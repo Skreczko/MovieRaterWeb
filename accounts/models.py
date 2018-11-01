@@ -1,4 +1,6 @@
 from random import randint
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.db import models
 from django.contrib.auth.models import \
     (BaseUserManager, AbstractBaseUser)
@@ -103,13 +105,30 @@ class ActivateProfile(models.Model):
 def key_generator():
     key_generated = ''
     for x in range(14):
-        key_generated += chr(randint(33, 127))
+        key_generated += str(randint(0, 9))
     return key_generated
+
+
+def send_email(instance):
+    User = MyUser.objects.filter(email=instance).first()
+    activation_key = User.activateprofile_set.all().first().key
+    subject = "Confirm registration on MovieRaterWEB"
+    from_email = settings.EMAIL_HOST_USER
+    to_email = [from_email, User.email]
+    html_content = '<h3>Thank you for registering</h3><hr><br><br><p>Click ' \
+                   '<a href="http://127.0.0.1:8000/accounts/register/{}">HERE</a>' \
+                   ' to confirm your registration<br><br><br>Best regards<br>MovieRaterWEB<hr></p>' \
+                    .format(activation_key)
+
+    send_mail(subject, "", from_email, to_email, html_message=html_content, fail_silently=True)
+
+
 
 def post_save_user(sender, instance, created, *args, **kwargs):
     if created:
         try:
             ActivateProfile.objects.create(user=instance)
+            send_email(instance=instance)
         except:
             pass
 

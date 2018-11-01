@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'movieraterweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'Lol123456789'
+
+
 
 # Application definition
 

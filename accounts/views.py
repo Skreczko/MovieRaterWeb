@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from django.http import HttpResponseRedirect
 from .forms import UserCreationForm,UserLoginForm
 from .models import ActivateProfile
@@ -30,9 +31,9 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-def activate_user(request, code=None, *args, **kwargs):
-    if code:
-        query_code = ActivateProfile.objects.filter(key=code)
+def activate_user(request, activation_key=None, *args, **kwargs):
+    if activation_key:
+        query_code = ActivateProfile.objects.filter(key=activation_key)
         if query_code.exists() :
             act_user = query_code.first()
             if not act_user.expired:
