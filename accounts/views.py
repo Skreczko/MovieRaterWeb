@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 from django.http import HttpResponseRedirect
 from .forms import UserCreationForm,UserLoginForm
@@ -8,10 +9,6 @@ from django.contrib.auth import login, logout, get_user_model
 
 User = get_user_model()
 
-def homepage(request):
-    if request.user.is_authenticated():
-        pass
-    return render(request, "home.html", {})
 
 def register(request, *args, **kwargs):
     form = UserCreationForm(request.POST or None, request.FILES or None)

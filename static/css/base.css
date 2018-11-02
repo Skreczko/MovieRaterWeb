@@ -1,0 +1,22 @@
+
+
+/* header */
+.header_top {
+    background-color: black;
+    padding:10px;
+    }
+
+.jumbotron {
+    margin:0px;}
+
+#register_now {
+    margin:10px;
+    }
+
+.under_jumbo {
+    background-color: black;
+    padding: 10px;
+}
+
+#movies_list, #actors_list {
+    margin: 0px 40px;}

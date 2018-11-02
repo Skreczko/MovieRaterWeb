@@ -5,7 +5,7 @@ from . import views
 
 
 urlpatterns = [
-    path('register/', views.register),
+    path('register/', views.register, name='register'),
     path('register/<activation_key>', views.activate_user),
 
 
