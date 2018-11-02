@@ -2,6 +2,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Register</h1>
-{% include "form.html" with form=form button='Submit' %}
+    <div class="form-group col-6 offset-3">
+        <h1>Register now</h1>
+            {% include "form.html" with form=form button='Submit' %}
+    </div>
 {% endblock %}
