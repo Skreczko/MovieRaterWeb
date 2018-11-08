@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     #else
     'bootstrapform',
     'crispy_forms',
+
 ]
 
 # for custom user model
