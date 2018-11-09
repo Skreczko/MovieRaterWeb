@@ -4,21 +4,25 @@ from datetime import timedelta, datetime, date
 from django.utils.timesince import timesince
 from django.utils import timezone
 from django.db.models.signals import pre_save
+import os, random, string
 
 # Create your models here.
 
 
 class Actor(models.Model):
+	def upload_path(instance, filename):
+		return os.path.join(
+			 'actors/',"%s" % instance.slug, filename)
+
 	name = models.CharField(max_length=128, default="")
 	slug = models.SlugField(unique=True)
 	last_name = models.CharField(max_length=128,  default="")
-	photo = models.ImageField(null=True, blank=True, upload_to='actors')
+	photo = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	biography = models.TextField(default="", blank=True)
 	birth = models.DateField(blank=True, null=True,)
 
 	def __str__(self):
 		return self.name + " " + self.last_name
-
 
 
 class ActorComment(models.Model):
@@ -50,10 +54,25 @@ class ActorComment(models.Model):
 		return '{t} ago'.format(t=timesince(self.edited_date))
 
 
+class ActorGallery(models.Model):
+	actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
+
+	def upload_path(instance, filename):
+		extension = filename.split('.')[-1]
+		random_name = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(9))
+		filename='{}.{}'.format(random_name, extension)
+		return os.path.join(
+			 'actors/{}/gallery/{}'.format(instance.actor.slug, filename))
+	picture = models.ImageField(upload_to=upload_path)
+
+	def __str__(self):
+		return str(self.actor)
+
+
 
 
 def slug_create(instance, new_slug=None):
-	slug = slugify(str(instance.name + ' ' + instance.last_name))
+	slug = slugify(str(instance.last_name + ' ' + instance.name))
 	if new_slug is not None:
 		slug = new_slug
 	qs = Actor.objects.filter(slug=slug)

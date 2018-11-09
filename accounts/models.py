@@ -1,7 +1,7 @@
 from random import randint
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
-
+import random, string
 from django.db import models
 from django.contrib.auth.models import \
     (BaseUserManager, AbstractBaseUser)
@@ -104,9 +104,7 @@ class ActivateProfile(models.Model):
         return str(self.user)
 
 def key_generator():
-    key_generated = ''
-    for x in range(14):
-        key_generated += str(randint(0, 9))
+    key_generated = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(24))
     return key_generated
 
 

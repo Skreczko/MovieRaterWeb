@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .forms import ActorForm
-from .models import Actor, ActorComment
+from .models import Actor, ActorComment, ActorGallery
 from django.utils.safestring import mark_safe
 # Register your models here.
 
@@ -48,8 +48,21 @@ class ActorCommentAdmin(admin.ModelAdmin):
 			return False
 	is_comment.boolean = True
 
+class ActorGalleryAdmin(admin.ModelAdmin):
+	list_display = ['actor', 'picture', 'show_photo']
+	search_fields = ['actor']
+	list_per_page = 50
 
+	class Meta:
+		model = ActorGallery
+
+	def show_photo(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url=obj.picture.url,
+			width=30,
+			height=60,))
 
 
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(ActorComment, ActorCommentAdmin)
+admin.site.register(ActorGallery, ActorGalleryAdmin)
