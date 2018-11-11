@@ -6,11 +6,12 @@ YEARS = [x for x in range(1930,2041)]
 
 
 class ActorForm(forms.ModelForm):
-	birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
+	born = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
+	died = forms.DateField(widget=forms.SelectDateWidget(years=YEARS), help_text="If actor is still alive, leave it")
 
 	class Meta:
 		model = Actor
-		fields = ['name', 'last_name', 'photo', 'biography', 'birth']
+		fields = ['name', 'last_name', 'photo', 'biography', 'born', 'if_died', 'died']
 
 
 class ActorCommentForm(forms.ModelForm):

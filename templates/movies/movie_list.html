@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+    {% for movie in object_list %}
+    <li>{{movie.name}}</li>
+    {% empty %}
+    <li>No movies yet.</li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

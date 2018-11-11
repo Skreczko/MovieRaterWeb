@@ -24,9 +24,12 @@ from accounts.views import user_login, user_logout
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='base.html')),
-    path('accounts/', include('accounts.urls')),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+
+    path('accounts/', include('accounts.urls')),
+    path('actors/', include('actors.urls')),
+    path('movies/', include('movies.urls')),
 
 
 ]

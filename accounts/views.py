@@ -14,6 +14,8 @@ def register(request, *args, **kwargs):
     form = UserCreationForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
+        messages.info(request, "Please check your email box to activate your account!")
+        return HttpResponseRedirect('/')
     return render(request, "accounts/register.html", {"form":form})
 
 def user_login(request, *args, **kwargs):

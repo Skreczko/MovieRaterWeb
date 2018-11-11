@@ -29,3 +29,39 @@ body {
 #movies_list, #actors_list {
     margin: 0px 40px;
     }
+
+
+/*  actor section */
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding:0px;
+}
+
+.card-section {
+    margin: 20px;
+}
+
+#element1 {
+    display:inline-block;
+
+}
+#element2 {
+    font-size: 90%;
+    display:inline-block;
+
+}
+
+#actor_image_list {
+    height: 200px;
+    width: 160px;
+
+}
+
+.fa-star {
+    color: #ff9900;
+}
+

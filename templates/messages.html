@@ -1,0 +1,7 @@
+{% load bootstrap %}
+
+{% if messages %}
+    {% for message in messages %}
+    <span class="badge badge-pill badge-info">{{ message }}</span>
+    {% endfor %}
+{% endif %}
