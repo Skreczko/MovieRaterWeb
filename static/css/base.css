@@ -5,6 +5,20 @@ body {
     width: 100% !important;
 }
 
+a {
+    color:black;
+}
+#expand_text {
+    color:blue;
+    font-size: 60%;
+}
+
+a:hover {
+    color:#505050;
+    text-decoration: none;
+
+}
+
 /* header */
 .header_top {
     background-color: black;
@@ -63,5 +77,11 @@ body {
 
 .fa-star {
     color: #ff9900;
+}
+
+#gallery_img {
+    height: 100px;
+    width: 80px;
+
 }
 

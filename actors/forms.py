@@ -11,7 +11,7 @@ class ActorForm(forms.ModelForm):
 
 	class Meta:
 		model = Actor
-		fields = ['name', 'last_name', 'photo', 'biography', 'born', 'if_died', 'died']
+		fields = ['name', 'last_name', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died']
 
 
 class ActorCommentForm(forms.ModelForm):

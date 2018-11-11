@@ -2,7 +2,72 @@
 
 {% block content %}
 
-<h1>{{object.last_name}}</h1>
+<div class="container">
+
+  <div class="row">
+      <div class="col-2">
+          <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
+      </div>
+      <div class="col-10">
+          <h4 class="card-title">{{object.name}} {{object.last_name}}</h4>
+          <div class="row">
+              <div class="col-2">
+                  <p>Born:</p>
+                  {% if object.if_died %}
+                  <p>Died:</p>
+                  {% endif %}
+                  <p>Birth place:</p>
+              </div>
+              <div class="col-6">
+                  <p>{{object.born|date:"j F Y"}} ({{object.actor_age}})</p>
+                  {% if object.if_died %}
+                  <p>{{object.died|date:"j F Y"}}</p>
+                  {% endif %}
+                  <p>{{object.city_of_birth}}, {{object.nationality.name}}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    <br><br>
+
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h4>Gallery</h4>
+            <hr>
+            {% for imag in object.actor_gallery.all %}
+            <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+            {% endfor %}
+        </div>
+    </div>
+
+<br><br>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h4>Biography</h4>
+            <hr>
+            <p class="text">{{object.biography|linebreaks}} </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h4>Filmography</h4>
+            <p class="text">add filmohraphy</p>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
 
 
 {% endblock %}

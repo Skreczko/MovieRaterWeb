@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     #else
     'bootstrapform',
     'crispy_forms',
+    'django_countries',
 
 ]
 

@@ -9,6 +9,8 @@ from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
 
+from django_countries.fields import CountryField
+
 # Create your models here.
 
 
@@ -22,6 +24,8 @@ class Actor(models.Model):
 	name = models.CharField(max_length=128, default="")
 	slug = models.SlugField(unique=True)
 	last_name = models.CharField(max_length=128,  default="")
+	nationality = CountryField()
+	city_of_birth = models.CharField(max_length=50)
 	photo = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	biography = models.TextField(default="", blank=True)
 	born = models.DateField(blank=True, null=True,)
@@ -40,7 +44,6 @@ class Actor(models.Model):
 			age = int((self.died-self.born).days/365)
 			return '{} years old'.format(age)
 
-
 	def average_stars(self):
 		rates = ActorComment.objects.filter(actor=self)
 		rates_amount = len(rates)
@@ -58,8 +61,6 @@ class Actor(models.Model):
 		return reverse('actor_detail', kwargs={"slug":self.slug})
 
 
-
-
 class ActorComment(models.Model):
 	STARS = (
 		(1, '1'),
@@ -73,13 +74,12 @@ class ActorComment(models.Model):
 		(9, '9'),
 		(10, '10'),
 	)
+
 	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="comments")
 	comment = models.TextField(max_length=1000,blank=True, null=True)
 	stars = models.IntegerField(choices=STARS)
 	publish_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	edited_date = models.DateTimeField(auto_now_add=False, auto_now=True)
-
-
 
 	def __str__(self):
 		return str(self.actor)
@@ -92,7 +92,7 @@ class ActorComment(models.Model):
 
 
 class ActorGallery(models.Model):
-	actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
+	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="actor_gallery")
 
 	def upload_path(instance, filename):
 		extension = filename.split('.')[-1]
@@ -104,8 +104,6 @@ class ActorGallery(models.Model):
 
 	def __str__(self):
 		return str(self.actor)
-
-
 
 
 def slug_create(instance, new_slug=None):
