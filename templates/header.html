@@ -3,6 +3,7 @@
 
 {% include 'navbar.html' %}
 
+
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4 center">MovieRaterWEB</h1>
@@ -13,9 +14,29 @@
 <div class="container-fluid under_jumbo">
   <div class="row justify-content-center">
     <div class="col-auto">
-          <a class="btn btn-outline-light my-2 my-sm-0" href="{% url 'movie_list' %}" id="movies_list"><i class="fas fa-film" ></i> Movies</a>
-          <a class="btn btn-outline-light my-2 my-sm-0" href="{% url 'actor_list' %}" id="actors_list"><i class="fas fa-users" ></i> Actors</a>
+
+
+        <div class="btn-group" id="movies_list" role="group">
+          <a class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="false"
+             aria-expanded="false" href="{% url 'movie_list' %}"><i class="fas fa-film" ></i> Movies</a>
+             <div class="dropdown-menu">
+                 <a class="dropdown-item" href="{% url 'movie_list' %}"><i class="fas fa-list"></i> Movie List</a>
+                 <a class="dropdown-item" href="#"><i class="fas fa-plus"></i> Add Movie</a>
+             </div>
+        </div>
+
+        <div class="btn-group " id="actors_list" role="group">
+          <a class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="false"
+             aria-expanded="false" href="{% url 'actor_list' %}"><i class="fas fa-users" ></i> Actors</a>
+             <div class="dropdown-menu">
+                 <a class="dropdown-item" href="{% url 'actor_list' %}"><i class="fas fa-list"></i> Actor List</a>
+                 <a class="dropdown-item" href="{% url 'actor_create' %}"><i class="fas fa-plus"></i> Add Actor</a>
+             </div>
+        </div>
+
+
 
     </div>
   </div>
 </div>
+

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from .models import Actor, ActorComment, ActorGallery
 from .forms import ActorForm
 
@@ -26,4 +27,7 @@ class ActorCreateView(CreateView):
 
 	def form_valid(self, form):
 		return super(ActorCreateView,self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse("actor_list")
 

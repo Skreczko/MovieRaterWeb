@@ -44,6 +44,10 @@ a:hover {
     margin: 0px 40px;
     }
 
+#add_movie , #add_actor {
+    color: white;
+}
+
 
 /*  actor section */
 
@@ -70,8 +74,8 @@ a:hover {
 }
 
 #actor_image_list {
-    height: 200px;
-    width: 160px;
+    height: 180px;
+    width: 140px;
 
 }
 

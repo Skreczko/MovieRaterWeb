@@ -4,6 +4,8 @@
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|bootstrap }}
+    <br>
     <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">{{button}}</button>
     <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark my-2 my-sm-0" >Back</a>
 </form>
+<br>
