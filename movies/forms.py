@@ -2,8 +2,7 @@ from django import forms
 from .models import Movie, MovieComment
 
 
-YEARS = ((x,x) for x in range(1930,2041))
-DURATION = ((x,x) for x in range(0,720))
+
 
 
 class MovieForm(forms.ModelForm):
@@ -30,8 +29,7 @@ class MovieForm(forms.ModelForm):
 		('Western', 'Western'),
 	)
 	category = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=CATEGORIES))
-	year_of_production = forms.IntegerField(widget=forms.Select(choices=YEARS))
-	duration = forms.IntegerField(widget=forms.Select(choices=DURATION), help_text="in minutes")
+
 	class Meta:
 		model = Movie
 		fields = [
@@ -43,8 +41,12 @@ class MovieForm(forms.ModelForm):
 			'poster',
 			'duration',
 			'description',
-
 		]
+
+		widgets = {
+			'year_of_production': forms.Select,
+			'duration': forms.Select,
+		}
 
 
 class MovieCommentForm(forms.ModelForm):

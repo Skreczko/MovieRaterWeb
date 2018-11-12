@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 
 class MovieAdmin(admin.ModelAdmin):
 	list_display = ['title',  'year_of_production', 'category', 'is_poster', ]
-	list_filter = ['year_of_production', ]
+	list_filter = ['category', ]
 	search_fields = ['title' , 'category', 'year_of_production']
 	readonly_fields = ['slug', 'show_poster']
 	list_per_page = 50

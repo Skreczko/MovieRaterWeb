@@ -16,6 +16,8 @@ from django_countries.fields import CountryField
 
 class Actor(models.Model):
 
+
+
 	def upload_path(instance, filename):
 		extension = filename.split('.')[-1]
 		filename = '{}.{}'.format(instance.slug,extension)
@@ -29,21 +31,25 @@ class Actor(models.Model):
 	city_of_birth = models.CharField(max_length=50)
 	photo = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	biography = models.TextField(default="", blank=True)
-	born = models.DateField(blank=True, null=True,)
+	born = models.DateField()
 	if_died = models.BooleanField(default=False, verbose_name="cross if dead")
 	died = models.DateField(blank=True, null=True, default=None,)
 
 	def __str__(self):
 		return self.name + " " + self.last_name
 
+
+
 	@property
 	def actor_age(self):
 		if not self.if_died:
 			age = timesince(self.born).split(',')[0]
 			return '{} old'.format(age)
-		else:
+		elif self.died:
 			age = int((self.died-self.born).days/365)
 			return '{} years old'.format(age)
+		else:
+			return "Edit this section and choose the date of death"
 
 	def average_stars(self):
 		rates = ActorComment.objects.filter(actor=self)

@@ -13,6 +13,9 @@ from django_countries.fields import CountryField
 
 class Movie(models.Model):
 
+	YEARS = ((x, x) for x in range(1930, 2041))
+	DURATION = ((x, x) for x in range(0, 721))
+
 	def upload_path(instance, filename):
 		extension = filename.split(".")[-1]
 		filename = "{}.{}".format(instance.slug, extension)
@@ -21,13 +24,13 @@ class Movie(models.Model):
 
 	title = models.CharField(max_length=50)
 	slug = models.SlugField(unique=True)
-	year_of_production = models.PositiveSmallIntegerField()
+	year_of_production = models.PositiveSmallIntegerField(choices=YEARS)
 	production = CountryField()
 	budget = models.PositiveIntegerField(help_text="in dollars")
 	poster = models.ImageField(null=True, blank=True, upload_to=upload_path)
-	duration = models.PositiveSmallIntegerField()
+	duration = models.PositiveSmallIntegerField(choices=DURATION)
 	description = models.TextField(default="", blank=True)
-	category = models.CharField(max_length=50)
+	category = models.CharField(max_length=100)
 
 	def __str__(self):
 		return str(self.title) + " ({})".format(str(self.year_of_production))
@@ -46,7 +49,7 @@ class Movie(models.Model):
 			return rating, rates_amount
 
 	def get_to_detail(self):
-		return reverse('movie_detail', kwargs={"slug":self.slug})
+		return reverse('movie_detail', kwargs={"slug": self.slug})
 
 
 
