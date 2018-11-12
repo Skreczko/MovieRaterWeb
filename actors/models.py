@@ -15,6 +15,7 @@ from django_countries.fields import CountryField
 
 
 class Actor(models.Model):
+
 	def upload_path(instance, filename):
 		extension = filename.split('.')[-1]
 		filename = '{}.{}'.format(instance.slug,extension)

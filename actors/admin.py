@@ -59,7 +59,7 @@ class ActorGalleryAdmin(admin.ModelAdmin):
 	def show_photo(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url=obj.picture.url,
-			width=30,
+			width=50,
 			height=60,))
 
 

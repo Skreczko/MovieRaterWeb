@@ -2,13 +2,38 @@
 
 {% block content %}
 
-<ul>
-    {% for movie in object_list %}
-    <li>{{movie.name}}</li>
+
+<div class="container">
+     {% for movie in object_list %}
+    <div class="card">
+      <div class="card-body">
+          <div class="row">
+              <div class="col-2">
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
+              </div>
+              <div class="col-10">
+                  <div class="card-section">
+                      <h4 class="card-title" id="element1"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
+                      <p id="element2">{{movie.duration}}min.</p>
+                    <div class="card-section2"><br>
+                      <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
+                      <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
     {% empty %}
-    <li>No movies yet.</li>
+    <h5>No actors yet.</h5>
     {% endfor %}
 
-</ul>
+
+</div>
+
+
+
+
 
 {% endblock %}
