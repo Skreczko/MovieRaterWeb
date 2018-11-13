@@ -2,33 +2,33 @@ from django import forms
 from .models import Movie, MovieComment
 
 
-
-
+YEARS = ((x, x) for x in range(1930, 2041))
+DURATION = ((x, x) for x in range(0, 721))
+CATEGORIES = (
+	('Action', 'Action'),
+	('Adventure', 'Adventure'),
+	('Animation', 'Animation'),
+	('Anime', 'Anime'),
+	('Biography', 'Biography'),
+	('Comedy', 'Comedy'),
+	('Crime', 'Crime'),
+	('Documentary', 'Documentary'),
+	('Drama', 'Drama'),
+	('Family', 'Family'),
+	('Fantasy', 'Fantasy'),
+	('Film - Noir', 'Film-Noir'),
+	('History', 'History'),
+	('Horror', 'Horror'),
+	('Musical', 'Musical'),
+	('Romence', 'Romence'),
+	('Sci - Fi', 'Sci-Fi'),
+	('Thriller', 'Thriller'),
+	('War', 'War'),
+	('Western', 'Western'),
+)
 
 class MovieForm(forms.ModelForm):
-	CATEGORIES = (
-		('Action', 'Action'),
-		('Adventure', 'Adventure'),
-		('Animation', 'Animation'),
-		('Anime', 'Anime'),
-		('Biography', 'Biography'),
-		('Comedy', 'Comedy'),
-		('Crime', 'Crime'),
-		('Documentary', 'Documentary'),
-		('Drama', 'Drama'),
-		('Family', 'Family'),
-		('Fantasy', 'Fantasy'),
-		('Film - Noir', 'Film-Noir'),
-		('History', 'History'),
-		('Horror', 'Horror'),
-		('Musical', 'Musical'),
-		('Romence', 'Romence'),
-		('Sci - Fi', 'Sci-Fi'),
-		('Thriller', 'Thriller'),
-		('War', 'War'),
-		('Western', 'Western'),
-	)
-	category = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=CATEGORIES))
+
 
 	class Meta:
 		model = Movie
@@ -44,8 +44,9 @@ class MovieForm(forms.ModelForm):
 		]
 
 		widgets = {
-			'year_of_production': forms.Select,
-			'duration': forms.Select,
+			'category': forms.CheckboxSelectMultiple(choices=CATEGORIES),
+			'year_of_production': forms.Select(choices=YEARS),
+			'duration': forms.Select(choices=DURATION),
 		}
 
 

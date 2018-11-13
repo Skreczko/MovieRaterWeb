@@ -22,11 +22,19 @@ class ActorDetailView(DetailView):
 
 class ActorCreateView(CreateView):
 
-	template_name = "actors/actor_add.html"
+	template_name = "actors/actor_form.html"
 	form_class = ActorForm
 
 	def form_valid(self, form):
 		return super(ActorCreateView,self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse("actor_list")
+
+class ActorUpdateView(UpdateView):
+	model = Actor
+	template_name = "actors/actor_form.html"
+	form_class = ActorForm
 
 	def get_success_url(self):
 		return reverse("actor_list")

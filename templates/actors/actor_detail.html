@@ -8,25 +8,25 @@
       <div class="col-2">
           <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
       </div>
-      <!--<div class="col-10">-->
-          <!--<h3 class="card-title">{{object.name}} {{object.year_of_production}}</h3>-->
-          <!--<div class="row">-->
-              <!--<div class="col-2">-->
-                  <!--<p>Born:</p>-->
-                  <!--{% if object.if_died %}-->
-                  <!--<p>Died:</p>-->
-                  <!--{% endif %}-->
-                  <!--<p>Birth place:</p>-->
-              <!--</div>-->
-              <!--<div class="col-6">-->
-                  <!--<p>{{object.born|date:"j F Y"}} ({{object.actor_age}})</p>-->
-                  <!--{% if object.if_died %}-->
-                  <!--<p>{{object.died|date:"j F Y"}}</p>-->
-                  <!--{% endif %}-->
-                  <!--<p>{{object.city_of_birth}}, {{object.nationality.name}}</p>-->
-              <!--</div>-->
-          <!--</div>-->
-      <!--</div>-->
+      <div class="col-10">
+          <h3 class="card-title">{{object.name}} {{object.last_name}}</h3>
+          <div class="row">
+              <div class="col-2">
+                  <p>Born:</p>
+                  {% if object.if_died %}
+                  <p>Died:</p>
+                  {% endif %}
+                  <p>Birth place:</p>
+              </div>
+              <div class="col-6">
+                  <p>{{object.born|date:"j F Y"}} ({{object.actor_age}})</p>
+                  {% if object.if_died %}
+                  <p>{{object.died|date:"j F Y"}}</p>
+                  {% endif %}
+                  <p>{{object.city_of_birth}}, {{object.nationality.name}}</p>
+              </div>
+          </div>
+      </div>
   </div>
 
     <br><br>
@@ -36,7 +36,7 @@
         <div class="col-12">
             <h4>Gallery</h4>
             <hr>
-            {% for imag in object.movie_gallery.all %}
+            {% for imag in object.actor_gallery.all %}
             <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
             {% endfor %}
         </div>
