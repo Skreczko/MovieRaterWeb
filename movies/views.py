@@ -21,11 +21,26 @@ class MovieDetailView(DetailView):
 
 class MovieCreateView(CreateView):
 
-	template_name = "movies/movie_add.html"
+	template_name = "form.html"
 	form_class = MovieForm
 
 	def form_valid(self, form):
 		return super(MovieCreateView,self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse("movie_list")
+
+class MovieUpdateView(UpdateView):
+	model = Movie
+	template_name = "form.html"
+	form_class = MovieForm
+
+	def get_success_url(self):
+		return reverse("movie_list")
+
+class MovieDeleteView(DeleteView):
+	model = Movie
+	template_name = "confirm_delete.html"
 
 	def get_success_url(self):
 		return reverse("movie_list")

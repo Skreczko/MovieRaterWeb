@@ -30,6 +30,7 @@ CATEGORIES = (
 class MovieForm(forms.ModelForm):
 
 
+
 	class Meta:
 		model = Movie
 		fields = [
@@ -48,6 +49,8 @@ class MovieForm(forms.ModelForm):
 			'year_of_production': forms.Select(choices=YEARS),
 			'duration': forms.Select(choices=DURATION),
 		}
+
+
 
 
 class MovieCommentForm(forms.ModelForm):

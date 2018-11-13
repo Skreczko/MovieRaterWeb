@@ -21,8 +21,7 @@ class ActorDetailView(DetailView):
 	model = Actor
 
 class ActorCreateView(CreateView):
-
-	template_name = "actors/actor_form.html"
+	template_name = "form.html"
 	form_class = ActorForm
 
 	def form_valid(self, form):
@@ -33,9 +32,18 @@ class ActorCreateView(CreateView):
 
 class ActorUpdateView(UpdateView):
 	model = Actor
-	template_name = "actors/actor_form.html"
+	template_name = "form.html"
 	form_class = ActorForm
+	prefix =
 
 	def get_success_url(self):
 		return reverse("actor_list")
+
+class ActorDeleteView(DeleteView):
+	model=Actor
+	template_name = "confirm_delete.html"
+
+	def get_success_url(self):
+		return reverse("actor_list")
+
 

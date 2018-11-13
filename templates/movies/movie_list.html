@@ -13,15 +13,34 @@
               </div>
               <div class="col-10">
                   <div class="card-section">
-                      <h4 class="card-title" id="element1"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
-                      <p id="element2">{{movie.duration}}min.</p>
-                    <div class="card-section2"><br>
+                      <h4 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
+                      <p id="duration_text">{{movie.duration}}min</p>
+                    <div class="card-section2">
                       <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
                       <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
                     </div>
                   </div>
+
+                  <div class="row">
+
+              <div class="col-2">
+                  <p id="">Category: </p>
+              </div>
+              <div class="col-3">
+                  {% for category in movie.category %}
+                  <p>{{category}}</p>
+                  {% endfor %}
+              </div>
+              <div class="col-3">
+              </div>
+              <div class="col-3">
+              </div>
+
+          </div>
+
               </div>
           </div>
+
       </div>
     </div>
 

@@ -89,3 +89,13 @@ a:hover {
 
 }
 
+/*  movie section */
+
+#duration_time {
+    margin: 0px;
+}
+
+#duration_text {
+    color:#505050;
+    font-size: 90%;
+}
