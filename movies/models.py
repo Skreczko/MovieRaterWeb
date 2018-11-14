@@ -13,8 +13,6 @@ from django_countries.fields import CountryField
 
 class Movie(models.Model):
 
-
-
 	def upload_path(instance, filename):
 		extension = filename.split(".")[-1]
 		filename = "{}.{}".format(instance.slug, extension)
@@ -29,7 +27,6 @@ class Movie(models.Model):
 	poster = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	duration = models.PositiveSmallIntegerField()
 	description = models.TextField(default="", blank=True)
-	category = models.CharField(max_length=100)
 
 	def __str__(self):
 		return str(self.title) + " ({})".format(str(self.year_of_production))
@@ -50,6 +47,12 @@ class Movie(models.Model):
 	def get_to_detail(self):
 		return reverse('movie_detail', kwargs={"slug": self.slug})
 
+class MovieCategory(models.Model):
+	related_movie = models.ManyToManyField(Movie)
+	category = models.CharField(max_length=100)
+
+	def __str__(self):
+		return str(self.category)
 
 
 class MovieComment(models.Model):

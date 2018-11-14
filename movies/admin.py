@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import Movie,  MovieComment, MovieGallery
-from .forms import MovieForm
+from .models import Movie,  MovieComment, MovieGallery, MovieCategory
+from .forms import MovieForm, MovieCategoryFormAdmin
 from django.utils.safestring import mark_safe
 # Register your models here.
 
 class MovieAdmin(admin.ModelAdmin):
-	list_display = ['title',  'year_of_production', 'category', 'is_poster', ]
+	list_display = ['title',  'year_of_production',  'is_poster', ]
 	list_filter = ['year_of_production', ]
-	search_fields = ['title' , 'category', 'year_of_production']
+	search_fields = ['title' ,  'year_of_production']
 	readonly_fields = ['slug', 'show_poster']
 	list_per_page = 50
 
@@ -57,6 +57,14 @@ class MovieGalleryAdmin(admin.ModelAdmin):
 			height=60,))
 
 
+
+class MovieCategoryAdmin(admin.ModelAdmin):
+	list_display = ['category' ]
+
+	form = MovieCategoryFormAdmin
+
+
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(MovieComment, MovieCommentAdmin)
 admin.site.register(MovieGallery, MovieGalleryAdmin)
+admin.site.register(MovieCategory, MovieCategoryAdmin)

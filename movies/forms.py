@@ -1,6 +1,5 @@
 from django import forms
-from .models import Movie, MovieComment
-
+from .models import Movie, MovieComment, MovieCategory
 
 YEARS = ((x, x) for x in range(1930, 2041))
 DURATION = ((x, x) for x in range(0, 721))
@@ -29,14 +28,11 @@ CATEGORIES = (
 
 class MovieForm(forms.ModelForm):
 
-
-
 	class Meta:
 		model = Movie
 		fields = [
 			'title',
 			'year_of_production',
-			'category',
 			'production',
 			'budget',
 			'poster',
@@ -45,12 +41,9 @@ class MovieForm(forms.ModelForm):
 		]
 
 		widgets = {
-			'category': forms.CheckboxSelectMultiple(choices=CATEGORIES),
 			'year_of_production': forms.Select(choices=YEARS),
 			'duration': forms.Select(choices=DURATION),
 		}
-
-
 
 
 class MovieCommentForm(forms.ModelForm):
@@ -58,4 +51,21 @@ class MovieCommentForm(forms.ModelForm):
 	class Meta:
 		model = MovieComment
 		fields = ['movie', 'comment', 'stars']
+
+class MovieCategoryForm(forms.Form):
+	category = forms.CharField(max_length=100, widget=forms.Select(choices=CATEGORIES))
+	class Meta:
+		model = MovieCategory
+		fields = ['category', 'related_movie']
+
+class MovieCategoryFormAdmin(forms.ModelForm):
+	category = forms.CharField(max_length=100, widget=forms.Select(choices=CATEGORIES))
+	class Meta:
+		model = MovieCategory
+		fields = ['category', 'related_movie']
+
+
+
+
+
 

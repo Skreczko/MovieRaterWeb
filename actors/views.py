@@ -34,7 +34,7 @@ class ActorUpdateView(UpdateView):
 	model = Actor
 	template_name = "form.html"
 	form_class = ActorForm
-	prefix =
+
 
 	def get_success_url(self):
 		return reverse("actor_list")

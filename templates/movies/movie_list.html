@@ -22,21 +22,22 @@
                   </div>
 
                   <div class="row">
+                      <div class="col-2">
+                          <p id="">Category: </p>
+                      </div>
+                      <div class="col-3">
+                          {% for cat in movie.moviecategory_set.all %}
+                            <p>{{cat.category}}</p>
+                          {% empty %}
+                            <p>add category!<a href="{% url 'movie_category' id=movie.id %}">ff</a> </p>
+                          {% endfor %}
+                      </div>
+                      <div class="col-3">
+                      </div>
+                      <div class="col-3">
+                      </div>
 
-              <div class="col-2">
-                  <p id="">Category: </p>
-              </div>
-              <div class="col-3">
-                  {% for category in movie.category %}
-                  <p>{{category}}</p>
-                  {% endfor %}
-              </div>
-              <div class="col-3">
-              </div>
-              <div class="col-3">
-              </div>
-
-          </div>
+                  </div>
 
               </div>
           </div>
