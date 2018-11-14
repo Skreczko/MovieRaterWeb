@@ -99,3 +99,10 @@ a:hover {
     color:#505050;
     font-size: 90%;
 }
+
+#paragraph_category {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}

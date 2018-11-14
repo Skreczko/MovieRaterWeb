@@ -26,31 +26,38 @@
                           <p id="">Category: </p>
                       </div>
                       <div class="col-3">
-                          {% for cat in movie.moviecategory_set.all %}
-                            <p>{{cat.category}}</p>
-                          {% empty %}
-                            <p>add category!<a href="{% url 'add_category' movie.slug %}">ff</a> </p>
-                          {% endfor %}
+                            <p id="paragraph_category">
+                                {% if movie.moviecategory_set.all|length > 1 %}
+                                    {% for cat in movie.moviecategory_set.all %}
+                                        {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                            {{cat.category}},
+                                        {% else %}
+                                            {{cat.category}}
+                                        {% endif %}
+                                    {% empty %}
+                                        <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                    {% endfor %}
+                                {% else %}
+                                    {% if empty %}
+                                        <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                    {% else %}
+                                        {{movie.moviecategory_set.all.0.category}}
+                                    {% endif %}
+                                {% endif %}
+                            </p>
                       </div>
-                      <div class="col-3">
-                      </div>
-                      <div class="col-3">
-                      </div>
-
                   </div>
-
               </div>
           </div>
-
-      </div>
+        </div>
     </div>
-
     {% empty %}
     <h5>No actors yet.</h5>
     {% endfor %}
 
 
 </div>
+
 
 
 

@@ -25,7 +25,7 @@ CATEGORIES = (
 	('Horror', 'Horror'),
 	('Musical', 'Musical'),
 	('Romence', 'Romence'),
-	('Sci - Fi', 'Sci-Fi'),
+	('Sci-Fi', 'Sci-Fi'),
 	('Thriller', 'Thriller'),
 	('War', 'War'),
 	('Western', 'Western'),
