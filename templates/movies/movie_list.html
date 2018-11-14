@@ -29,7 +29,7 @@
                           {% for cat in movie.moviecategory_set.all %}
                             <p>{{cat.category}}</p>
                           {% empty %}
-                            <p>add category!<a href="{% url 'movie_category' id=movie.id %}">ff</a> </p>
+                            <p>add category!<a href="{% url 'add_category' movie.slug %}">ff</a> </p>
                           {% endfor %}
                       </div>
                       <div class="col-3">

@@ -4,13 +4,14 @@ from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateV
 					category_create
 
 urlpatterns = [
-
+	#	MOVIES
 	path('', MovieListView.as_view(), name='movie_list'),
 	path('detail/<slug>', MovieDetailView.as_view(), name='movie_detail'),
 	path('detail/<slug>/edit/', MovieUpdateView.as_view(), name='movie_update'),
 	path('detail/<slug>/delete/', MovieDeleteView.as_view(), name='movie_delete'),
 	path('add/', MovieCreateView.as_view(), name='movie_create'),
 
-	path('cr/<id>', category_create, name='movie_category'),
+	#	MOVIES CATEGORIES
+	path('detail/<slug>/add_category/', category_create, name='add_category'),
 
 ]

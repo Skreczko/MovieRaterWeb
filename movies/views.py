@@ -50,9 +50,9 @@ class MovieDeleteView(DeleteView):
 
 #	CATEGORY SECTION
 
-def category_create(request, id):
+def category_create(request, slug=None):
 	form = MovieCategoryForm(request.POST or None)
-	qs_movie = Movie.objects.get(pk=id)
+	qs_movie = Movie.objects.get(slug=slug)
 
 	if form.is_valid():
 		category = form.cleaned_data['category']
