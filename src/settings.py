@@ -52,9 +52,11 @@ INSTALLED_APPS = [
     'src',
 
     #else
+    'multiselectfield',
     'bootstrapform',
     'crispy_forms',
     'django_countries',
+
 
 ]
 

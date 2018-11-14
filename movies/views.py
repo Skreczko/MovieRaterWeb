@@ -58,11 +58,12 @@ def category_create(request, slug=None):
 
 	if form.is_valid():
 		category = form.cleaned_data['category']
-		check = MovieCategory.objects.filter(category=category).first()
-		if not check:
-			MovieCategory.objects.create(category=category).save()
-		qs_category = MovieCategory.objects.filter(category=category).first()
-		qs_category.related_movie.add(qs_movie)
+		for item in category:
+			check = MovieCategory.objects.filter(category=item).first()
+			if not check:
+				MovieCategory.objects.create(category=item).save()
+			qs_category = MovieCategory.objects.filter(category=item).first()
+			qs_category.related_movie.add(qs_movie)
 		return redirect('movie_detail', slug)
 
 	return render(request, 'form.html', {'form':form} )

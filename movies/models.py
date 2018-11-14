@@ -4,7 +4,9 @@ from django.utils.timesince import timesince
 from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
+
 from django_countries.fields import CountryField
+
 
 YEARS = ((x, x) for x in range(1930, 2041))
 DURATION = ((x, x) for x in range(0, 721))
