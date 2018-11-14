@@ -9,6 +9,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 # Create your views here.
 
+
+
 class MovieListView(ListView):
 	model = Movie
 
@@ -59,6 +61,8 @@ def category_create(request, slug=None):
 		MovieCategory.objects.create(category=category).save()
 		qs_category = MovieCategory.objects.filter(category=category).first()
 		qs_category.related_movie.add(qs_movie)
+
+		return redirect('movie_detail', slug)
 
 
 

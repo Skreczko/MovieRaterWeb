@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Movie,  MovieComment, MovieGallery, MovieCategory
-from .forms import MovieForm, MovieCategoryFormAdmin
+from .forms import MovieForm, MovieCategoryForm
 from django.utils.safestring import mark_safe
 # Register your models here.
 
@@ -61,10 +61,10 @@ class MovieGalleryAdmin(admin.ModelAdmin):
 class MovieCategoryAdmin(admin.ModelAdmin):
 	list_display = ['category' ]
 
-	form = MovieCategoryFormAdmin
+	form = MovieCategoryForm
 
 
 admin.site.register(Movie, MovieAdmin)
 admin.site.register(MovieComment, MovieCommentAdmin)
 admin.site.register(MovieGallery, MovieGalleryAdmin)
-admin.site.register(MovieCategory, MovieCategoryAdmin)
+admin.site.register(MovieCategory)

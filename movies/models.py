@@ -1,15 +1,49 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.timesince import timesince
-
-
 from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
-
 from django_countries.fields import CountryField
 
+YEARS = ((x, x) for x in range(1930, 2041))
+DURATION = ((x, x) for x in range(0, 721))
+CATEGORIES = (
+	('Action', 'Action'),
+	('Adventure', 'Adventure'),
+	('Animation', 'Animation'),
+	('Anime', 'Anime'),
+	('Biography', 'Biography'),
+	('Comedy', 'Comedy'),
+	('Crime', 'Crime'),
+	('Documentary', 'Documentary'),
+	('Drama', 'Drama'),
+	('Family', 'Family'),
+	('Fantasy', 'Fantasy'),
+	('Film - Noir', 'Film-Noir'),
+	('History', 'History'),
+	('Horror', 'Horror'),
+	('Musical', 'Musical'),
+	('Romence', 'Romence'),
+	('Sci - Fi', 'Sci-Fi'),
+	('Thriller', 'Thriller'),
+	('War', 'War'),
+	('Western', 'Western'),
+)
+STARS = (
+		(1, '1'),
+		(2, '2'),
+		(3, '3'),
+		(4, '4'),
+		(5, '5'),
+		(6, '6'),
+		(7, '7'),
+		(8, '8'),
+		(9, '9'),
+		(10, '10'),
+	)
 # Create your models here.
+
 
 class Movie(models.Model):
 
@@ -48,26 +82,16 @@ class Movie(models.Model):
 		return reverse('movie_detail', kwargs={"slug": self.slug})
 
 class MovieCategory(models.Model):
+
 	related_movie = models.ManyToManyField(Movie)
-	category = models.CharField(max_length=100)
+	category = models.CharField(max_length=100, choices=CATEGORIES)
 
 	def __str__(self):
 		return str(self.category)
 
 
 class MovieComment(models.Model):
-	STARS = (
-		(1, '1'),
-		(2, '2'),
-		(3, '3'),
-		(4, '4'),
-		(5, '5'),
-		(6, '6'),
-		(7, '7'),
-		(8, '8'),
-		(9, '9'),
-		(10, '10'),
-	)
+
 
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_comments")
 	comment = models.TextField(max_length=1000,blank=True, null=True)
