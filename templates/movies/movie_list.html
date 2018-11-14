@@ -19,30 +19,43 @@
                       <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
                       <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
                     </div>
-                  </div>
 
-                  <div class="row">
-                      <div class="col-2">
-                          <p id="">Category: </p>
-                      </div>
-                      <div class="col-3">
-                            <p id="paragraph_category">
-                                {% if movie.moviecategory_set.all|length > 1 %}
-                                    {% for cat in movie.moviecategory_set.all %}
-                                        {% if forloop.counter != movie.moviecategory_set.all|length %}
-                                            {{cat.category}},
-                                        {% else %}
-                                            {{cat.category}}
-                                        {% endif %}
-                                    {% empty %}
+                      <div class="row">
+                          <div class="col-2">
+                              <p id="">Category: </p>
+                          </div>
+
+                          <div class="col-3">
+                                <p id="paragraph_category">
+                                    {% if movie.moviecategory_set.all|length > 1 %}
+                                        {% for cat in movie.moviecategory_set.all %}
+                                            {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                                {{cat.category}},
+                                            {% else %}
+                                                {{cat.category}}
+                                            {% endif %}
+                                        {% empty %}
+                                            <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                        {% endfor %}
+                                    {% elif movie.moviecategory_set.all|length is 1 %}
+                                        {{movie.moviecategory_set.all.0.category}}
+                                    {% else %}
                                         <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
-                                    {% endfor %}
-                                {% elif movie.moviecategory_set.all|length is 1 %}
-                                    {{movie.moviecategory_set.all.0.category}}
-                                {% else %}
-                                    <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
-                                {% endif %}
-                            </p>
+                                    {% endif %}
+                                </p>
+                          </div>
+
+                          <div class="col-2">
+                              <p id="">Production: </p>
+                          </div>
+
+                          <div class="col-3">
+                                <p id="paragraph_category">
+                                    {{movie.production.name}}
+                                </p>
+                          </div>
+
+
                       </div>
                   </div>
               </div>
