@@ -5,6 +5,17 @@ body {
     width: 100% !important;
 }
 
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
 a {
     color:black;
 }
@@ -13,11 +24,20 @@ a {
     font-size: 60%;
 }
 
+
+
 a:hover {
     color:#505050;
     text-decoration: none;
 
 }
+
+.bold {
+    font-weight: bold;
+}
+
+
+
 
 /* header */
 .header_top {
@@ -70,12 +90,14 @@ a:hover {
 #element2 {
     font-size: 90%;
     display:inline-block;
+    margin-left: 10px;
 
 }
 
 #actor_image_list {
-    height: 180px;
+    height: 200px;
     width: 140px;
+
 
 }
 
@@ -84,7 +106,7 @@ a:hover {
 }
 
 #gallery_img {
-    height: 100px;
+    height: 120px;
     width: 80px;
 
 }
@@ -93,6 +115,7 @@ a:hover {
 
 #duration_time {
     margin: 0px;
+    margin-top: -5px;
 }
 
 #duration_text {
@@ -101,8 +124,13 @@ a:hover {
 }
 
 #paragraph_category {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
+    font-size: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.margin_bottom p {
+    margin-bottom: 0rem;
 }

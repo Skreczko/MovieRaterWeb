@@ -2,73 +2,85 @@
 
 {% block content %}
 
-
-<div class="container">
-     {% for movie in object_list %}
-    <div class="card">
-      <div class="card-body">
-          <div class="row">
-              <div class="col-2">
-                  <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
-              </div>
-              <div class="col-10">
-                  <div class="card-section">
-                      <h4 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
-                      <p id="duration_text">{{movie.duration}}min</p>
-                    <div class="card-section2">
-                      <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
-                      <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
-                    </div>
-
-                      <div class="row">
-                          <div class="col-2">
-                              <p id="">Category: </p>
-                          </div>
-
-                          <div class="col-3">
-                                <p id="paragraph_category">
-                                    {% if movie.moviecategory_set.all|length > 1 %}
-                                        {% for cat in movie.moviecategory_set.all %}
-                                            {% if forloop.counter != movie.moviecategory_set.all|length %}
-                                                {{cat.category}},
-                                            {% else %}
-                                                {{cat.category}}
-                                            {% endif %}
-                                        {% empty %}
+<div class="row no-gutters">
+    <div class="col-6 offset-3">
+        {% for movie in object_list %}
+        <div class="card">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-2">
+                      <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
+                  </div>
+                  <div class="col-10">
+                      <div class="card-section">
+                          <h4 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
+                          <p id="duration_text">{{movie.duration}}min</p>
+                        <div class="card-section2">
+                          <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
+                          <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
+                        </div>
+                          <div class="row">
+                              <div class="col-2">
+                                  <p class="bold" id="paragraph_category">Category: </p>
+                              </div>
+                              <div class="col-4">
+                                    <p id="paragraph_category">
+                                        {% if movie.moviecategory_set.all|length > 1 %}
+                                            {% for cat in movie.moviecategory_set.all %}
+                                                {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                                    {{cat.category}},
+                                                {% else %}
+                                                    {{cat.category}}
+                                                {% endif %}
+                                            {% empty %}
+                                                <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                            {% endfor %}
+                                        {% elif movie.moviecategory_set.all|length is 1 %}
+                                            {{movie.moviecategory_set.all.0.category}}
+                                        {% else %}
                                             <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
-                                        {% endfor %}
-                                    {% elif movie.moviecategory_set.all|length is 1 %}
-                                        {{movie.moviecategory_set.all.0.category}}
-                                    {% else %}
-                                        <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
-                                    {% endif %}
-                                </p>
-                          </div>
+                                        {% endif %}
+                                    </p>
+                              </div>
+                              <div class="col-2">
+                                  <p class="bold" id="paragraph_category">Production: </p>
+                              </div>
 
-                          <div class="col-2">
-                              <p id="">Production: </p>
-                          </div>
+                              <div class="col-3">
+                                    <p id="paragraph_category">
+                                        {{movie.production.name}}
+                                    </p>
+                              </div>
+                           </div>
+                          <div class="row margin_bottom">
+                              <div class="col-3">
+                                  <p class="bold " id="paragraph_category">Director: </p>
+                              </div>
+                              <div class="col-3">
+                                    <p id="paragraph_category">
 
-                          <div class="col-3">
-                                <p id="paragraph_category">
-                                    {{movie.production.name}}
-                                </p>
-                          </div>
+                                    </p>
+                              </div>
+                              <div class="col-2">
+                                  <p class="bold" id="paragraph_category">Actors: </p>
+                              </div>
+                              <div class="col-3">
+                                    <p id="paragraph_category">
 
-
+                                    </p>
+                              </div>
+                           </div>
                       </div>
                   </div>
               </div>
-          </div>
+            </div>
         </div>
+        {% empty %}
+        <h5>No actors yet.</h5>
+        {% endfor %}
+
     </div>
-    {% empty %}
-    <h5>No actors yet.</h5>
-    {% endfor %}
-
-
 </div>
-
 
 
 

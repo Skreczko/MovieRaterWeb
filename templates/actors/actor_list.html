@@ -3,32 +3,33 @@
 {% block content %}
 
 
-<div class="container">
-     {% for actor in object_list %}
-    <div class="card">
-      <div class="card-body">
-          <div class="row">
-              <div class="col-2">
-                  <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
-              </div>
-              <div class="col-10">
-                  <div class="card-section">
-                      <h4 class="card-title" id="element1"><a href="{{actor.get_to_detail}}">{{actor.name}} {{actor.last_name}}</a></h4>
-                      <p id="element2">{{actor.actor_age}} ({{actor.born|date:"Y"}}- {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
-                    <div class="card-section2"><br>
-                      <h5 id="element1"><i class="fas fa-star"></i> {{actor.average_stars|first}}</h5>
-                      <p id="element2">{{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
-                    </div>
+<div class="row no-gutters">
+    <div class="col-6 offset-3">
+         {% for actor in object_list %}
+        <div class="card">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-2">
+                      <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
+                  </div>
+                  <div class="col-10">
+                      <div class="card-section">
+                          <h4 class="card-title" id="element1"><a href="{{actor.get_to_detail}}">{{actor.name}} {{actor.last_name}}</a></h4>
+                          <p id="element2">{{actor.actor_age}} ({{actor.born|date:"Y"}}- {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
+                        <div class="card-section2"><br>
+                          <h5 id="element1"><i class="fas fa-star"></i> {{actor.average_stars|first}}</h5>
+                          <p id="element2">{{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
+                        </div>
+                      </div>
                   </div>
               </div>
           </div>
-      </div>
+        </div>
+
+        {% empty %}
+        <h5>No actors yet.</h5>
+        {% endfor %}
     </div>
-
-    {% empty %}
-    <h5>No actors yet.</h5>
-    {% endfor %}
-
 
 </div>
 

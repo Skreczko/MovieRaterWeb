@@ -2,50 +2,76 @@
 
 {% block content %}
 
-<div class="container">
+<div class="row no-gutters">
+    <div class="col-8 offset-2">
 
-  <div class="row">
-      <div class="col-2">
-          <img id="actor_image_list" class="img-responsive" src="/media/{{object.poster}}" alt="{{object.title}}">
-      </div>
-      <div class="col-10">
-          <h3 class="card-title">{{object.title}} ({{object.year_of_production}})</h3>
-          <div class="row">
-              <div class="col-2">
-                  <p>Born:</p>
-                  {% if object.if_died %}
-                  <p>Died:</p>
-                  {% endif %}
-                  <p>Birth place:</p>
-              </div>
-              <div class="col-6">
-                  <p>{{object.born|date:"j F Y"}} ({{object.actor_age}})</p>
-                  {% if object.if_died %}
-                  <p>{{object.died|date:"j F Y"}}</p>
-                  {% endif %}
-                  <p>{{object.city_of_birth}}, {{object.nationality.name}}</p>
+       <div class="row">
+          <div class="col-2">
+              <img id="actor_image_list" class="img-responsive" src="/media/{{object.poster}}" alt="{{object.title}}">
+          </div>
+          <div class="col-10">
+              <h3 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h3>
+                          <p id="duration_text">{{movie.duration}}min</p>
+              <div class="row">
+                  <div class="col-2">
+                      <p>Category:</p>
+                      <p>Production:</p>
+                      <p>Director:</p>
+                      <p>Actors:</p>
+
+
+                  </div>
+                  <div class="col-7">
+                      <p>{% if movie.moviecategory_set.all|length > 1 %}
+                                            {% for cat in movie.moviecategory_set.all %}
+                                                {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                                    {{cat.category}},
+                                                {% else %}
+                                                    {{cat.category}}
+                                                {% endif %}
+                                            {% empty %}
+                                                <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                            {% endfor %}
+                                        {% elif movie.moviecategory_set.all|length is 1 %}
+                                            {{movie.moviecategory_set.all.0.category}}
+                                        {% endif %}</p>
+
+                      <p>{{movie.production.name}}</p>
+                      <p>Director add</p>
+                      <p>Actors</p>
+                  </div>
+                  <div class="col-3 align-self-center">
+                      <h3 id="element1"><i class="fas fa-star"></i> {{object.average_stars|first}}</h3>
+                      <p id="element2">{{object.average_stars|last}} vote{{object.average_stars|last|pluralize}}</p>
+                  </div>
+
+
               </div>
           </div>
       </div>
-  </div>
 
-    <br><br>
+        <br><br>
 
 
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <h4>Gallery</h4>
-            <hr>
-            {% for imag in object.movie_gallery.all %}
-            <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
-            {% endfor %}
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h4>Gallery</h4>
+                <hr>
+                {% for imag in object.movie_gallery.all %}
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                {% endfor %}
+            </div>
         </div>
+
+
+
+
     </div>
-
-<br><br>
-
-
+    <div class="col-2">
+        {% include 'movies/dashboard.html' %}
+    </div>
 </div>
+
 
 
 

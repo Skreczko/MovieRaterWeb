@@ -61,7 +61,7 @@ class Movie(models.Model):
 	production = CountryField()
 	budget = models.PositiveIntegerField(help_text="in dollars")
 	poster = models.ImageField(null=True, blank=True, upload_to=upload_path)
-	duration = models.PositiveSmallIntegerField()
+	duration = models.PositiveSmallIntegerField(help_text="in minutes")
 	description = models.TextField(default="", blank=True)
 
 	def __str__(self):

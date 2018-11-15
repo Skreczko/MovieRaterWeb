@@ -9,7 +9,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 # Create your views here.
 
+"""------------------------MOVIE SECTION------------------------"""
 
+							#MOVIE
 
 class MovieListView(ListView):
 	model = Movie
@@ -18,7 +20,6 @@ class MovieListView(ListView):
 		qs = super(MovieListView,self).get_queryset(*args, **kwargs).order_by("title")
 		return qs
 
-#	MOVIE SECTION
 
 class MovieDetailView(DetailView):
 	model = Movie
@@ -50,7 +51,7 @@ class MovieDeleteView(DeleteView):
 		return reverse("movie_list")
 
 
-#	CATEGORY SECTION
+						#CATEGORY
 
 def category_create(request, slug=None):
 	form = MovieCategoryForm(request.POST or None)
@@ -66,8 +67,22 @@ def category_create(request, slug=None):
 			qs_category.related_movie.add(qs_movie)
 		return redirect('movie_detail', slug)
 
-	return render(request, 'form.html', {'form':form} )
+	return render(request, 'form.html', {'form':form})
 
+# def category_edit(request, slug=None):
+# 	form = MovieCategoryForm(request.POST or None)
+# 	qs_movie = Movie.objects.get(slug=slug)
+#
+# 	if form.is_valid():
+# 		category = form.cleaned_data['category']
+# 		for item in category:
+# 			check = MovieCategory.objects.filter(category=item).first()
+# 			if not check:
+# 				MovieCategory.objects.create(category=item).save()
+# 			qs_category = MovieCategory.objects.filter(category=item).first()
+# 			qs_category.related_movie.add(qs_movie)
+# 		return redirect('movie_detail', slug)
+#
+# 	return render(request, 'form.html', {'form': form}
 
-
-
+		#GALLERY
