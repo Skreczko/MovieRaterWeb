@@ -7,19 +7,28 @@
           <div class="row">
               <div class="col-10">
                   <div class="card-section">
+                        <li>Details:</li>
+                          <ul>
+                              <li><a href="{% url 'actor_update' slug %}">Update</a></li>
+                              <li><a href="{% url 'actor_delete' slug %}">Delete</a></li>
+                          </ul>
+                        <li>Votes:</li>
+                           <ul>
+                               <li><a href="{% url 'actor_update' slug %}">Update</a></li>
+                               <li><a href="{% url 'actor_delete' slug %}">Delete</a></li>
+                              </ul>
 
-                          <a href="{% url 'actor_update' slug %}">Update </a>
-                        <a href="{% url 'actor_delete' slug %}">Delete </a>
-                        <ul>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
+                      <li>Gallery:</li>
+                           <ul>
+                               <li><a href="{% url 'actor_update' slug %}">Add image</a></li>
+                               <li><a href="{% url 'actor_delete' slug %}">Delete image</a></li>
+                              </ul>
 
-                      </ul>
-
-
+                      <li>Filmography:</li>
+                           <ul>
+                               <li><a href="{% url 'actor_update' slug %}">Add actor</a></li>
+                               <li><a href="{% url 'actor_delete' slug %}">Delete actor</a></li>
+                              </ul>
 
                   </div>
               </div>

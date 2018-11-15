@@ -19,10 +19,9 @@ class ActorForm(forms.ModelForm):
 
 
 class ActorCommentForm(forms.ModelForm):
-
 	class Meta:
 		model = ActorComment
-		fields = ['actor', 'comment', 'stars']
+		fields = ['comment' ]
 
 
 

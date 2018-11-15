@@ -13,18 +13,13 @@
                   </div>
                   <div class="col-10">
                       <div class="card-section">
-                          <h4 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h4>
-                          <p id="duration_text">{{movie.duration}}min</p>
-                        <div class="card-section2">
-                          <h5 id="element1"><i class="fas fa-star"></i> {{movie.average_stars|first}}</h5>
-                          <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
-                        </div>
+                          <h3 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h3>
                           <div class="row">
                               <div class="col-2">
-                                  <p class="bold" id="paragraph_category">Category: </p>
+                                  <p id="paragraph_category">{{movie.duration}}min</p>
                               </div>
-                              <div class="col-4">
-                                    <p id="paragraph_category">
+                              <div class="col-5">
+                                  <p id="paragraph_category">
                                         {% if movie.moviecategory_set.all|length > 1 %}
                                             {% for cat in movie.moviecategory_set.all %}
                                                 {% if forloop.counter != movie.moviecategory_set.all|length %}
@@ -37,36 +32,54 @@
                                             {% endfor %}
                                         {% elif movie.moviecategory_set.all|length is 1 %}
                                             {{movie.moviecategory_set.all.0.category}}
-                                        {% else %}
+                                       {% else %}
                                             <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
                                         {% endif %}
                                     </p>
                               </div>
+                          </div>
+
+                              <div class="row">
+                                  <div class="col-6">
+                                      {% include 'stars.html' with object=movie.average_stars|first %}
+                                      <p class="votes">{{movie.average_stars|first}}/5  |  {{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
+                                  </div>
+
+                        </div>
+                          <div class="row">
                               <div class="col-2">
-                                  <p class="bold" id="paragraph_category">Production: </p>
+                                  <p class="bold" id="paragraph_category">Director: </p>
+                              </div>
+                              <div class="col-3">
+                                <p id="paragraph_category">
+                                    NOT SELECTED YET
+                                </p>
+                              </div>
+                              <div class="col-2">
+                                  <p class="bold" id="paragraph_category">Actors: </p>
                               </div>
 
+                              <div class="col-5">
+                                    <p id="paragraph_category">
+                                        ACTORS NOT SELECTED
+                                    </p>
+                              </div>
+                           </div>
+                          <div class="row margin_bottom">
+                              <div class="col-2">
+                                  <p class="bold " id="paragraph_category">Production: </p>
+                              </div>
                               <div class="col-3">
                                     <p id="paragraph_category">
                                         {{movie.production.name}}
                                     </p>
                               </div>
-                           </div>
-                          <div class="row margin_bottom">
-                              <div class="col-3">
-                                  <p class="bold " id="paragraph_category">Director: </p>
-                              </div>
-                              <div class="col-3">
-                                    <p id="paragraph_category">
-
-                                    </p>
-                              </div>
                               <div class="col-2">
-                                  <p class="bold" id="paragraph_category">Actors: </p>
+                                  <p class="bold" id="paragraph_category">Budget: </p>
                               </div>
-                              <div class="col-3">
+                              <div class="col-5">
                                     <p id="paragraph_category">
-
+                                        {{movie.budget}} $
                                     </p>
                               </div>
                            </div>

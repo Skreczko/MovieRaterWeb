@@ -1,0 +1,85 @@
+{% load staticfiles %}
+{% load bootstrap %}
+{% load crispy_forms_tags %}
+
+<p class="element1">
+    <span class="fa-stack">
+        <!--1/2 of 1st STAR-->
+        <i
+           {% if object < 0.5 %}
+                class="fas fa-star-half fa-stack-1x grey"
+            {% else  %}
+            class="fas fa-star-half fa-stack-1x yellow"
+            {% endif %}></i>
+        <!--2/2 of 1st STAR-->
+        <i id="right_star"
+           {% if object > 1 %}
+                class="fas fa-star-half fa-stack-1x transf yellow"
+            {% else %}
+            class="fas fa-star-half fa-stack-1x transf grey"
+            {% endif %}></i></span>
+
+      <span class="fa-stack">
+                <!--1/2 of 2nd STAR-->
+                <i
+                   {% if object < 1.5 %}
+                        class="fas fa-star-half fa-stack-1x grey"
+                    {% else  %}
+                    class="fas fa-star-half fa-stack-1x yellow"
+                    {% endif %}></i>
+                <!--2/2 of 2nd STAR-->
+                <i id="right_star"
+                   {% if object > 2 %}
+                        class="fas fa-star-half fa-stack-1x transf yellow"
+                    {% else %}
+                    class="fas fa-star-half fa-stack-1x transf grey"
+                    {% endif %}></i></span>
+
+      <span class="fa-stack">
+                <!--1/2 of 3rd STAR-->
+                <i
+                   {% if object < 2.5 %}
+                        class="fas fa-star-half fa-stack-1x grey"
+                    {% else  %}
+                    class="fas fa-star-half fa-stack-1x yellow"
+                    {% endif %}></i>
+                <!--2/2 of 3rd STAR-->
+                <i id="right_star"
+                   {% if object > 3 %}
+                        class="fas fa-star-half fa-stack-1x transf yellow"
+                    {% else %}
+                    class="fas fa-star-half fa-stack-1x transf grey"
+                    {% endif %}></i></span>
+
+      <span class="fa-stack">
+                <!--1/2 of 4th STAR-->
+                <i
+                   {% if object <  3.5 %}
+                        class="fas fa-star-half fa-stack-1x grey"
+                    {% else  %}
+                    class="fas fa-star-half fa-stack-1x yellow"
+                    {% endif %}></i>
+                <!--2/2 of 4th STAR-->
+                <i id="right_star"
+                   {% if object > 4 %}
+                        class="fas fa-star-half fa-stack-1x transf yellow"
+                    {% else %}
+                    class="fas fa-star-half fa-stack-1x transf grey"
+                    {% endif %}></i></span>
+
+      <span class="fa-stack">
+                <!--1/2 of 5th STAR-->
+                <i
+                   {% if object < 4.5 %}
+                        class="fas fa-star-half fa-stack-1x grey"
+                    {% else  %}
+                    class="fas fa-star-half fa-stack-1x yellow"
+                    {% endif %}></i>
+                <!--2/2 of 5th STAR-->
+                <i id="right_star"
+                   {% if object > 4.8 %}
+                        class="fas fa-star-half fa-stack-1x transf yellow"
+                    {% else %}
+                    class="fas fa-star-half fa-stack-1x transf grey"
+                    {% endif %}></i></span>
+</p>
