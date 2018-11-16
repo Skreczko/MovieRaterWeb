@@ -13,12 +13,10 @@
               <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
                   <span id="movie_dur_span"><i class="far fa-clock"></i> {{movie.duration}} min</span>
               </h3>
-
             <div class="row font_90">
                 <div class="col-5">
 
                               <div class="row no_gutters">
-
                                   <div class="col-4">
                                       <p>Category:</p>
                                   </div>
@@ -69,52 +67,40 @@
                               </div>
                 </div>
                 <div class="col-4">
-
-                              <div class="row no_gutters">
-
-                                  <div class="col-12">
-                                      <p>{{movie.description}}</p>
-                              </div>
-                </div>
-
-
-
-
+                  <div class="row no_gutters">
+                      <div class="col-12">
+                          <p>{{movie.description}}</p>
+                      </div>
+                  </div>
             </div>
                 <div class="col-3">
-                <div class="row">
-                 <div class="col-12" >
+                    <div class="row">
+                         <div class="col-12" >
 
-                      <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{object.average_stars|first}}</h3>
-                      <p id="element2">{{object.average_stars|last}} vote{{object.average_stars|last|pluralize}}</p>
+                              <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{object.average_stars|first}}</h3>
+                              <p id="element2">{{object.average_stars|last}} vote{{object.average_stars|last|pluralize}}</p>
 
-                  </div>
+                         </div>
                     </div>
 
                   <div class="row">
-                 <div class="col-12 align-self-end" >
+                     <div class="col-12 align-self-end" >
 
-                     <p id=>RATE MOVIE NOW</p>
-                     <div class="fb-share-button" data-href="{{request.get_full_path}}"
-                          data-layout="button_count" data-size="small" data-mobile-iframe="true">
-                         <a target="_blank" href="{{request.get_full_path}}"
-                            class="fb-xfbml-parse-ignore">Share</a></div>
-                     </div>
-
-                  </div>
+                         <p class=" bold">RATE NOW</p>
+                         <p id="rate_now">
+                             <a href="#" id="a1"><i id="star1" class="fas fa-star"></i></a><a href="#" id="a2"><i id="star2" class="fas fa-star"></i></a><a href="#" id="a3"><i id="star3" class="fas fa-star"></i></a><a href="#" id="a4"><i id="star4" class="fas fa-star"></i></a><a href="#" id="a5"><i id="star5" class="fas fa-star"></i></a>
+                         </p>
+                         <div class="fb-share-button" data-href="{{request.get_full_path}}"
+                              data-layout="button" data-size="small" data-mobile-iframe="true">
+                             <a target="_blank" href=""
+                                class="fb-xfbml-parse-ignore">Share</a></div>
+                      </div>
                     </div>
-                    </div>
-
-
-
-
+                </div>
           </div>
        </div>
-
     </div>
-
         <br><br>
-
 
         <div class="row justify-content-center">
             <div class="col-8">
@@ -132,7 +118,67 @@
     </div>
 
 
+<script>
+$("#a1").mouseover(function(){
+    $("#star1").addClass("orange")
+                });
+$("#a1").mouseout(function(){
+    $("#star1").removeClass("orange")
+                });
+$("#a2").mouseover(function(){
+    $("#star1").addClass("orange");
+    $("#star2").addClass("orange")
+                });
+$("#a2").mouseout(function(){
+    $("#star1").removeClass("orange");
+    $("#star2").removeClass("orange")
+                });
+$("#a3").mouseover(function(){
+    $("#star1").addClass("orange");
+    $("#star2").addClass("orange");
+    $("#star3").addClass("orange")
+                });
+$("#a3").mouseout(function(){
+    $("#star1").removeClass("orange");
+    $("#star2").removeClass("orange");
+    $("#star3").removeClass("orange")
+                });
 
+$("#a4").mouseover(function(){
+    $("#star1").addClass("orange");
+    $("#star2").addClass("orange");
+    $("#star3").addClass("orange");
+    $("#star4").addClass("orange")
+                });
+$("#a4").mouseout(function(){
+    $("#star1").removeClass("orange");
+    $("#star2").removeClass("orange");
+    $("#star3").removeClass("orange");
+    $("#star4").removeClass("orange")
+                });
+$("#a5").mouseover(function(){
+    $("#star1").addClass("orange");
+    $("#star2").addClass("orange");
+    $("#star3").addClass("orange");
+    $("#star5").addClass("orange");
+    $("#star4").addClass("orange")
+                });
+$("#a5").mouseout(function(){
+    $("#star1").removeClass("orange");
+    $("#star2").removeClass("orange");
+    $("#star3").removeClass("orange");
+    $("#star4").removeClass("orange");
+    $("#star5").removeClass("orange")
+                });
+</script>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 {% endblock %}
