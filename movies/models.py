@@ -38,11 +38,6 @@ STARS = (
 		(3, '3'),
 		(4, '4'),
 		(5, '5'),
-		(6, '6'),
-		(7, '7'),
-		(8, '8'),
-		(9, '9'),
-		(10, '10'),
 	)
 # Create your models here.
 
@@ -62,7 +57,7 @@ class Movie(models.Model):
 	budget = models.PositiveIntegerField(help_text="in dollars")
 	poster = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	duration = models.PositiveSmallIntegerField(help_text="in minutes")
-	description = models.TextField(default="", blank=True)
+	description = models.CharField(max_length=295, default="", null=True,blank=True, help_text="295 character maximum.")
 
 	def __str__(self):
 		return str(self.title) + " ({})".format(str(self.year_of_production))
@@ -96,7 +91,7 @@ class MovieComment(models.Model):
 
 
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_comments")
-	comment = models.TextField(max_length=1000,blank=True, null=True)
+	comment = models.TextField(blank=True, null=True, )
 	stars = models.IntegerField(choices=STARS)
 	publish_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	edited_date = models.DateTimeField(auto_now_add=False, auto_now=True)

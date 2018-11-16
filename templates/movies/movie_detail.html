@@ -10,52 +10,114 @@
               <img id="actor_image_list" class="img-responsive" src="/media/{{object.poster}}" alt="{{object.title}}">
           </div>
           <div class="col-10">
-              <h3 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h3>
-                          <p id="duration_text">{{movie.duration}}min</p>
-              <div class="row">
-                  <div class="col-2">
-                      <p>Category:</p>
-                      <p>Production:</p>
-                      <p>Director:</p>
-                      <p>Actors:</p>
+              <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
+                  <span id="movie_dur_span"><i class="far fa-clock"></i> {{movie.duration}} min</span>
+              </h3>
+
+            <div class="row font_90">
+                <div class="col-5">
+
+                              <div class="row no_gutters">
+
+                                  <div class="col-4">
+                                      <p>Category:</p>
+                                  </div>
+                                  <div class="col-6">
+                                       <p>
+                                          {% if movie.moviecategory_set.all|length > 1 %}
+                                                {% for cat in movie.moviecategory_set.all %}
+                                                    {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                                        {{cat.category}},
+                                                    {% else %}
+                                                        {{cat.category}}
+                                                    {% endif %}
+                                                    {% empty %}
+                                                        <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                                {% endfor %}
+                                          {% elif movie.moviecategory_set.all|length is 1 %}
+                                                {{movie.moviecategory_set.all.0.category}}
+                                          {% endif %}
+                                      </p>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-4">
+                                      <p>Director:</p>
+                                  </div>
+                                  <div class="col-6">
+                                      <p>ADD DIRECTOR</p>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-4 ">
+                                      <p>Production:</p>
+                                  </div>
+                                  <div class="col-6">
+                                      <p>{{movie.production.name}}</p>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-4">
+                                      <p>Budget:</p>
+                                  </div>
+                                  <div class="col-6">
+                                      <p>{{movie.budget}} $</p>
+                                  </div>
+                              </div>
+                </div>
+                <div class="col-4">
+
+                              <div class="row no_gutters">
+
+                                  <div class="col-12">
+                                      <p>{{movie.description}}</p>
+                              </div>
+                </div>
 
 
-                  </div>
-                  <div class="col-7">
-                      <p>{% if movie.moviecategory_set.all|length > 1 %}
-                                            {% for cat in movie.moviecategory_set.all %}
-                                                {% if forloop.counter != movie.moviecategory_set.all|length %}
-                                                    {{cat.category}},
-                                                {% else %}
-                                                    {{cat.category}}
-                                                {% endif %}
-                                            {% empty %}
-                                                <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
-                                            {% endfor %}
-                                        {% elif movie.moviecategory_set.all|length is 1 %}
-                                            {{movie.moviecategory_set.all.0.category}}
-                                        {% endif %}</p>
 
-                      <p>{{movie.production.name}}</p>
-                      <p>Director add</p>
-                      <p>Actors</p>
-                  </div>
-                  <div class="col-3 align-self-center">
 
-                      <h3 id="element1"><i class="fas fa-star"></i> {{object.average_stars|first}}</h3>
+            </div>
+                <div class="col-3">
+                <div class="row">
+                 <div class="col-12" >
+
+                      <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{object.average_stars|first}}</h3>
                       <p id="element2">{{object.average_stars|last}} vote{{object.average_stars|last|pluralize}}</p>
+
                   </div>
+                    </div>
+
+                  <div class="row">
+                 <div class="col-12 align-self-end" >
+
+                     <p id=>RATE MOVIE NOW</p>
+                     <div class="fb-share-button" data-href="{{request.get_full_path}}"
+                          data-layout="button_count" data-size="small" data-mobile-iframe="true">
+                         <a target="_blank" href="{{request.get_full_path}}"
+                            class="fb-xfbml-parse-ignore">Udostępnij</a></div>
+                     </div>
+
+                  </div>
+                    </div>
+                    </div>
 
 
-              </div>
+
+
           </div>
-      </div>
+       </div>
+
+    </div>
 
         <br><br>
 
 
         <div class="row justify-content-center">
-            <div class="col-12">
+            <div class="col-8">
                 <h4>Gallery</h4>
                 <hr>
                 {% for imag in object.movie_gallery.all %}
@@ -64,18 +126,10 @@
             </div>
         </div>
 
-
-
-
-    </div>
-    <div class="col-2">
+</div>
+<div class="col-2">
         {% include 'movies/dashboard.html' %}
     </div>
-</div>
-
-
-
-
 
 
 

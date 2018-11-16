@@ -131,7 +131,7 @@ a:hover {
 
 #duration_time {
     margin: 0px;
-    margin-top: -20px;
+    margin-top: -15px;
 }
 
 
@@ -143,6 +143,18 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 300px;
+}
+
+.cut_words {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+
+}
+
+.font_90 p{
+    font-size: 90%;
 }
 
 .margin_bottom p {
@@ -158,5 +170,10 @@ a:hover {
     text-overflow: ellipsis;
     max-width: 300px;
 
+}
+
+#movie_dur_span {
+    color:#505050;
+    font-size: 15px;
 
 }
