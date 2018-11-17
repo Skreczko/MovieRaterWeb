@@ -7,16 +7,29 @@
           <div class="row">
               <div class="col-10">
                   <div class="card-section">
-                      <ul>
-                          <a href="#">Update </a>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
+                     <li>Details:</li>
+                          <ul>
+                              <li><a href="{% url 'movie_update' movie.slug %}"><i class="fas fa-pen"></i> Update</a></li>
+                              <li><a href="{% url 'movie_delete' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                          </ul>
+                        <li>Gallery:</li>
+                           <ul>
+                               <li><a href="{% url 'add_picture' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
+                              </ul>
 
-                      </ul>
+                      <li>Movie categories:</li>
+                           <ul>
+                               <li><a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="{% url 'category_edit' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                              </ul>
+
+                      <li>Comment:</li>
+                           <ul>
+                               <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="#"><i class="fas fa-pen"></i> Edit</a></li>
+                               <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
+                              </ul>
 
 
 

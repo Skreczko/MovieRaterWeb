@@ -31,7 +31,7 @@
                                   {% if 'actors' in request.get_full_path %}{{object.name}} {{object.last_name}}
                                   {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
                                   {% endif %}?</p>
-                              <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Submit</button>
+                              <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Submit</button>
                               <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark my-2 my-sm-0" >Back</a>
                           </form>
                             <br>

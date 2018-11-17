@@ -32,6 +32,10 @@ a:hover {
 
 }
 
+ul {
+  list-style-type: none;
+}
+
 /* star */
 .bold {
     font-weight: bold;
@@ -206,4 +210,8 @@ a:hover {
 
 #rate_now{
     margin-top: -20px;
+}
+
+.red {
+    color: red;
 }

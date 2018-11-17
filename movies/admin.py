@@ -68,3 +68,4 @@ admin.site.register(Movie, MovieAdmin)
 admin.site.register(MovieComment, MovieCommentAdmin)
 admin.site.register(MovieGallery, MovieGalleryAdmin)
 admin.site.register(MovieCategory)
+
