@@ -36,6 +36,10 @@ ul {
   list-style-type: none;
 }
 
+.bigger {
+    font-size: 120%;
+}
+
 /* star */
 .bold {
     font-weight: bold;

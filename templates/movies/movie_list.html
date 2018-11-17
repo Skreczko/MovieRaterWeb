@@ -33,7 +33,7 @@
                                         {% elif movie.moviecategory_set.all|length is 1 %}
                                             {{movie.moviecategory_set.all.0.category}}
                                        {% else %}
-                                            <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
+                                           <i class="fas fa-ban red"> Add category in details</i>
                                         {% endif %}
                                     </p>
                               </div>
