@@ -3,7 +3,7 @@
 {% load bootstrap %}
 
 <form  method="POST" >{% csrf_token %}
-    {% if object %}
+    {% if vote %}
     <p class=" bold">YOUR RATE</p>
          <div id="rate_now">
          {% if vote == 1 %}

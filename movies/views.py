@@ -16,7 +16,8 @@ from django.http import HttpResponseRedirect
 
 class MovieListView(ListView):
 	model = Movie
-	#paginate_by = 2 dodaj strony z dokumentacji:
+	paginate_by = 2
+	queryset = Movie.objects.all()
 	""" 
 	https://docs.djangoproject.com/en/2.1/topics/pagination/
 	https://docs.djangoproject.com/en/2.1/topics/class-based-views/mixins/
@@ -44,7 +45,8 @@ class MovieDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
-		context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
+		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
+			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
 
 	def get_success_url(self):
@@ -83,7 +85,8 @@ class MovieCreateView(CreateView):
 		return super(MovieCreateView,self).form_valid(form)
 
 	def get_success_url(self):
-		return reverse("movie_list")
+		view_name = 'movie_detail'
+		return reverse(view_name, kwargs={'slug': self.object.slug})
 
 class MovieUpdateView(UpdateView):
 	model = Movie
