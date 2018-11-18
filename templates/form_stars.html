@@ -1,0 +1,104 @@
+
+{% load staticfiles %}
+{% load bootstrap %}
+
+<form  method="POST" >{% csrf_token %}
+    {% if object %}
+    <p class=" bold">YOUR RATE</p>
+         <div id="rate_now">
+         {% if vote == 1 %}
+            <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star orange_vote"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star"></i></button>
+         {% elif vote == 2 %}
+             <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star orange_vote"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star orange_vote"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star"></i></button>
+        {% elif vote == 3 %}
+             <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star orange_vote"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star orange_vote"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star orange_vote"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star"></i></button>
+        {% elif vote == 4 %}
+             <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star orange_vote"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star orange_vote"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star orange_vote"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star orange_vote"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star"></i></button>
+        {% elif vote == 5 %}
+             <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star orange_vote"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star orange_vote"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star orange_vote"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star orange_vote"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star orange_vote"></i></button>
+        {% endif %}
+     {% else %}
+     <p class=" bold">RATE NOW</p>
+         <div id="rate_now">
+            <button value="1" name="stars" type="submit" id="a1"><i id="star1" class="fas fa-star"></i></button>
+            <button value="2" name="stars" type="submit" id="a2"><i id="star2" class="fas fa-star"></i></button>
+            <button value="3" name="stars" type="submit" id="a3"><i id="star3" class="fas fa-star"></i></button>
+            <button value="4" name="stars" type="submit" id="a4"><i id="star4" class="fas fa-star"></i></button>
+            <button value="5" name="stars" type="submit" id="a5"><i id="star5" class="fas fa-star"></i></button>
+     {% endif %}
+         </div>
+</form>
+
+<script>
+$("button#a1").mouseover(function(){
+    $("button#a1").addClass("orange")
+                });
+$("button#a1").mouseout(function(){
+    $("button#a1").removeClass("orange")
+                });
+$("button#a2").mouseover(function(){
+    $("button#a1").addClass("orange");
+    $("button#a2").addClass("orange")
+                });
+$("button#a2").mouseout(function(){
+    $("button#a1").removeClass("orange");
+    $("button#a2").removeClass("orange")
+                });
+$("button#a3").mouseover(function(){
+    $("button#a1").addClass("orange");
+    $("button#a2").addClass("orange");
+    $("button#a3").addClass("orange")
+                });
+$("button#a3").mouseout(function(){
+    $("button#a1").removeClass("orange");
+    $("button#a2").removeClass("orange");
+    $("button#a3").removeClass("orange")
+                });
+
+$("button#a4").mouseover(function(){
+    $("button#a1").addClass("orange");
+    $("button#a2").addClass("orange");
+    $("button#a3").addClass("orange");
+    $("button#a4").addClass("orange")
+                });
+$("button#a4").mouseout(function(){
+    $("button#a1").removeClass("orange");
+    $("button#a2").removeClass("orange");
+    $("button#a3").removeClass("orange");
+    $("button#a4").removeClass("orange")
+                });
+$("button#a5").mouseover(function(){
+    $("button#a1").addClass("orange");
+    $("button#a2").addClass("orange");
+    $("button#a3").addClass("orange");
+    $("button#a4").addClass("orange");
+    $("button#a5").addClass("orange")
+                });
+$("button#a5").mouseout(function(){
+    $("button#a1").removeClass("orange");
+    $("button#a2").removeClass("orange");
+    $("button#a3").removeClass("orange");
+    $("button#a4").removeClass("orange");
+    $("button#a5").removeClass("orange")
+                });
+</script>

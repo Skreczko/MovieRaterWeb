@@ -42,6 +42,10 @@ class MovieCommentForm(forms.ModelForm):
 		model = MovieComment
 		fields = ['movie', 'comment', 'stars']
 
+class MovieStarsForm(forms.Form):
+	stars = forms.IntegerField()
+
+
 class MovieCategoryForm(forms.Form):
 	category = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=CATEGORIES), label="Maximum of categories per movie is 3.")
 

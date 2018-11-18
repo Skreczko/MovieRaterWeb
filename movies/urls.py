@@ -1,8 +1,9 @@
 
 from django.urls import path
 from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateView, MovieDeleteView,\
+					MovieGalleryView, \
 					category_create, category_edit,\
-					gallery_create
+					gallery_create, movie_gallery_delete
 
 urlpatterns = [
 	#	MOVIES
@@ -19,7 +20,9 @@ urlpatterns = [
 	path('detail/<slug>/edit_category/', category_edit, name='category_edit'),
 
 	#	MOVIES GALLERY
-	path('detail/<slug>/add_poster/', gallery_create, name='add_picture'),
+	path('detail/<slug>/gallery/add_image/', gallery_create, name='add_picture'),
+	path('detail/<slug>/gallery/management_image/', MovieGalleryView.as_view(), name='management_picture'),
+	path('detail/<slug>/gallery/delete/<id>', movie_gallery_delete, name='delete_picture'),
 	#path('detail/<slug>/edit_category/', category_edit, name='category_edit'),
 
 ]

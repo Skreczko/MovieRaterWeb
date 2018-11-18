@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-body">
           <div class="row">
-              <div class="col-10">
+              <div class="col-12">
                   <div class="card-section">
                      <ul><li class="bold bigger">{{movie.title}}:</li>
                           <ul>
@@ -15,7 +15,7 @@
                         <li>Gallery:</li>
                            <ul>
                                <li><a href="{% url 'add_picture' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               <li><a href="{% url 'management_picture' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                               </ul>
 
                       <li>Movie categories:</li>

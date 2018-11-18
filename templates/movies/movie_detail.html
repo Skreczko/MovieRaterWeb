@@ -7,7 +7,7 @@
 
        <div class="row">
           <div class="col-2">
-              <img id="actor_image_list" class="img-responsive" src="/media/{{object.poster}}" alt="{{object.title}}">
+              <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
           </div>
           <div class="col-10">
               <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
@@ -78,23 +78,22 @@
                     <div class="row">
                          <div class="col-12" >
 
-                              <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{object.average_stars|first}}</h3>
-                              <p id="element2">{{object.average_stars|last}} vote{{object.average_stars|last|pluralize}}</p>
+                              <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{movie.average_stars|first}}</h3>
+                              <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
 
                          </div>
                     </div>
 
                   <div class="row">
-                     <div class="col-12 align-self-end" >
+                     <div class="col-12 align-self-end">
 
-                         <p class=" bold">RATE NOW</p>
-                         <p id="rate_now">
-                             <a href="#" id="a1"><i id="star1" class="fas fa-star"></i></a><a href="#" id="a2"><i id="star2" class="fas fa-star"></i></a><a href="#" id="a3"><i id="star3" class="fas fa-star"></i></a><a href="#" id="a4"><i id="star4" class="fas fa-star"></i></a><a href="#" id="a5"><i id="star5" class="fas fa-star"></i></a>
-                         </p>
+                        {% include 'form_stars.html' with object=movie.movie_comments vote=user_vote %}
+
                          <div class="fb-share-button" data-href="{{request.get_full_path}}"
                               data-layout="button" data-size="small" data-mobile-iframe="true">
                              <a target="_blank" href=""
                                 class="fb-xfbml-parse-ignore">Share</a></div>
+                     <br>
                       </div>
                     </div>
                 </div>
@@ -107,71 +106,27 @@
             <div class="col-8">
                 <h4>Gallery</h4>
                 <hr>
-                {% for imag in object.movie_gallery.all %}
+            {% if 'management_image' in request.get_full_path %}
+                {% for imag in gallery_movie_all %}
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
+            {% else %}
+                {% for imag in gallery_movie_20 %}
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                {% endfor %}
+            {% endif %}
+
             </div>
         </div>
-
+<br><br><br>
 </div>
 <div class="col-2">
         {% include 'movies/dashboard.html' with object=movie%}
     </div>
 
 
-<script>
-$("#a1").mouseover(function(){
-    $("#star1").addClass("orange")
-                });
-$("#a1").mouseout(function(){
-    $("#star1").removeClass("orange")
-                });
-$("#a2").mouseover(function(){
-    $("#star1").addClass("orange");
-    $("#star2").addClass("orange")
-                });
-$("#a2").mouseout(function(){
-    $("#star1").removeClass("orange");
-    $("#star2").removeClass("orange")
-                });
-$("#a3").mouseover(function(){
-    $("#star1").addClass("orange");
-    $("#star2").addClass("orange");
-    $("#star3").addClass("orange")
-                });
-$("#a3").mouseout(function(){
-    $("#star1").removeClass("orange");
-    $("#star2").removeClass("orange");
-    $("#star3").removeClass("orange")
-                });
 
-$("#a4").mouseover(function(){
-    $("#star1").addClass("orange");
-    $("#star2").addClass("orange");
-    $("#star3").addClass("orange");
-    $("#star4").addClass("orange")
-                });
-$("#a4").mouseout(function(){
-    $("#star1").removeClass("orange");
-    $("#star2").removeClass("orange");
-    $("#star3").removeClass("orange");
-    $("#star4").removeClass("orange")
-                });
-$("#a5").mouseover(function(){
-    $("#star1").addClass("orange");
-    $("#star2").addClass("orange");
-    $("#star3").addClass("orange");
-    $("#star5").addClass("orange");
-    $("#star4").addClass("orange")
-                });
-$("#a5").mouseout(function(){
-    $("#star1").removeClass("orange");
-    $("#star2").removeClass("orange");
-    $("#star3").removeClass("orange");
-    $("#star4").removeClass("orange");
-    $("#star5").removeClass("orange")
-                });
-</script>
+
 
 
 

@@ -67,8 +67,13 @@ ul {
 
 .orange {
     color: orange;
-
  }
+
+ .orange_vote {
+    color: orange;
+ }
+
+
 
 .no-gutters {
   margin-right: 0;
@@ -161,6 +166,20 @@ ul {
 
 }
 
+#delete_img {
+    height: 120px;
+    width: 80px;
+}
+
+#delete_img:hover {
+    height: 120px;
+    width: 80px;
+    border: solid red 6px;
+}
+
+
+
+
 /*  movie section */
 
 #duration_time {
@@ -195,6 +214,10 @@ ul {
     margin-bottom: 0rem;
 }
 
+.margin_bottom_20px {
+    margin_bottom: 20px;
+}
+
 .votes {
     color:#505050;
     margin-top: -15px;
@@ -218,4 +241,26 @@ ul {
 
 .red {
     color: red;
+}
+
+#a1 {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding: 0px;
+    margin-left: 0px;
+}
+
+#a2, #a3, #a4, #a5 {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding: 0px;
+    margin-left: -5px;
 }

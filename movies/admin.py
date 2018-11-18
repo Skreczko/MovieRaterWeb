@@ -28,9 +28,9 @@ class MovieAdmin(admin.ModelAdmin):
 
 
 class MovieCommentAdmin(admin.ModelAdmin):
-	list_display = ['movie', 'stars', 'is_comment', 'added_time', 'edited_time']
+	list_display = ['movie', 'stars', 'is_comment', 'added_by', 'added_time', 'edited_time']
 	readonly_fields = ['added_time', 'edited_time']
-	list_filter = ['movie', 'publish_date', 'edited_date']
+	list_filter = ['movie', 'publish_date', 'added_by', 'edited_date']
 
 	class Meta:
 		model = MovieComment

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils.text import slugify
 from django.utils.timesince import timesince
 from django.db.models.signals import pre_save
@@ -88,8 +89,7 @@ class MovieCategory(models.Model):
 
 
 class MovieComment(models.Model):
-
-
+	added_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_comments")
 	comment = models.TextField(blank=True, null=True, )
 	stars = models.IntegerField(choices=STARS)
@@ -104,6 +104,9 @@ class MovieComment(models.Model):
 
 	def edited_time(self):
 		return '{t} ago'.format(t=timesince(self.edited_date))
+
+	# def added_by(self):
+	# 	return
 
 
 class MovieGallery(models.Model):
