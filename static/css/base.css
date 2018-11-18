@@ -163,6 +163,7 @@ ul {
 #gallery_img {
     height: 120px;
     width: 80px;
+    padding: 1px;
 
 }
 
@@ -263,4 +264,15 @@ ul {
     outline:none;
     padding: 0px;
     margin-left: -5px;
+}
+
+/*          PAGINATION          */
+.page-link {
+    color: black;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #545b62;
+    border-color: #545b62;
 }

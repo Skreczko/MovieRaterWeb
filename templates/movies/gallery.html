@@ -13,18 +13,20 @@
               <h3 class="card-title" id="">Gallery: {{movie.title}} ({{movie.year_of_production}})
 
               </h3>
-            <div class="">
-
-              </div>
               <div class="row">
                     <div class="col-12">
                     <hr>
+{% if 'management_image' in request.get_full_path %}
                     <p class="margin_bottom_20px" >Click on image you want to delete!</p>
 
                             {% for imag in object.movie_gallery.all %}
                             <a href="{% url 'delete_picture' movie.slug imag.id %}"><img id="delete_img" src="/media/{{imag.picture}}"></a>
                         {% endfor %}
-
+{% else %}
+                        {% for imag in object.movie_gallery.all %}
+                            <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                        {% endfor %}
+{% endif %}
                     </div>
               </div>
 
@@ -32,11 +34,13 @@
                     <div class="col-12">
                     <hr>
                     <a href="{% url 'movie_detail' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{movie.title}}</a>
-
                     </div>
               </div>
 
-
+            {% if is_paginated %}
+            <hr>
+            {% include 'pagination.html' %}
+            {% endif %}
 
           </div>
        </div>

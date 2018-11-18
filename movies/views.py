@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect
 
 class MovieListView(ListView):
 	model = Movie
-	paginate_by = 2
+	paginate_by = 20
 	queryset = Movie.objects.all()
 	""" 
 	https://docs.djangoproject.com/en/2.1/topics/pagination/

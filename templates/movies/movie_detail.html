@@ -104,7 +104,8 @@
 
         <div class="row justify-content-center">
             <div class="col-8">
-                <h4>Gallery</h4>
+                <h4>Gallery <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}"><i class="far fa-images"> more</i></a>
+</span></h4>
                 <hr>
             {% if 'management_image' in request.get_full_path %}
                 {% for imag in gallery_movie_all %}

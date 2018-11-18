@@ -20,6 +20,7 @@ urlpatterns = [
 	path('detail/<slug>/edit_category/', category_edit, name='category_edit'),
 
 	#	MOVIES GALLERY
+	path('detail/<slug>/gallery/', MovieGalleryView.as_view(), name='picture_gallery'),
 	path('detail/<slug>/gallery/add_image/', gallery_create, name='add_picture'),
 	path('detail/<slug>/gallery/management_image/', MovieGalleryView.as_view(), name='management_picture'),
 	path('detail/<slug>/gallery/delete/<id>', movie_gallery_delete, name='delete_picture'),

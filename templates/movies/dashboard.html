@@ -14,6 +14,7 @@
                           </ul>
                         <li>Gallery:</li>
                            <ul>
+                               <li><a href="{% url 'picture_gallery' movie.slug %}"><i class="fas fa-images"></i> All</a></li>
                                <li><a href="{% url 'add_picture' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                                <li><a href="{% url 'management_picture' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                               </ul>
