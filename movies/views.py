@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
-from actors.models import Actor
+from actors.models import Actor, ActorRole
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
@@ -44,9 +44,10 @@ class MovieDetailView(FormMixin, DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
+		context['gallery_movie_18'] = MovieGallery.objects.filter(movie=self.object)[:18]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
 		context['related_actors'] = Actor.objects.filter(movies=self.object)
+		context['actor_role'] = ActorRole.objects.filter(movie=self.object).order_by("actor")
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context

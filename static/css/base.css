@@ -266,6 +266,36 @@ ul {
     margin-left: -5px;
 }
 
+
+
+
+
+
+
+
+/* TABLE */
+.table td, .table th {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top-width: 0px;
+    align: right;
+    vertical-align: middle;
+}
+
+
+#img_table {
+    height: 95px;
+    width: 70px;
+}
+
+#actor_in_table{
+    padding-left: 20px;
+}
+
+
+
 /*          PAGINATION          */
 .page-link {
     color: black;

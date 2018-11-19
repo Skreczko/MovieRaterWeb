@@ -105,9 +105,9 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Gallery
-                    {% if gallery_movie_all|length > 20 %}
+                    {% if gallery_movie_all|length > 18 %}
                     <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
-                        <i class="far fa-images"> more</i></a>
+                        <i class="far fa-images"> ({{gallery_movie_all|length}})</i></a>
                     </span>
                     {% endif %}
                 </h4>
@@ -117,7 +117,7 @@
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
             {% else %}
-                {% for imag in gallery_movie_20 %}
+                {% for imag in gallery_movie_18 %}
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}
@@ -126,35 +126,77 @@
         </div>
         <br><br>
 
+
+
+
+
         <div class="row justify-content-center">
             <div class="col-8">
-                <h4>Actors
+                <h4>Cast
                     {% if gallery_movie_all|length > 20 %}
                     <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
                         <i class="far fa-images"> more</i></a>
                     </span>
                     {% endif %}
                 </h4>
-                <hr>
-            {% if 'management_image' in request.get_full_path %}
-                {% for imag in gallery_movie_all %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
-                {% endfor %}
-            {% else %}
-                {% for imag in gallery_movie_20 %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
-                {% endfor %}
+         <hr>
+
+                    <table class="table table-striped">
+                          <tbody>
+                          {% for actor in related_actors %}
+                            <tr>
+                              <th scope="row" width="10%"><img id="img_table" src="/media/{{actor.photo}}" alt="{{actor.last_name}}"></th>
+                                <td id="actor_in_table" width="40%">
+                                    <a class="bold" href="{{actor.get_to_detail}}">{{ actor.name }} {{ actor.last_name }}</a>
+                                    {% include 'stars.html' with object=actor.average_stars|first %}
+                                      <p class="votes">Actor rate: {{actor.average_stars|first}}/5  |  {{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
+                                </td>
+
+
+      {% for item in actor_role %}
+            {% if item.movie == movie %}
+                {% if item.actor == actor %}
+                                 <td align="left" id="role_in_table" width="40%">
+                    {{ item.role }}
+
+                                 </td>
+                                <td width="5%">
+                                  <img id="img_table" src="/media/{{item.picture}}" alt="{{item.role}}">
+                                </td>
+
+                {% else %}
+                    {% if forloop.counter == actor_role|length %}
+
+                                <td align="left" id="role_in_table" width="40%">
+                                                {{item.role}}
+                                 </td>
+                                <td width="5%">
+                                </td>
+
+                    {% endif %}
+                {% endif %}
             {% endif %}
+      {% endfor %}
+
+
+
+                            </tr>
+                          {% endfor %}
+
+                        </tbody>
+
+                        </table>
+
+
 
             </div>
         </div>
-{% for actor in related_actors %}
-    <p>{{ actor.name }}</p>
-    {% endfor %}
+
 
 
 <br><br><br>
 </div>
+
 <div class="col-2">
         {% include 'movies/dashboard.html' with object=movie%}
     </div>

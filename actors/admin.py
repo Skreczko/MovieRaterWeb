@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .forms import ActorForm
-from .models import Actor, ActorComment, ActorGallery
+from .models import Actor, ActorComment, ActorGallery, ActorRole
 from django.utils.safestring import mark_safe
 # Register your models here.
 
@@ -63,6 +63,22 @@ class ActorGalleryAdmin(admin.ModelAdmin):
 			height=60,))
 
 
+class ActorRoleAdmin(admin.ModelAdmin):
+	list_display = ['movie', 'actor', 'role', 'show_photo']
+	search_fields = ['movie', 'actor', 'role']
+	list_per_page = 50
+
+	class Meta:
+		model = ActorRole
+
+	def show_photo(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url=obj.picture.url,
+			width=50,
+			height=60,))
+
+
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(ActorComment, ActorCommentAdmin)
 admin.site.register(ActorGallery, ActorGalleryAdmin)
+admin.site.register(ActorRole, ActorRoleAdmin)

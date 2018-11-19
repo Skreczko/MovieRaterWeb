@@ -5,7 +5,6 @@ from django.utils.timesince import timesince
 from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
-
 from django_countries.fields import CountryField
 
 
@@ -60,6 +59,8 @@ class Movie(models.Model):
 	duration = models.PositiveSmallIntegerField(help_text="in minutes")
 	description = models.CharField(max_length=295, default="", null=True,blank=True, help_text="295 character maximum.")
 
+
+
 	def __str__(self):
 		return str(self.title) + " ({})".format(str(self.year_of_production))
 
@@ -105,8 +106,6 @@ class MovieComment(models.Model):
 	def edited_time(self):
 		return '{t} ago'.format(t=timesince(self.edited_date))
 
-	# def added_by(self):
-	# 	return
 
 
 class MovieGallery(models.Model):
@@ -122,7 +121,6 @@ class MovieGallery(models.Model):
 
 	def __str__(self):
 		return str(self.movie)
-
 
 def slug_create(instance, new_slug=None):
 	slug = slugify(str(instance.title))

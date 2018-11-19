@@ -38,6 +38,8 @@ class Actor(models.Model):
 	def __str__(self):
 		return self.name + " " + self.last_name
 
+	class Meta:
+		ordering = ('last_name', 'name')
 
 
 	@property
@@ -88,6 +90,8 @@ class ActorComment(models.Model):
 	publish_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	edited_date = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+
+
 	def __str__(self):
 		return str(self.actor)
 
@@ -111,6 +115,25 @@ class ActorGallery(models.Model):
 
 	def __str__(self):
 		return str(self.actor)
+
+
+class ActorRole(models.Model):
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_role")
+	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_role")
+	role = models.CharField(max_length=100)
+	def upload_path(instance, filename):
+		extension = filename.split('.')[-1]
+		random_name = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(9))
+		filename='{}.{}'.format(random_name, extension)
+		return os.path.join(
+			 'movies/{m}/cast/{r}/{file}'.format(m=instance.movie.slug, r=instance.role, file=filename))
+	picture = models.ImageField(upload_to=upload_path)
+
+	def __str__(self):
+		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
+
+	class Meta:
+		ordering = ('actor','movie')
 
 
 def slug_create(instance, new_slug=None):

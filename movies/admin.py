@@ -57,7 +57,6 @@ class MovieGalleryAdmin(admin.ModelAdmin):
 			height=60,))
 
 
-
 class MovieCategoryAdmin(admin.ModelAdmin):
 	list_display = ['category' ]
 
@@ -68,4 +67,5 @@ admin.site.register(Movie, MovieAdmin)
 admin.site.register(MovieComment, MovieCommentAdmin)
 admin.site.register(MovieGallery, MovieGalleryAdmin)
 admin.site.register(MovieCategory)
+
 
