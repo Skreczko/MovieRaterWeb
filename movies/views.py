@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
+from actors.models import Actor
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
@@ -45,6 +46,7 @@ class MovieDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
+		context['movie_actors'] = Actor.objects.filter(movies=self.object)
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
@@ -95,7 +97,6 @@ class MovieUpdateView(UpdateView):
 
 	def get_success_url(self):
 		view_name = 'movie_detail'
-		# No need for reverse_lazy here, because it's called inside the method
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
 class MovieDeleteView(DeleteView):
