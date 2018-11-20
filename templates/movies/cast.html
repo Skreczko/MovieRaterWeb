@@ -17,10 +17,12 @@
                     <div class="col-12">
                     <hr>
                     {% if 'management_cast/editing' in request.get_full_path %}
-                        <i class="fas fa-exclamation-triangle orange"> Click on actor name that you want to edit!</i>
+                        <i class="fas fa-exclamation-triangle orange">{% if related_actors|length == 0 %} There is no cast to edit! {% else %}
+                            Click on actor name that you want to edit!{% endif %}</i>
                         <br><br>
                     {% elif 'management_cast/deleting' in request.get_full_path %}
-                        <i class="fas fa-exclamation-triangle red"> Click on actor name that you want to delete!</i>
+                        <i class="fas fa-exclamation-triangle red">{% if related_actors|length == 0 %} There is no cast to delete! {% else %}
+                            Click on actor name that you want to delete!{% endif %}</i>
                         <br><br>
                     {% endif %}
 
