@@ -127,7 +127,7 @@ class ActorRole(models.Model):
 		filename='{}.{}'.format(random_name, extension)
 		return os.path.join(
 			 'movies/{m}/cast/{r}/{file}'.format(m=instance.movie.slug, r=instance.role, file=filename))
-	picture = models.ImageField(upload_to=upload_path)
+	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
 
 	def __str__(self):
 		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))

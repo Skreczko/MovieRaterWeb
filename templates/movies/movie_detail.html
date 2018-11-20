@@ -151,43 +151,22 @@
                                     {% include 'stars.html' with object=actor.average_stars|first %}
                                       <p class="votes">Actor rate: {{actor.average_stars|first}}/5  |  {{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
                                 </td>
-
-
-      {% for item in actor_role %}
-            {% if item.movie == movie %}
-                {% if item.actor == actor %}
-                                 <td align="left" id="role_in_table" width="40%">
-                    {{ item.role }}
-
-                                 </td>
-                                <td width="5%">
-                                  <img id="img_table" src="/media/{{item.picture}}" alt="{{item.role}}">
-                                </td>
-
-                {% else %}
-                    {% if forloop.counter == actor_role|length %}
-
                                 <td align="left" id="role_in_table" width="40%">
-                                                {{item.role}}
+                                    {% if actor.actor_role %}
+                                        {{ actor.actor_role.role }}
+                                    {% else %}
+                                        <i class="fas fa-ban red"></i>
+                                    {% endif %}
                                  </td>
                                 <td width="5%">
+                                 {% if actor.actor_role.picture %}
+                                    <img id="img_table" src="/media/{{actor.actor_role.picture}}" alt="{{actor.actor_role.role}}">
+                                    {% endif %}
                                 </td>
-
-                    {% endif %}
-                {% endif %}
-            {% endif %}
-      {% endfor %}
-
-
-
                             </tr>
                           {% endfor %}
-
                         </tbody>
-
                         </table>
-
-
 
             </div>
         </div>

@@ -47,7 +47,6 @@ class MovieDetailView(FormMixin, DetailView):
 		context['gallery_movie_18'] = MovieGallery.objects.filter(movie=self.object)[:18]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
 		context['related_actors'] = Actor.objects.filter(movies=self.object)
-		context['actor_role'] = ActorRole.objects.filter(movie=self.object).order_by("actor")
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context

@@ -64,12 +64,20 @@ class ActorGalleryAdmin(admin.ModelAdmin):
 
 
 class ActorRoleAdmin(admin.ModelAdmin):
-	list_display = ['movie', 'actor', 'role', 'show_photo']
+	list_display = ['movie', 'actor', 'role', 'is_picture']
 	search_fields = ['movie', 'actor', 'role']
+	readonly_fields = ['show_photo']
 	list_per_page = 50
 
 	class Meta:
 		model = ActorRole
+
+	def is_picture(self, obj, *args, **kwargs):
+		if obj.picture:
+			return True
+		else:
+			return False
+	is_picture.boolean = True
 
 	def show_photo(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
