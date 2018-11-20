@@ -107,7 +107,7 @@
                 <h4>Gallery
                     {% if gallery_movie_all|length > 18 %}
                     <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
-                        <i class="far fa-images"> ({{gallery_movie_all|length}})</i></a>
+                        <i class="far fa-images"> ({{gallery_movie_all|length|add:-18}} more)</i></a>
                     </span>
                     {% endif %}
                 </h4>
@@ -129,13 +129,12 @@
 
 
 
-
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Cast
-                    {% if gallery_movie_all|length > 20 %}
-                    <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
-                        <i class="far fa-images"> more</i></a>
+                    {% if related_actors|length > 10 %}
+                    <span id="movie_dur_span"><a href="#">
+                        <i class="fas fa-users"> ({{related_actors|length|add:-10}} more)</i></a>
                     </span>
                     {% endif %}
                 </h4>
@@ -144,6 +143,7 @@
                     <table class="table table-striped">
                           <tbody>
                           {% for actor in related_actors %}
+                      {% if forloop.counter <= 10 %}
                             <tr>
                               <th scope="row" width="10%"><img id="img_table" src="/media/{{actor.photo}}" alt="{{actor.last_name}}"></th>
                                 <td id="actor_in_table" width="40%">
@@ -164,9 +164,12 @@
                                     {% endif %}
                                 </td>
                             </tr>
+
+                    {% endif %}
                           {% endfor %}
                         </tbody>
                         </table>
+
 
             </div>
         </div>
