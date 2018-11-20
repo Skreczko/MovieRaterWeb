@@ -24,7 +24,8 @@
                             <tr>
                               <th scope="row" width="10%"><img id="img_table" src="/media/{{actor.photo}}" alt="{{actor.last_name}}"></th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" href="{{actor.get_to_detail}}">{{ actor.name }} {{ actor.last_name }}</a>
+                                    <a class="bold" {%if 'management_cast' in request.get_full_path %} href="{% url 'edit_cast' movie.slug actor.id %}" {% else %} href="{{actor.get_to_detail}}" {% endif %}> {{ actor.name }} {{ actor.last_name }}</a>
+
                                     {% include 'stars.html' with object=actor.average_stars|first %}
                                       <p class="votes_for_table">Actor rate: {{actor.average_stars|first}}/5  |  {{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
                                 </td>

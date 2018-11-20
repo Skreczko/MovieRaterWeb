@@ -216,7 +216,9 @@ def cast_create(request, slug=None):
 	return render(request, template, context)
 
 def cast_edit(request, slug=None, id=None):
-	qs_cast = get_object_or_404(pk=id)
+	qs_movie = Movie.objects.get(slug=slug)
+	qs_actor = Actor.objects.get(pk=id)
+	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
 	form = MovieCastForm(request.POST or None, request.FILES or None, instance=qs_cast)
 	template = 'form.html'
 	context = {'form': form}

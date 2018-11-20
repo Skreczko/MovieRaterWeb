@@ -5,7 +5,7 @@ from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateV
 					MovieCastView,\
 					category_create, category_edit,\
 					gallery_create, movie_gallery_delete,\
-					cast_create
+					cast_create, cast_edit
 
 urlpatterns = [
 	#	MOVIES
@@ -30,5 +30,7 @@ urlpatterns = [
 
 	#	MOVIES CAST
 	path('detail/<slug>/cast/', MovieCastView.as_view(), name='cast_list'),
-	path('detail/<slug>/gallery/add_role/', cast_create, name='add_cast'),
+	path('detail/<slug>/cast/add_role/', cast_create, name='add_cast'),
+	path('detail/<slug>/cast/management_cast/', MovieCastView.as_view(), name='management_cast'),
+	path('detail/<slug>/cast/edit/<id>/', cast_edit, name='edit_cast'),
 ]
