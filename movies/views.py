@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
 from actors.models import Actor, ActorRole
+from actors.forms import MovieCastForm
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
@@ -145,8 +146,6 @@ def category_edit(request, slug=None):
 	template = 'form.html'
 	context = {'form':form}
 
-
-
 	if form.is_valid():
 		category = form.cleaned_data['category']
 		if category:
@@ -183,7 +182,6 @@ class MovieGalleryView(DetailView):
 
 def movie_gallery_delete(request, slug=None, id=None):
 	photo = MovieGallery.objects.get(pk=id)
-	print(photo.picture)
 	template = "confirm_delete_gallery.html"
 	context = {"photo": photo}
 	if request.method == 'POST':
@@ -193,7 +191,39 @@ def movie_gallery_delete(request, slug=None, id=None):
 
 
 
-						# COMMENTS
+						# CAST
+
+class MovieCastView(DetailView):
+	model = Movie
+	template_name = 'movies/cast.html'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['related_actors'] = Actor.objects.filter(movies=self.object)
+		return context
+
+
+def cast_create(request, slug=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	form = MovieCastForm(request.POST or None, request.FILES or None)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		obj = form.save(commit=False)
+		obj.movie = qs_movie
+		obj.save()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
+
+def cast_edit(request, slug=None, id=None):
+	qs_cast = get_object_or_404(pk=id)
+	form = MovieCastForm(request.POST or None, request.FILES or None, instance=qs_cast)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		form.save()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
 
 
 

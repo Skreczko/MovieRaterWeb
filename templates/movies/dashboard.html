@@ -12,6 +12,13 @@
                               <li><a href="{% url 'movie_update' movie.slug %}"><i class="fas fa-pen"></i> Update</a></li>
                               <li><a href="{% url 'movie_delete' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                           </ul>
+
+                      <li>Categories:</li>
+                           <ul>
+                               <li><a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="{% url 'category_edit' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                              </ul>
+
                         <li>Gallery:</li>
                            <ul>
                                <li><a href="{% url 'picture_gallery' movie.slug %}"><i class="fas fa-images"></i> All</a></li>
@@ -19,9 +26,10 @@
                                <li><a href="{% url 'management_picture' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                               </ul>
 
-                      <li>Movie categories:</li>
+                      <li>Cast:</li>
                            <ul>
-                               <li><a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="{% url 'cast_list' movie.slug %}"><i class="fas fa-users"></i> All</a></li>
+                               <li><a href="{% url 'add_cast' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                                <li><a href="{% url 'category_edit' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
                               </ul>
 

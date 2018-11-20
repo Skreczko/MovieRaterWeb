@@ -228,7 +228,10 @@ ul {
     text-overflow: ellipsis;
     max-width: 300px;
 
+
 }
+
+
 
 #movie_dur_span {
     color:#505050;
@@ -286,14 +289,13 @@ ul {
 
 
 #img_table {
-    height: 95px;
+    height: 100px;
     width: 70px;
 }
 
 #actor_in_table{
     padding-left: 20px;
 }
-
 
 
 /*          PAGINATION          */

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Actor, ActorComment
+from .models import Actor, ActorComment, ActorRole
 
 
 
@@ -24,6 +24,11 @@ class ActorCommentForm(forms.ModelForm):
 		model = ActorComment
 		fields = ['comment' ]
 
+
+class MovieCastForm(forms.ModelForm):
+	class Meta:
+		model = ActorRole
+		fields = ['actor', 'role', 'picture']
 
 
 
