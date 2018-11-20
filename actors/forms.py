@@ -10,7 +10,7 @@ class ActorForm(forms.ModelForm):
 	class Meta:
 
 		model = Actor
-		fields = ['name', 'last_name', 'movies', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died']
+		fields = ['name', 'last_name', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died']
 
 		widgets = {
 			'born': forms.SelectDateWidget(years=YEARS),
@@ -30,5 +30,9 @@ class MovieCastForm(forms.ModelForm):
 		model = ActorRole
 		fields = ['actor', 'role', 'picture']
 
+class MovieCastRoleForm(forms.ModelForm):
+	class Meta:
+		model = ActorRole
+		fields = ['role', 'picture']
 
 

@@ -133,7 +133,7 @@
             <div class="col-8">
                 <h4>Cast
                     {% if related_actors|length > 10 %}
-                    <span id="movie_dur_span"><a href="#">
+                    <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
                         <i class="fas fa-users"> ({{related_actors|length|add:-10}} more)</i></a>
                     </span>
                     {% endif %}
@@ -142,25 +142,21 @@
 
                     <table class="table table-striped">
                           <tbody>
-                          {% for actor in related_actors %}
+                          {% for query in related_actors %}
                       {% if forloop.counter <= 10 %}
                             <tr>
-                              <th scope="row" width="10%"><img id="img_table" src="/media/{{actor.photo}}" alt="{{actor.last_name}}"></th>
+                              <th scope="row" width="10%"><img id="img_table" src="/media/{{query.actor.photo}}" ></th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" href="{{actor.get_to_detail}}">{{ actor.name }} {{ actor.last_name }}</a>
-                                    {% include 'stars.html' with object=actor.average_stars|first %}
-                                      <p class="votes">Actor rate: {{actor.average_stars|first}}/5  |  {{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
+                                    <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
+                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
+                                      <p class="votes">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
                                 </td>
                                 <td align="left" id="role_in_table" width="40%">
-                                    {% if actor.actor_role %}
-                                        {{ actor.actor_role.role }}
-                                    {% else %}
-                                        <i class="fas fa-ban red"></i>
-                                    {% endif %}
+                                    <div class="bold">{{ query.role }}</div>
                                  </td>
                                 <td width="5%">
-                                 {% if actor.actor_role.picture %}
-                                    <img id="img_table" src="/media/{{actor.actor_role.picture}}" alt="{{actor.actor_role.role}}">
+                                 {% if query.picture %}
+                                    <img id="img_table" src="/media/{{query.picture}}" >
                                     {% endif %}
                                 </td>
                             </tr>

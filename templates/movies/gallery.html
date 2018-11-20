@@ -17,7 +17,7 @@
                     <div class="col-12">
                     <hr>
 {% if 'management_image' in request.get_full_path %}
-                    <p class="margin_bottom_20px" >Click on image you want to delete!</p>
+                        <i class="fas fa-exclamation-triangle red">Click on image you want to delete!</i><br><br>
 
                             {% for imag in object.movie_gallery.all %}
                             <a href="{% url 'delete_picture' movie.slug imag.id %}"><img id="delete_img" src="/media/{{imag.picture}}"></a>

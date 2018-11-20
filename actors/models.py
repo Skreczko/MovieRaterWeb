@@ -33,7 +33,7 @@ class Actor(models.Model):
 	born = models.DateField()
 	if_died = models.BooleanField(default=False, verbose_name="cross if dead")
 	died = models.DateField(blank=True, null=True, default=None,)
-	movies = models.ManyToManyField(Movie, related_name='related_actors')
+
 
 	def __str__(self):
 		return self.name + " " + self.last_name

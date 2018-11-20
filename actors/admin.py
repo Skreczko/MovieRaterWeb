@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 # Register your models here.
 
 class ActorAdmin(admin.ModelAdmin):
-	list_display = ['name',  'last_name', 'is_photo' , 'is_biography']
+	list_display = ['name',  'last_name', 'is_photo', 'is_biography']
 	list_filter = ['name', 'last_name',]
 	search_fields = ['name', 'last_name']
 	readonly_fields = ['slug', 'show_photo']

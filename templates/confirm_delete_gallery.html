@@ -19,6 +19,8 @@
                   <img id="actor_image_list" class="img-responsive" src="/media/{{object.photo}}" alt="{{object.title}}">
                   {% elif 'movies' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{photo.picture}}" >
+                  {% elif 'cast' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
                   {% endif %}
               </div>
               <div class="col-10">
@@ -27,7 +29,12 @@
                       <div class="col-6">
                           <form action="" method="POST">{% csrf_token %}
                               <br>
+                              {% if 'cast' in request.get_full_path %}
+                              <h5> Are you sure you want to delete</h5>
+                              <h4> {{role.actor}} playing as {{role.role}}?</h4>
+                              {% else %}
                               <h5> Are you sure you want to delete?</h5>
+                              {% endif %}
                               <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Submit</button>
                               <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark my-2 my-sm-0" >Back</a>
                           </form>

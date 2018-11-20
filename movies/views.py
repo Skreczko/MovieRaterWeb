@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
 from actors.models import Actor, ActorRole
-from actors.forms import MovieCastForm
+from actors.forms import MovieCastForm, MovieCastRoleForm
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
@@ -47,7 +47,7 @@ class MovieDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_movie_18'] = MovieGallery.objects.filter(movie=self.object)[:18]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
-		context['related_actors'] = Actor.objects.filter(movies=self.object)
+		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
@@ -199,7 +199,7 @@ class MovieCastView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['related_actors'] = Actor.objects.filter(movies=self.object)
+		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
 		return context
 
 
@@ -219,7 +219,7 @@ def cast_edit(request, slug=None, id=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_actor = Actor.objects.get(pk=id)
 	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
-	form = MovieCastForm(request.POST or None, request.FILES or None, instance=qs_cast)
+	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
@@ -227,5 +227,15 @@ def cast_edit(request, slug=None, id=None):
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
+def cast_delete(request, slug=None, id=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	qs_actor = Actor.objects.get(pk=id)
+	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	template = "confirm_delete_gallery.html"
+	context = {'role': qs_cast}
+	if request.method == 'POST':
+		qs_actor.delete()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
 
 
