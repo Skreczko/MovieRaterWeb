@@ -126,7 +126,7 @@ class ActorRole(models.Model):
 		random_name = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(9))
 		filename='{}.{}'.format(random_name, extension)
 		return os.path.join(
-			 'movies/{m}/cast/{r}/{file}'.format(m=instance.movie.slug, r=instance.role, file=filename))
+			 'movies/{m}/cast/{a} as {r}/{file}'.format(m=instance.movie.slug, a=instance.actor, r=instance.role, file=filename))
 	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
 
 	def __str__(self):
