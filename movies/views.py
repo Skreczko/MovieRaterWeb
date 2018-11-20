@@ -234,7 +234,7 @@ def cast_delete(request, slug=None, id=None):
 	template = "confirm_delete_gallery.html"
 	context = {'role': qs_cast}
 	if request.method == 'POST':
-		qs_actor.delete()
+		qs_cast.delete()
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 

@@ -145,7 +145,7 @@
                           {% for query in related_actors %}
                       {% if forloop.counter <= 10 %}
                             <tr>
-                              <th scope="row" width="10%"><img id="img_table" src="/media/{{query.actor.photo}}" ></th>
+                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" >{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
                                     <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
