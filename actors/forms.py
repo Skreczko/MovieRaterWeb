@@ -1,6 +1,6 @@
 from django import forms
 from .models import YEARS, YES_NO
-from .models import Actor, ActorComment, ActorRole
+from .models import Actor, ActorComment, ActorRole, CrewRole
 
 
 
@@ -35,6 +35,16 @@ class MovieCastForm(forms.ModelForm):
 class MovieCastRoleForm(forms.ModelForm):
 	class Meta:
 		model = ActorRole
+		fields = ['role', 'picture']
+
+class MovieCrewForm(forms.ModelForm):
+	class Meta:
+		model = CrewRole
+		fields = ['actor', 'role', 'picture']
+
+class MovieCrewRoleForm(forms.ModelForm):
+	class Meta:
+		model = CrewRole
 		fields = ['role', 'picture']
 
 

@@ -28,7 +28,7 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
 
     path('accounts/', include('accounts.urls')),
-    path('actors/', include('actors.urls')),
+    path('persons/', include('actors.urls')),
     path('movies/', include('movies.urls')),
 
 

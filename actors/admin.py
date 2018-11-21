@@ -5,8 +5,8 @@ from django.utils.safestring import mark_safe
 # Register your models here.
 
 class ActorAdmin(admin.ModelAdmin):
-	list_display = ['name',  'last_name', 'is_photo', 'is_biography']
-	list_filter = ['name', 'last_name',]
+	list_display = ['name',  'last_name','is_crew_member', 'is_photo', 'is_biography']
+	list_filter = ['is_crew', 'name', 'last_name',]
 	search_fields = ['name', 'last_name']
 	readonly_fields = ['slug', 'show_photo']
 	list_per_page = 50
@@ -26,6 +26,11 @@ class ActorAdmin(admin.ModelAdmin):
 		else:
 			return False
 	is_biography.boolean = True
+
+	def is_crew_member(self, obj, *args, **kwargs):
+		return obj.is_crew
+	is_crew_member.boolean = True
+
 
 	def show_photo(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(

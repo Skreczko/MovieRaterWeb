@@ -150,6 +150,7 @@ class ActorRole(models.Model):
 	class Meta:
 		ordering = ('actor','movie')
 
+
 class CrewRole(models.Model):
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_crew_role", null=True)
 	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_crew_role", null=True,
@@ -164,10 +165,11 @@ class CrewRole(models.Model):
 	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
 
 	def __str__(self):
-		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
+		return str(self.actor)
 
 	class Meta:
-		ordering = ('actor','movie')
+		ordering = ('role', 'actor', 'movie')
+
 
 def slug_create(instance, new_slug=None):
 	slug = slugify(str(instance.last_name + ' ' + instance.name))
@@ -186,4 +188,40 @@ def pre_save_actors(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(pre_save_actors, sender = Actor)
+
+
+
+#https://stackoverflow.com/questions/41783318/how-to-have-extra-django-model-fields-depending-on-the-value-of-a-field
+# class ActorRole(models.Model):
+# 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_role", null=True)
+# 	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_role", null=True)
+# 	role = models.OneToOneField()
+# 	def upload_path(instance, filename):
+# 		extension = filename.split('.')[-1]
+# 		random_name = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(9))
+# 		filename='{}.{}'.format(random_name, extension)
+# 		return os.path.join(
+# 			 'movies/{m}/cast/{a} as {r}/{file}'.format(m=instance.movie.slug, a=instance.actor, r=instance.role, file=filename))
+# 	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
+#
+# 	def __str__(self):
+# 		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
+#
+# 	class Meta:
+# 		ordering = ('actor','movie')
+#
+#
+#
+#
+# class Cast(models.Model):
+# 	role = models.CharField(max_length=100, choices=CREW_ROLE)
+# 	class Meta:
+# 		abstract = True
+#
+#
+# class Crew(models.Model):
+# 	role = models.CharField(max_length=100)
+#
+# 	class Meta:
+# 		abstract = True
 

@@ -2,10 +2,10 @@
 from django.urls import path
 from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateView, MovieDeleteView,\
 					MovieGalleryView, \
-					MovieCastView,\
+					MovieCastView, MovieCrewView,\
 					category_create, category_edit,\
 					gallery_create, movie_gallery_delete,\
-					cast_create, cast_edit, cast_delete
+					cast_create, cast_edit, cast_delete, crew_create, crew_edit, crew_delete
 
 urlpatterns = [
 	#	MOVIES
@@ -35,4 +35,14 @@ urlpatterns = [
 	path('detail/<slug>/cast/management_cast/deleting/', MovieCastView.as_view(), name='management_cast_deleting'),
 	path('detail/<slug>/cast/edit/<id>/', cast_edit, name='edit_cast'),
 	path('detail/<slug>/cast/delete/<id>/', cast_delete, name='delete_cast'),
+
+	#	MOVIES CREW
+	path('detail/<slug>/crew/', MovieCrewView.as_view(), name='crew_list'),
+	path('detail/<slug>/crew/add_role/', crew_create, name='add_crew'),
+	path('detail/<slug>/crew/management_crew/editing/', MovieCrewView.as_view(), name='management_crew_editing'),
+	path('detail/<slug>/crew/management_crew/deleting/', MovieCrewView.as_view(), name='management_crew_deleting'),
+	path('detail/<slug>/crew/edit/<id>/', crew_edit, name='edit_crew'),
+	path('detail/<slug>/crew/delete/<id>/', crew_delete, name='delete_crew'),
+
+
 ]

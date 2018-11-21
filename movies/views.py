@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
-from actors.models import Actor, ActorRole
-from actors.forms import MovieCastForm, MovieCastRoleForm
+from actors.models import Actor, ActorRole, CrewRole
+from actors.forms import MovieCastForm, MovieCastRoleForm, \
+							MovieCrewForm, MovieCrewRoleForm
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
@@ -48,6 +49,8 @@ class MovieDetailView(FormMixin, DetailView):
 		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
 		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
+		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
+		context['director'] = CrewRole.objects.filter(movie=self.object, role='Director')
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
@@ -242,9 +245,20 @@ def cast_delete(request, slug=None, id=None):
 
 
 #							CREW
+class MovieCrewView(DetailView):
+	model = Movie
+	template_name = 'movies/cast.html'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
+		return context
+
+
+
 def crew_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
-	form = MovieCastForm(request.POST or None, request.FILES or None)
+	form = MovieCrewForm(request.POST or None, request.FILES or None)
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
@@ -258,8 +272,8 @@ def crew_create(request, slug=None):
 def crew_edit(request, slug=None, id=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_actor = Actor.objects.get(pk=id)
-	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
-	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
+	qs_cast = CrewRole.objects.get(movie=qs_movie, actor=qs_actor)
+	form = MovieCrewRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
@@ -270,7 +284,7 @@ def crew_edit(request, slug=None, id=None):
 def crew_delete(request, slug=None, id=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_actor = Actor.objects.get(pk=id)
-	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	qs_cast = CrewRole.objects.get(movie=qs_movie, actor=qs_actor)
 	template = "confirm_delete_gallery.html"
 	context = {'role': qs_cast}
 	if request.method == 'POST':

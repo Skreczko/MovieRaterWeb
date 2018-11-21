@@ -45,7 +45,22 @@
                                       <p>Director:</p>
                                   </div>
                                   <div class="col-6">
-                                      <p>ADD DIRECTOR</p>
+                                      <p>
+                                          {% if director.all|length > 1 %}
+                                                {% for cat in director.all %}
+                                                    {% if forloop.counter != director.all|length %}
+                                          <a href="{{cat.actor.get_to_detail}}">{{cat}},</a>
+                                                    {% else %}
+                                          <a href="{{cat.actor.get_to_detail}}">{{cat}}</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                          {% elif director.all|length is 1 %}
+                                          <a href="{{director.all.0.actor.get_to_detail}}">{{director.all.0}}</a>
+                                           {% elif director.all|length == 0 %}
+                                                <i class="fas fa-ban red"></i>
+                                          {% endif %}
+
+                                      </p>
                                   </div>
                               </div>
 
@@ -165,7 +180,46 @@
                           {% endfor %}
                         </tbody>
                         </table>
+            </div>
+        </div>
 
+
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h4>Crew
+                    {% if related_crews|length > 10 %}
+                    <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
+                        <i class="fas fa-users"> ({{related_crews|length|add:-10}} more)</i></a>
+                    </span>
+                    {% endif %}
+                </h4>
+         <hr>
+
+                    <table class="table table-striped">
+                          <tbody>
+                          {% for query in related_crews %}
+                      {% if forloop.counter <= 10 %}
+                            <tr>
+                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" >{% endif %}</th>
+                                <td id="actor_in_table" width="40%">
+                                    <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
+                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
+                                      <p class="votes">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                </td>
+                                <td align="left" id="role_in_table" width="40%">
+                                    <div class="bold">{{ query.role }}</div>
+                                 </td>
+                                <td width="5%">
+                                 {% if query.picture %}
+                                    <img id="img_table" src="/media/{{query.picture}}" >
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                    {% endif %}
+                          {% endfor %}
+                        </tbody>
+                        </table>
 
             </div>
         </div>
