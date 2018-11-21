@@ -1,20 +1,22 @@
 from django import forms
+from .models import YEARS, YES_NO
 from .models import Actor, ActorComment, ActorRole
 
 
 
-YEARS = [x for x in range(1930, 2041)]
+
 
 class ActorForm(forms.ModelForm):
 
 	class Meta:
 
 		model = Actor
-		fields = ['name', 'last_name', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died']
+		fields = ['is_crew', 'name', 'last_name', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died', ]
 
 		widgets = {
 			'born': forms.SelectDateWidget(years=YEARS),
 			'died': forms.SelectDateWidget(years=YEARS),
+			'is_crew': forms.Select(choices=YES_NO),
 
 		}
 

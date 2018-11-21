@@ -105,7 +105,7 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Gallery
-                    {% if gallery_movie_all|length > 14 %}
+                    {% if gallery_movie_all|length > 20 %}
                     <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
                         <i class="far fa-images"> ({{gallery_movie_all|length|add:-14}} more)</i></a>
                     </span>
@@ -117,7 +117,7 @@
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
             {% else %}
-                {% for imag in gallery_movie_14 %}
+                {% for imag in gallery_movie_20 %}
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}

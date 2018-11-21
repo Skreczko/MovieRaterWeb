@@ -45,7 +45,7 @@ class MovieDetailView(FormMixin, DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['gallery_movie_14'] = MovieGallery.objects.filter(movie=self.object)[:14]
+		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
 		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
@@ -215,6 +215,7 @@ def cast_create(request, slug=None):
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
+
 def cast_edit(request, slug=None, id=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_actor = Actor.objects.get(pk=id)
@@ -237,5 +238,45 @@ def cast_delete(request, slug=None, id=None):
 		qs_cast.delete()
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
+
+
+
+#							CREW
+def crew_create(request, slug=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	form = MovieCastForm(request.POST or None, request.FILES or None)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		obj = form.save(commit=False)
+		obj.movie = qs_movie
+		obj.save()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
+
+
+def crew_edit(request, slug=None, id=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	qs_actor = Actor.objects.get(pk=id)
+	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		form.save()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
+
+def crew_delete(request, slug=None, id=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	qs_actor = Actor.objects.get(pk=id)
+	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	template = "confirm_delete_gallery.html"
+	context = {'role': qs_cast}
+	if request.method == 'POST':
+		qs_cast.delete()
+		return redirect('movie_detail', slug)
+	return render(request, template, context)
+
 
 

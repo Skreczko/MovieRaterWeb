@@ -14,6 +14,32 @@ from movies.models import Movie
 
 # Create your models here.
 
+YEARS = [x for x in range(1930, 2041)]
+YES_NO = (
+	(False, 'No'),
+	(True, 'Yes')
+)
+
+STARS = (
+	(1, '1'),
+	(2, '2'),
+	(3, '3'),
+	(4, '4'),
+	(5, '5'),
+)
+
+CREW_ROLE = (
+	('Director', 'Director'),
+	('Producer', 'Producer'),
+	('Set_Designer', 'Set Designer'),
+	('Costume_Designer', 'Costume Designer'),
+	('Prop_Master', 'Prop Master'),
+	('Makeup_Artist', 'Makeup Artist'),
+	('Movie_Editor', 'Movie Editor'),
+	('Other', 'Other'),
+
+)
+
 
 class Actor(models.Model):
 
@@ -33,6 +59,7 @@ class Actor(models.Model):
 	born = models.DateField()
 	if_died = models.BooleanField(default=False, verbose_name="cross if dead")
 	died = models.DateField(blank=True, null=True, default=None,)
+	is_crew = models.BooleanField(default=False, choices=YES_NO, verbose_name='Is crew member? (i.e. director, composer sountrack, costume designer)')
 
 
 	def __str__(self):
@@ -71,18 +98,6 @@ class Actor(models.Model):
 
 
 class ActorComment(models.Model):
-	STARS = (
-		(1, '1'),
-		(2, '2'),
-		(3, '3'),
-		(4, '4'),
-		(5, '5'),
-		(6, '6'),
-		(7, '7'),
-		(8, '8'),
-		(9, '9'),
-		(10, '10'),
-	)
 
 	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="comments")
 	comment = models.TextField(max_length=1000,blank=True, null=True)
@@ -135,6 +150,24 @@ class ActorRole(models.Model):
 	class Meta:
 		ordering = ('actor','movie')
 
+class CrewRole(models.Model):
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_crew_role", null=True)
+	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_crew_role", null=True,
+								 limit_choices_to={'is_crew': True})
+	role = models.CharField(max_length=100, choices=CREW_ROLE)
+	def upload_path(instance, filename):
+		extension = filename.split('.')[-1]
+		random_name = ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(9))
+		filename='{}.{}'.format(random_name, extension)
+		return os.path.join(
+			 'movies/{m}/crew/{a} as {r}/{file}'.format(m=instance.movie.slug, a=instance.actor, r=instance.role, file=filename))
+	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
+
+	def __str__(self):
+		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
+
+	class Meta:
+		ordering = ('actor','movie')
 
 def slug_create(instance, new_slug=None):
 	slug = slugify(str(instance.last_name + ' ' + instance.name))
