@@ -182,7 +182,7 @@
                         </table>
             </div>
         </div>
-
+<br><br>
 
         <div class="row justify-content-center">
             <div class="col-8">
@@ -204,7 +204,7 @@
                                 <td id="actor_in_table" width="40%">
                                     <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
-                                      <p class="votes">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                      <p class="votes">Rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
                                 </td>
                                 <td align="left" id="role_in_table" width="40%">
                                     <div class="bold">{{ query.role }}</div>
