@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.forms.utils import ErrorList
+from django import forms
 from django.db.models import Q
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
 from actors.models import Actor, ActorRole, CrewRole
 from actors.forms import MovieCastForm, MovieCastRoleForm, \
 							MovieCrewForm, MovieCrewRoleForm
-from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
+from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm, MovieCommentForm
 from datetime import datetime
 from django.views.generic.list import ListView
 from django.views.generic.detail import SingleObjectMixin
@@ -75,9 +77,8 @@ class MovieDetailView(FormMixin, DetailView):
 		added_by = self.request.user
 		check = MovieComment.objects.filter(added_by=added_by, movie=self.object)
 		if check.exists():
-			MovieComment.objects.filter(added_by=added_by, movie=self.object).update(stars=stars, edited_date=datetime.now())
+			MovieComment.objects.filter(added_by=added_by, movie=self.object).update(stars=stars)
 		else:
-
 			MovieComment.objects.create(stars=stars, movie=self.object, added_by=added_by).save()
 		return super().form_valid(form)
 
@@ -310,4 +311,29 @@ class CommentsListView(ListView):
 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
 		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date')
 
+class CommentCreateView(CreateView):
+	form_class = MovieCommentForm
+	template_name = 'form_comment.html'
 
+
+	def form_valid(self, form):
+		movie = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
+		form.instance.movie = movie
+		form.instance.added_by = self.request.user
+		check = MovieComment.objects.filter(movie=movie, added_by=self.request.user)
+		if check.exists():
+			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+				u'You have added comment already, please go to EDIT or DELETE section.'
+			])
+			return super().form_invalid(form)
+		else:
+			return super().form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['movie'] = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
+		return context
+
+	def get_success_url(self):
+		view_name = 'comment_list'
+		return reverse(view_name, kwargs={'slug': self.object.movie.slug})

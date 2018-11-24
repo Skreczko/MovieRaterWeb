@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap %}
+
+{% block content %}
+
+<div class="row no-gutters">
+    <div class="col-6 offset-3">
+
+        {% if login %}
+        <h3>Login</h3>
+        {% endif %}
+        <form  method="POST" enctype="multipart/form-data">{% csrf_token %}
+            {{ form|bootstrap }}
+
+
+            <br>
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Submit</button>
+            <a href="{% url 'comment_list' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Back</a>
+
+        </form>
+        <br>
+    </div>
+</div>
+
+
+{% endblock %}

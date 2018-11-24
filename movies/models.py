@@ -90,9 +90,9 @@ class MovieCategory(models.Model):
 
 
 class MovieComment(models.Model):
-	added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	added_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_comments")
-	comment = models.TextField(blank=True, null=True, )
+	comment = models.CharField(max_length=2000, blank=True, null=True, )
 	stars = models.IntegerField(choices=STARS)
 	publish_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	edited_date = models.DateTimeField(auto_now_add=False, auto_now=True)

@@ -40,7 +40,12 @@ class MovieForm(forms.ModelForm):
 class MovieCommentForm(forms.ModelForm):
 	class Meta:
 		model = MovieComment
-		fields = ['movie', 'comment', 'stars']
+		fields = ['comment', 'stars']
+
+		widgets = {
+			'comment': forms.Textarea
+
+		}
 
 class MovieStarsForm(forms.Form):
 	stars = forms.IntegerField()
