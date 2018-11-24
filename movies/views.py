@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from django.urls import reverse
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
 from actors.models import Actor, ActorRole, CrewRole
@@ -7,6 +8,7 @@ from actors.forms import MovieCastForm, MovieCastRoleForm, \
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm
 from datetime import datetime
 from django.views.generic.list import ListView
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -42,8 +44,6 @@ class MovieDetailView(FormMixin, DetailView):
 	model = Movie
 	form_class = MovieStarsForm
 
-
-
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
@@ -51,6 +51,7 @@ class MovieDetailView(FormMixin, DetailView):
 		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
 		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
 		context['director'] = CrewRole.objects.filter(movie=self.object, role='Director')
+		context['comments'] = MovieComment.objects.filter(movie=self.object).exclude(Q(comment__isnull=False) | Q(comment__exact=''))[:5]
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
@@ -76,6 +77,7 @@ class MovieDetailView(FormMixin, DetailView):
 		if check.exists():
 			MovieComment.objects.filter(added_by=added_by, movie=self.object).update(stars=stars, edited_date=datetime.now())
 		else:
+
 			MovieComment.objects.create(stars=stars, movie=self.object, added_by=added_by).save()
 		return super().form_valid(form)
 
@@ -292,5 +294,20 @@ def crew_delete(request, slug=None, id=None):
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
+
+
+
+
+
+#							COMMENTS
+
+class CommentsListView(ListView):
+	template_name = 'movies/comments.html'
+	context_object_name = 'comment_list'
+	paginate_by = 20
+
+	def get_queryset(self):
+		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
+		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date')
 
 

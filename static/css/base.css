@@ -231,10 +231,14 @@ ul {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 300px;
-
-
 }
 
+
+.comment_added_by {
+    margin-top: -15px;
+    font-size: 80%;
+
+}
 
 
 #movie_dur_span {
