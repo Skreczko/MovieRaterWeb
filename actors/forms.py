@@ -37,7 +37,7 @@ class ActorGalleryForm(forms.ModelForm):
 		fields = ['picture']
 
 
-
+					#MOVIE SECTION
 
 class MovieCastForm(forms.ModelForm):
 	class Meta:
@@ -59,7 +59,10 @@ class MovieCrewRoleForm(forms.ModelForm):
 		model = CrewRole
 		fields = ['role', 'picture']
 
-
-
+					#ACTOR SECTION
+class ActorCastForm(forms.ModelForm):
+	class Meta:
+		model = ActorRole
+		fields = ['movie', 'role', 'picture']
 
 

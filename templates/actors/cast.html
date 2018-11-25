@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row no-gutters">
+    <div class="col-8 offset-2">
+       <div class="row">
+          <div class="col-2">
+              <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
+          </div>
+          <div class="col-8">
+              <h3 class="card-title" id="">
+                    {% if 'cast' in request.get_full_path %}
+                  Cast:
+                  {% elif 'crew' in request.get_full_path %}
+                    Crew:
+                    {% endif %}
+                  {{actor.name}} {{actor.last_name}}
+              </h3>
+              <div class="row">
+                    <div class="col-12">
+                    <hr>
+                    {% if 'management_cast/editing' in request.get_full_path %}
+                        <i class="fas fa-exclamation-triangle orange">{% if related_movies|length == 0 %} There is no cast to edit! {% else %}
+                            Click on movie title that you want to edit!{% endif %}</i>
+                        <br><br>
+                    {% elif 'management_cast/deleting' in request.get_full_path %}
+                        <i class="fas fa-exclamation-triangle red">{% if related_movies|length == 0 %} There is no cast to delete! {% else %}
+                            Click on movie title that you want to delete!{% endif %}</i>
+                        <br><br>
+                    {% elif 'management_crew/editing' in request.get_full_path %}
+                        <i class="fas fa-exclamation-triangle orange">{% if related_crews|length == 0 %} There is no crew to edit! {% else %}
+                            Click on cast name that you want to edit!{% endif %}</i>
+                        <br><br>
+                    {% elif 'management_crew/deleting' in request.get_full_path %}
+                        <i class="fas fa-exclamation-triangle red">{% if related_crews|length == 0 %} There is no crew to delete! {% else %}
+                            Click on cast name that you want to delete!{% endif %}</i>
+                        <br><br>
+                    {% endif %}
+                 <table class="table table-striped">
+                          <tbody>
+                          {% if 'cast' in request.get_full_path %}
+                            {% for query in related_movies %}
+                            <tr>
+                              <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="/media/{{query.movie.poster}}" alt="{{query.movie.title}}">{% endif %}</th>
+                                <td id="actor_in_table" width="40%">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'edit_cast' movie.slug query.actor.id %}"
+                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'delete_cast' movie.slug query.actor.id %}"
+                                    {% else %}
+                                    href="{{query.actor.get_to_detail}}"
+                                    {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
+                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
+                                      <p class="votes_for_table">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                </td>
+                                <td align="left" id="role_in_table" width="40%">
+                                    <div class="bold">{{ query.role }}</div>
+                                 </td>
+                                <td width="5%">
+                                 {% if query.picture %}
+                                    <img id="img_table" src="/media/{{query.picture}}" alt="{{query.role}}">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                          {% endfor %}
+                          {% elif 'crew' in request.get_full_path %}
+                            {% for query in related_crews %}
+                            <tr>
+                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
+                                <td id="actor_in_table" width="40%">
+                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'edit_crew' movie.slug query.actor.id %}"
+                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'delete_crew' movie.slug query.actor.id %}"
+                                    {% else %}
+                                    href="{{query.actor.get_to_detail}}"
+                                    {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
+                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
+                                      <p class="votes_for_table">Rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                </td>
+                                <td align="left" id="role_in_table" width="40%">
+                                    <div class="bold">{{ query.role }}</div>
+                                 </td>
+                                <td width="5%">
+                                 {% if query.picture %}
+                                    <img id="img_table" src="/media/{{query.picture}}" alt="{{query.role}}">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                          {% endfor %}
+                          {% endif %}
+                        </tbody>
+                        </table>
+              <div class="row">
+                    <div class="col-12">
+                    <hr>
+                    <a href="{% url 'movie_detail' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{movie.title}}</a><br><br>
+                    </div>
+              </div>
+          </div>
+       </div>
+    </div>
+</div>
+
+{% endblock %}
