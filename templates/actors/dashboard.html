@@ -5,34 +5,56 @@
     <div class="card">
       <div class="card-body">
           <div class="row">
-              <div class="col-10">
+              <div class="col-12">
                   <div class="card-section">
-                        <li>Details:</li>
+                     <ul><li class="bold bigger">{{actor.name}} {{actor.last_name}}:</li>
                           <ul>
-                              <li><a href="{% url 'actor_update' slug %}">Update</a></li>
-                              <li><a href="{% url 'actor_delete' slug %}">Delete</a></li>
+                                <li><a href="{% url 'actor_update' actor.slug %}"><i class="fas fa-pen"></i> Update</a></li>
+                                <li><a href="{% url 'actor_delete' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                           </ul>
-                        <li>Votes:</li>
+
+                        <li>Gallery:</li>
                            <ul>
-                               <li><a href="{% url 'actor_update' slug %}">Update</a></li>
-                               <li><a href="{% url 'actor_delete' slug %}">Delete</a></li>
+                               <li><a href="{% url 'actor_gallery' actor.slug %}"><i class="fas fa-images"></i> All</a></li>
+                               <li><a href="{% url 'add_actor_picture' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="{% url 'actor_management_picture' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                               </ul>
 
-                      <li>Gallery:</li>
+                      <li>Filmography</li>
                            <ul>
-                               <li><a href="{% url 'actor_update' slug %}">Add image</a></li>
-                               <li><a href="{% url 'actor_delete' slug %}">Delete image</a></li>
+                               <li><a href="#"><i class="fas fa-users"></i> All</a></li>
+                               <li class="bold">Acting</li>
+                               <ul>
+                                   <li><a href="#"><i class="fas fa-users"></i> All</a></li>
+                                   <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="#"><i class="fas fa-pen"></i> Change</a></li>
+                                   <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               </ul>
+                                <li class="bold">Crew member</li>
+                               <ul>
+                                   <li><a href="#"><i class="fas fa-users"></i> All</a></li>
+                                   <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="#"><i class="fas fa-pen"></i> Change</a></li>
+                                   <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               </ul>
                               </ul>
-
-                      <li>Filmography:</li>
+                      <li>Comment:</li>
                            <ul>
-                               <li><a href="{% url 'actor_update' slug %}">Add actor</a></li>
-                               <li><a href="{% url 'actor_delete' slug %}">Delete actor</a></li>
+                               <li><a href="#"><i class="fas fa-comments"></i> All</a></li>
+                               <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
                               </ul>
-
+                     </ul>
                   </div>
               </div>
           </div>
       </div>
     </div>
 </div>
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 from django import forms
 from .models import YEARS, YES_NO
-from .models import Actor, ActorComment, ActorRole, CrewRole
+from .models import Actor, ActorGallery, ActorComment, ActorRole, CrewRole
 
 
 
@@ -11,7 +11,8 @@ class ActorForm(forms.ModelForm):
 	class Meta:
 
 		model = Actor
-		fields = ['is_crew', 'name', 'last_name', 'photo', 'nationality', 'city_of_birth', 'biography', 'born', 'if_died', 'died', ]
+		fields = ['is_crew', 'name', 'last_name', 'original_name', 'photo', 'nationality',
+				  'city_of_birth', 'biography', 'born', 'if_died', 'died', ]
 
 		widgets = {
 			'born': forms.SelectDateWidget(years=YEARS),
@@ -25,6 +26,17 @@ class ActorCommentForm(forms.ModelForm):
 	class Meta:
 		model = ActorComment
 		fields = ['comment' ]
+
+
+class ActorStarsForm(forms.Form):
+	stars = forms.IntegerField()
+
+class ActorGalleryForm(forms.ModelForm):
+	class Meta:
+		model = ActorGallery
+		fields = ['picture']
+
+
 
 
 class MovieCastForm(forms.ModelForm):
@@ -46,5 +58,8 @@ class MovieCrewRoleForm(forms.ModelForm):
 	class Meta:
 		model = CrewRole
 		fields = ['role', 'picture']
+
+
+
 
 

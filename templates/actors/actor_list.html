@@ -15,10 +15,14 @@
                   <div class="col-10">
                       <div class="card-section">
                           <h4 class="card-title" id="element1"><a href="{{actor.get_to_detail}}">{{actor.name}} {{actor.last_name}}</a></h4>
-                          <p id="element2">{{actor.actor_age}} ({{actor.born|date:"Y"}}- {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
-                        <div class="card-section2"><br>
-                          <h5 id="element1"><i class="fas fa-star"></i> {{actor.average_stars|first}}</h5>
-                          <p id="element2">{{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
+                          <p id="element2">{{actor.actor_age}} ({{actor.born|date:"Y"}} - {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
+                            {% if actor.original_name %}<p>{{actor.original_name}}</p> {% endif %}
+                          <div class="card-section2"><br>
+                           {% include 'stars.html' with object=actor.average_stars|first %}
+                            <p class="votes">{{actor.average_stars|first}}/5  |  {{actor.average_stars|last}} vote{{actor.average_stars|last|pluralize}}</p>
+
+
+
                         </div>
                       </div>
                   </div>
@@ -29,8 +33,12 @@
         {% empty %}
         <h5>No actors yet.</h5>
         {% endfor %}
-    </div>
 
+        {% if is_paginated %}
+            <hr>
+            {% include 'pagination.html' %}
+        {% endif %}
+    </div>
 </div>
 
 

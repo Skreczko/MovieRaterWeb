@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 # Register your models here.
 
 class ActorAdmin(admin.ModelAdmin):
-	list_display = ['name',  'last_name','is_crew_member', 'is_photo', 'is_biography']
+	list_display = ['name',  'last_name','is_original_name', 'is_crew_member', 'is_photo', 'is_biography']
 	list_filter = ['is_crew', 'name', 'last_name',]
 	search_fields = ['name', 'last_name']
 	readonly_fields = ['slug', 'show_photo']
@@ -13,12 +13,20 @@ class ActorAdmin(admin.ModelAdmin):
 
 	form = ActorForm
 
+
 	def is_photo(self, obj, *args, **kwargs):
 		if obj.photo:
 			return True
 		else:
 			return False
 	is_photo.boolean = True
+
+	def is_original_name(self, obj, *args, **kwargs):
+		if obj.original_name:
+			return True
+		else:
+			return False
+	is_original_name.boolean = True
 
 	def is_biography(self, obj, *args, **kwargs):
 		if obj.biography:

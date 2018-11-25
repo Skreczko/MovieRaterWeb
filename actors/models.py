@@ -1,14 +1,10 @@
 from django.db import models
+from django.conf import settings
 from django.utils.text import slugify
-
-from datetime import timedelta, datetime, date
 from django.utils.timesince import timesince
-from django.utils import timezone
-
 from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
-
 from django_countries.fields import CountryField
 from movies.models import Movie
 
@@ -52,6 +48,7 @@ class Actor(models.Model):
 	name = models.CharField(max_length=128, default="")
 	slug = models.SlugField(unique=True)
 	last_name = models.CharField(max_length=128,  default="")
+	original_name = models.CharField(max_length=128, null=True, blank=True)
 	nationality = CountryField()
 	city_of_birth = models.CharField(max_length=50)
 	photo = models.ImageField(null=True, blank=True, upload_to=upload_path)
@@ -94,17 +91,17 @@ class Actor(models.Model):
 			return rating, rates_amount
 
 	def get_to_detail(self):
-		return reverse('actor_detail', kwargs={"slug":self.slug})
+		return reverse('actor_detail', kwargs={"slug": self.slug})
 
 
 class ActorComment(models.Model):
 
-	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="comments")
-	comment = models.TextField(max_length=1000,blank=True, null=True)
+	added_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="actor_comments")
+	comment = models.CharField(max_length=2000, blank=True, null=True, )
 	stars = models.IntegerField(choices=STARS)
 	publish_date = models.DateTimeField(auto_now_add=True, auto_now=False)
 	edited_date = models.DateTimeField(auto_now_add=False, auto_now=True)
-
 
 
 	def __str__(self):
