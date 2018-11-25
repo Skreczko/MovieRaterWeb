@@ -53,7 +53,7 @@ class MovieDetailView(FormMixin, DetailView):
 		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
 		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
 		context['director'] = CrewRole.objects.filter(movie=self.object, role='Director')
-		context['comments'] = MovieComment.objects.filter(movie=self.object).exclude(Q(comment__isnull=False) | Q(comment__exact=''))[:5]
+		context['comment_list'] = MovieComment.objects.filter(movie=self.object, added_by=self.request.user).exclude(Q(comment__isnull=True) | Q(comment__exact=''))[:5]
 		if MovieComment.objects.filter(added_by=self.request.user, movie=self.object).exists():
 			context['user_vote'] = MovieComment.objects.filter(added_by=self.request.user, movie=self.object).first().stars
 		return context
