@@ -4,7 +4,6 @@
 
 <div class="row no-gutters">
     <div class="col-8 offset-2">
-
        <div class="row">
           <div class="col-2">
               <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
@@ -21,7 +20,6 @@
               <div class="row">
                     <div class="col-12">
                     <hr>
-
                     {% if 'management_cast/editing' in request.get_full_path %}
                         <i class="fas fa-exclamation-triangle orange">{% if related_actors|length == 0 %} There is no cast to edit! {% else %}
                             Click on actor name that you want to edit!{% endif %}</i>
@@ -30,7 +28,6 @@
                         <i class="fas fa-exclamation-triangle red">{% if related_actors|length == 0 %} There is no cast to delete! {% else %}
                             Click on actor name that you want to delete!{% endif %}</i>
                         <br><br>
-
                     {% elif 'management_crew/editing' in request.get_full_path %}
                         <i class="fas fa-exclamation-triangle orange">{% if related_crews|length == 0 %} There is no crew to edit! {% else %}
                             Click on cast name that you want to edit!{% endif %}</i>
@@ -39,17 +36,11 @@
                         <i class="fas fa-exclamation-triangle red">{% if related_crews|length == 0 %} There is no crew to delete! {% else %}
                             Click on cast name that you want to delete!{% endif %}</i>
                         <br><br>
-
                     {% endif %}
-
-
-
-
                  <table class="table table-striped">
                           <tbody>
                           {% if 'cast' in request.get_full_path %}
                             {% for query in related_actors %}
-
                             <tr>
                               <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
@@ -58,7 +49,6 @@
                                     {% else %}
                                     href="{{query.actor.get_to_detail}}"
                                     {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
-
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
                                       <p class="votes_for_table">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
                                 </td>
@@ -72,10 +62,8 @@
                                 </td>
                             </tr>
                           {% endfor %}
-
                           {% elif 'crew' in request.get_full_path %}
                             {% for query in related_crews %}
-
                             <tr>
                               <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
@@ -84,7 +72,6 @@
                                     {% else %}
                                     href="{{query.actor.get_to_detail}}"
                                     {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
-
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
                                       <p class="votes_for_table">Rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
                                 </td>
@@ -101,22 +88,15 @@
                           {% endif %}
                         </tbody>
                         </table>
-
               <div class="row">
                     <div class="col-12">
                     <hr>
                     <a href="{% url 'movie_detail' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{movie.title}}</a><br><br>
                     </div>
-
               </div>
-
-
-
           </div>
        </div>
     </div>
 </div>
-
-
 
 {% endblock %}

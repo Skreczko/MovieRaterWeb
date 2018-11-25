@@ -14,7 +14,6 @@
 
           <div class="row">
               <div class="col-2">
-
                   {% if 'actors' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{object.photo}}" alt="{{object.title}}">
                   {% elif 'movies' in request.get_full_path %}
@@ -24,7 +23,6 @@
                   {% endif %}
               </div>
               <div class="col-10">
-
                   <div class="row">
                       <div class="col-6">
                           <form action="" method="POST">{% csrf_token %}

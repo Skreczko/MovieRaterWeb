@@ -4,14 +4,12 @@
 
 <div class="row no-gutters">
     <div class="col-8 offset-2">
-
        <div class="row">
           <div class="col-2">
               <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
           </div>
           <div class="col-8">
               <h3 class="card-title" id="">Gallery: {{movie.title}} ({{movie.year_of_production}})
-
               </h3>
               <div class="row">
                     <div class="col-12">
@@ -19,7 +17,6 @@
 {% if 'management_image' in request.get_full_path %}
                         <i class="fas fa-exclamation-triangle red">{% if object.movie_gallery.all|length == 0 %} There is no images to delete! {% else %}
                             Click on image you want to delete!{% endif %}</i><br><br>
-
                             {% for imag in object.movie_gallery.all %}
                             <a href="{% url 'delete_picture' movie.slug imag.id %}"><img id="delete_img" src="/media/{{imag.picture}}"></a>
                         {% endfor %}
@@ -30,38 +27,19 @@
 {% endif %}
                     </div>
               </div>
-
               <div class="row">
                     <div class="col-12">
                     <hr>
                     <a href="{% url 'movie_detail' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{movie.title}}</a><br><br>
                     </div>
               </div>
-
             {% if is_paginated %}
             <hr>
             {% include 'pagination.html' %}
             {% endif %}
-
           </div>
        </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}

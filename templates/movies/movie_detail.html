@@ -4,7 +4,6 @@
 
 <div class="row no-gutters">
     <div class="col-8 offset-2">
-
        <div class="row">
           <div class="col-2">
               <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
@@ -15,7 +14,6 @@
               </h3>
             <div class="row font_90">
                 <div class="col-5">
-
                               <div class="row no_gutters">
                                   <div class="col-4">
                                       <p>Category:</p>
@@ -35,11 +33,9 @@
                                            {% elif movie.moviecategory_set.all|length == 0 %}
                                                 <i class="fas fa-ban red"></i>
                                           {% endif %}
-
                                       </p>
                                   </div>
                               </div>
-
                               <div class="row">
                                   <div class="col-4">
                                       <p>Director:</p>
@@ -59,7 +55,6 @@
                                            {% elif director.all|length == 0 %}
                                                 <i class="fas fa-ban red"></i>
                                           {% endif %}
-
                                       </p>
                                   </div>
                               </div>
@@ -92,18 +87,13 @@
                 <div class="col-3">
                     <div class="row">
                          <div class="col-12" >
-
                               <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{movie.average_stars|first}}</h3>
                               <p id="element2">{{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
-
                          </div>
                     </div>
-
                   <div class="row">
                      <div class="col-12 align-self-end">
-
                         {% include 'form_stars.html' with object=movie.movie_comments vote=user_vote %}
-
                          <div class="fb-share-button" data-href="{{request.get_full_path}}"
                               data-layout="button" data-size="small" data-mobile-iframe="true">
                              <a target="_blank" href=""
@@ -136,13 +126,9 @@
                 <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}
-
             </div>
         </div>
         <br><br>
-
-
-
 
         <div class="row justify-content-center">
             <div class="col-8">
@@ -154,7 +140,6 @@
                     {% endif %}
                 </h4>
          <hr>
-
                     <table class="table table-striped">
                           <tbody>
                           {% for query in related_actors %}
@@ -175,7 +160,6 @@
                                     {% endif %}
                                 </td>
                             </tr>
-
                     {% endif %}
                           {% endfor %}
                         </tbody>
@@ -183,7 +167,6 @@
             </div>
         </div>
 <br><br>
-
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Crew
@@ -194,7 +177,6 @@
                     {% endif %}
                 </h4>
          <hr>
-
                     <table class="table table-striped">
                           <tbody>
                           {% for query in related_crews %}
@@ -215,18 +197,14 @@
                                     {% endif %}
                                 </td>
                             </tr>
-
                     {% endif %}
                           {% endfor %}
                         </tbody>
                         </table>
-
             </div>
         </div>
-
-
-
 <br><br>
+
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Comments
@@ -235,8 +213,6 @@
                         <i class="fas fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
                     </span>
                     {% endif %}
-
-
                 </h4><hr>
                  {% for comment in your_comment_list %}
                         <div class="card">
@@ -301,7 +277,6 @@
                           </div>
                         </div>
                 {% endfor %}
-
             </div>
         </div>
         <br><br><br>
@@ -318,11 +293,5 @@
   js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-
 
 {% endblock %}

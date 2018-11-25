@@ -311,7 +311,7 @@ class CommentsListView(ListView):
 
 	def get_queryset(self):
 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
-		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date','comment')
+		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date', 'comment')
 
 
 

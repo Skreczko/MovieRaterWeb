@@ -11,7 +11,6 @@
           <div class="col-8">
               <h3 class="card-title" id="">Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})</h3>
               {% for comment in comment_list %}
-
               <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -47,12 +46,10 @@
                 {% endfor %}
                     </div>
               </div>
-
               {% if is_paginated %}
             <br>
             {% include 'pagination.html' %}
             {% endif %}
-
               <div class="row">
                     <div class="col-12">
                     <hr>
