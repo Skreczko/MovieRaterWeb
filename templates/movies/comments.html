@@ -11,7 +11,7 @@
           <div class="col-8">
               <h3 class="card-title" id="">Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})</h3>
               {% for comment in comment_list %}
-                {% if comment.comment %}
+
               <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -43,7 +43,7 @@
                               </div>
                           </div>
                         </div>
-                    {% endif %}
+
                 {% endfor %}
                     </div>
               </div>

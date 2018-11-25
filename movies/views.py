@@ -309,14 +309,13 @@ class CommentsListView(ListView):
 
 	def get_queryset(self):
 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
-		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date')
+		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date','comment')
 
 
 
 class CommentCreateView(CreateView):
 	form_class = MovieCommentForm
 	template_name = 'form_comment.html'
-
 
 	def form_valid(self, form):
 		movie = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
@@ -325,7 +324,7 @@ class CommentCreateView(CreateView):
 		check = MovieComment.objects.filter(movie=movie, added_by=self.request.user)
 		if check.exists():
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
-				u'You have added comment already!'
+				u'You have added comment already! Please check comment list.'
 			])
 			return super().form_invalid(form)
 		else:
