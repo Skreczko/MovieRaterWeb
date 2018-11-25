@@ -13,8 +13,6 @@
               <h3 class="card-title" id="">Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})
 
  </h3>
-              {% for comment in comment_list %}
-                {% if comment.comment %}
               <div class="row">
                     <div class="col-12">
 
@@ -33,20 +31,13 @@
 
 
                             <p class="card-text">{{comment.comment}}</p>
-
-
-
-
-
-
                               {% if request.user is user %}
-                            <a href="{% url 'edit_comment' movie.slug comment.id  %}" class="card-link">Edit your comment</a>
+                            <a href="{% url 'edit_comment' comment.pk comment.movie.slug%}" class="card-link">Edit your comment</a>
                             <a href="#" class="card-link">Another link</a>
                               {% endif %}
                           </div>
                         </div>
-                    {% endif %}
-                {% endfor %}
+
 
 
 
@@ -54,15 +45,11 @@
               </div>
 
 
-              {% if is_paginated %}
-            <br>
-            {% include 'pagination.html' %}
-            {% endif %}
-
-
               <div class="row">
                     <div class="col-12">
                     <hr>
+
+                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark my-2 my-sm-0" >Return {{movie}}</a><br><br>
 
                     </div>
               </div>

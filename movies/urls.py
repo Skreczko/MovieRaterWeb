@@ -3,10 +3,11 @@ from django.urls import path
 from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateView, MovieDeleteView,\
 					MovieGalleryView, \
 					MovieCastView, MovieCrewView, \
-					CommentsListView, CommentCreateView,\
+					CommentsListView, CommentCreateView, CommentsUpdateView, \
 					category_create, category_edit,\
 					gallery_create, movie_gallery_delete,\
-					cast_create, cast_edit, cast_delete, crew_create, crew_edit, crew_delete
+					cast_create, cast_edit, cast_delete, crew_create, crew_edit, crew_delete, \
+					edit_comment
 
 urlpatterns = [
 	#	MOVIES
@@ -49,7 +50,8 @@ urlpatterns = [
 	#	MOVIE COMMENTS
 	path('detail/<slug>/comments/', CommentsListView.as_view(), name='comment_list'),
 	path('detail/<slug>/comments/add_comment/', CommentCreateView.as_view(), name='add_comment'),
-	path('detail/<slug>/comments/management_comments/editing/', MovieCrewView.as_view(), name='management_crew_editing'),
+	path('detail/<slug>/comments/<id>/', edit_comment, name='edit_comment'),
+	path('detail/<slug>/comments/edit_comment/<id>', CommentsUpdateView.as_view(), name='edit_comment'),
 	path('detail/<slug>//comments/management_comments/deleting/', MovieCrewView.as_view(), name='management_crew_deleting'),
 	path('detail/<slug>/crew/edit/<id>/', crew_edit, name='edit_crew'),
 	path('detail/<slug>/crew/delete/<id>/', crew_delete, name='delete_crew'),

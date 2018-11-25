@@ -311,6 +311,8 @@ class CommentsListView(ListView):
 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
 		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date')
 
+
+
 class CommentCreateView(CreateView):
 	form_class = MovieCommentForm
 	template_name = 'form_comment.html'
@@ -323,7 +325,7 @@ class CommentCreateView(CreateView):
 		check = MovieComment.objects.filter(movie=movie, added_by=self.request.user)
 		if check.exists():
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
-				u'You have added comment already, please go to EDIT or DELETE section.'
+				u'You have added comment already!'
 			])
 			return super().form_invalid(form)
 		else:
@@ -332,8 +334,36 @@ class CommentCreateView(CreateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['movie'] = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
+		context['user'] = self.object.added_by
 		return context
 
 	def get_success_url(self):
 		view_name = 'comment_list'
 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
+
+
+
+class CommentsUpdateView(UpdateView):
+	model = MovieComment
+	template_name = 'form_comment.html'
+	form_class = MovieCommentForm
+
+
+def edit_comment(request, id=None, slug=None):
+	qs_movie = Movie.objects.get(slug=slug)
+	qs_comment = MovieComment.objects.get(pk=id)
+	form = MovieCommentForm(request.POST or None, instance=qs_comment)
+	template = 'form_comment.html'
+	context = {'form': form, 'movie': qs_movie}
+
+	if form.is_valid():
+		form.save()
+		return redirect('comment_list', slug)
+	return render(request, template, context)
+
+
+
+
+	# def get_success_url(self):
+	# 	view_name = 'movie_detail'
+	# 	return reverse(view_name, kwargs={'slug': self.object.slug})
