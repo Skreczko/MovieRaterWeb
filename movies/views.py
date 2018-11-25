@@ -334,7 +334,6 @@ class CommentCreateView(CreateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['movie'] = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
-		context['user'] = self.object.added_by
 		return context
 
 	def get_success_url(self):
@@ -348,22 +347,17 @@ class CommentsUpdateView(UpdateView):
 	template_name = 'form_comment.html'
 	form_class = MovieCommentForm
 
+	def get_success_url(self):
+		view_name = 'comment_list'
+		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
 
-def edit_comment(request, id=None, slug=None):
-	qs_movie = Movie.objects.get(slug=slug)
-	qs_comment = MovieComment.objects.get(pk=id)
-	form = MovieCommentForm(request.POST or None, instance=qs_comment)
-	template = 'form_comment.html'
-	context = {'form': form, 'movie': qs_movie}
 
-	if form.is_valid():
-		form.save()
-		return redirect('comment_list', slug)
-	return render(request, template, context)
+class CommentsDeleteView(DeleteView):
+	model = MovieComment
+	template_name = "confirm_delete.html"
 
+	def get_success_url(self):
+		return reverse("movie_list")
 
 
 
-	# def get_success_url(self):
-	# 	view_name = 'movie_detail'
-	# 	return reverse(view_name, kwargs={'slug': self.object.slug})
