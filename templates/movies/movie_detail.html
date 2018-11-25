@@ -230,9 +230,15 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Comments
+                    {% if all_comment_list|length > 5 %}
+                    <span id="movie_dur_span"><a href="{% url 'comment_list' movie.slug %}">
+                        <i class="fas fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
+                    </span>
+                    {% endif %}
 
-                    {% for comment in comment_list %}
 
+                </h4><hr>
+                 {% for comment in your_comment_list %}
                         <div class="card">
                           <div class="card-body">
                           <div class="row">
@@ -262,7 +268,38 @@
                               </div>
                           </div>
                         </div>
+                {% endfor %}
 
+                        {% for comment in comment_list %}
+                        <div class="card">
+                          <div class="card-body">
+                          <div class="row">
+                              <div class="col-11">
+                            <h5 class="card-title">{% include 'stars.html' with object=comment.stars %}</h5>
+                            <p class="card-subtitle mb-3 text-muted comment_added_by">
+                                Added by: <span class="bold">{{comment.added_by.username}}</span>  |
+                                {% if comment.added_time == comment.edited_time %}
+                             {{comment.added_time}}
+                              {% else %}
+                               {{comment.added_time}} (added) |  {{comment.edited_time}} (edited)
+                              {% endif %}
+                            </p>
+                              </div>
+                              <div class="col-1">
+                                  {% if request.user.id is comment.added_by.id %}
+                            <a href="{% url 'edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>
+                            <a href="{% url 'delete_comment' comment.id  %}"><i class="far fa-trash-alt"></i></a>
+                              {% endif %}
+                              </div>
+                          </div>
+                              <div class="row">
+                                  <div class="col-12">
+                                      <p class="card-text">{{comment.comment}}</p>
+                          <br>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
                 {% endfor %}
 
             </div>
