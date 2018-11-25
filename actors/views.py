@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Actor, ActorComment, ActorGallery
-from .forms import ActorForm, ActorGalleryForm
+from .forms import ActorForm, ActorGalleryForm, ActorStarsForm
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
@@ -19,14 +20,41 @@ class ActorListView(ListView):
 		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by("last_name")
 		return qs
 
-class ActorDetailView(DetailView):
+class ActorDetailView(FormMixin, DetailView):
 	model = Actor
+	form_class = ActorStarsForm
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['gallery_actor_20'] = ActorGallery.objects.filter(actor=self.object)[:20]
 		context['gallery_actor_all'] = ActorGallery.objects.filter(actor=self.object)
+		if ActorComment.objects.filter(added_by=self.request.user, actor=self.object).exists():
+			context['user_vote'] = ActorComment.objects.filter(added_by=self.request.user, actor=self.object).first().stars
 		return context
+
+	def get_success_url(self):
+		view_name = 'actor_detail'
+		return reverse(view_name, kwargs={'slug': self.object.slug})
+
+	def post(self, request, *args, **kwargs):
+		# if not request.user.is_authenticated:
+		# 	return HttpResponseForbidden()
+		self.object = self.get_object()
+		form = self.get_form()
+		if form.is_valid():
+			return self.form_valid(form)
+		else:
+			return self.form_invalid(form)
+
+	def form_valid(self, form):
+		stars = form.cleaned_data.get('stars')
+		added_by = self.request.user
+		check = ActorComment.objects.filter(added_by=added_by, actor=self.object)
+		if check.exists():
+			ActorComment.objects.filter(added_by=added_by, actor=self.object).update(stars=stars)
+		else:
+			ActorComment.objects.create(stars=stars, actor=self.object, added_by=added_by).save()
+		return super().form_valid(form)
 
 
 class ActorCreateView(CreateView):

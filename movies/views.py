@@ -8,13 +8,12 @@ from actors.models import Actor, ActorRole, CrewRole
 from actors.forms import MovieCastForm, MovieCastRoleForm, \
 							MovieCrewForm, MovieCrewRoleForm
 from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm, MovieCommentForm
-from datetime import datetime
 from django.views.generic.list import ListView
-from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect
+
+
 # Create your views here.
 
 """------------------------MOVIE SECTION------------------------"""
