@@ -131,7 +131,7 @@ class ActorGallery(models.Model):
 
 class ActorRole(models.Model):
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_role", null=True)
-	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_role", null=True)
+	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="actor_role", null=True)
 	role = models.CharField(max_length=100)
 	def upload_path(instance, filename):
 		extension = filename.split('.')[-1]

@@ -127,6 +127,9 @@ class ActorCastView(DetailView):
 		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
 		return context
 
+from django.forms.utils import ErrorList
+from django import forms
+
 
 def actor_cast_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
@@ -134,10 +137,25 @@ def actor_cast_create(request, slug=None):
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
-		obj = form.save(commit=False)
-		obj.actor = qs_actor
-		obj.save()
-		return redirect('actor_detail', slug)
+		movie = form.cleaned_data.get('movie')
+		check = ActorRole.objects.filter(movie=movie, actor=qs_actor)
+		if check.exists():
+			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+				u'Your cannot add more than one actor per movie!'
+			])
+
+		else:
+
+			# ActorRole.objects.filter(movie=movie, actor=qs_actor).update(role=role, picture=picture)
+		# else:
+		# 	ActorRole.objects.create(movie=movie, actor=qs_actor, role=role, picture=picture).save()
+
+			obj = form.save(commit=False)
+			obj.actor = qs_actor
+			print (obj.actor)
+
+			obj.save()
+			return redirect('actor_detail', slug)
 	return render(request, template, context)
 
 

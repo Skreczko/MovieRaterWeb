@@ -216,10 +216,17 @@ def cast_create(request, slug=None):
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
-		obj = form.save(commit=False)
-		obj.movie = qs_movie
-		obj.save()
-		return redirect('movie_detail', slug)
+		actor = form.cleaned_data.get('actor')
+		check = ActorRole.objects.filter(actor=actor, movie=qs_movie)
+		if check.exists():
+			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+				u'Your cannot add more than one actor per movie!'
+			])
+		else:
+			obj = form.save(commit=False)
+			obj.movie = qs_movie
+			obj.save()
+			return redirect('movie_detail', slug)
 	return render(request, template, context)
 
 
@@ -266,10 +273,17 @@ def crew_create(request, slug=None):
 	template = 'form.html'
 	context = {'form': form}
 	if form.is_valid():
-		obj = form.save(commit=False)
-		obj.movie = qs_movie
-		obj.save()
-		return redirect('movie_detail', slug)
+		actor = form.cleaned_data.get('actor')
+		check = ActorRole.objects.filter(actor=actor, movie=qs_movie)
+		if check.exists():
+			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+				u'Your cannot add more than one actor per movie!'
+			])
+		else:
+			obj = form.save(commit=False)
+			obj.movie = qs_movie
+			obj.save()
+			return redirect('movie_detail', slug)
 	return render(request, template, context)
 
 

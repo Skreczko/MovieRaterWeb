@@ -30,11 +30,11 @@
                         <br><br>
                     {% elif 'management_crew/editing' in request.get_full_path %}
                         <i class="fas fa-exclamation-triangle orange">{% if related_crews|length == 0 %} There is no crew to edit! {% else %}
-                            Click on cast name that you want to edit!{% endif %}</i>
+                            Click on movie title that you want to edit!{% endif %}</i>
                         <br><br>
                     {% elif 'management_crew/deleting' in request.get_full_path %}
                         <i class="fas fa-exclamation-triangle red">{% if related_crews|length == 0 %} There is no crew to delete! {% else %}
-                            Click on cast name that you want to delete!{% endif %}</i>
+                            Click on movie title that you want to delete!{% endif %}</i>
                         <br><br>
                     {% endif %}
                  <table class="table table-striped">
@@ -58,13 +58,13 @@
 
 
 
-                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'edit_cast' movie.slug query.actor.id %}"
-                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'delete_cast' movie.slug query.actor.id %}"
+                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' actor.slug query.movie.id %}"
+                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' actor.slug query.movie.id %}"
                                     {% else %}
-                                    href="{{query.actor.get_to_detail}}"
-                                    {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
-                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
-                                      <p class="votes_for_table">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                    href="{{query.movie.get_to_detail}}"
+                                    {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>
+                                    {% include 'stars.html' with object=query.movie.average_stars|first %}
+                                      <p class="votes_for_table">Movie rate: {{query.movie.average_stars|first}}/5  |  {{query.movie.average_stars|last}} vote{{query.movie.average_stars|last|pluralize}}</p>
                                 </td>
                                 <td align="left" id="role_in_table" width="40%">
                                     <div class="bold">{{ query.role }}</div>
@@ -79,15 +79,15 @@
                           {% elif 'crew' in request.get_full_path %}
                             {% for query in related_crews %}
                             <tr>
-                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
+                              <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="/media/{{query.movie.poster}}" alt="{{query.movie.poster}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'edit_crew' movie.slug query.actor.id %}"
-                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'delete_crew' movie.slug query.actor.id %}"
+                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'actor_edit_crew' actor.slug query.movie.id %}"
+                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'actor_delete_crew' actor.slug query.movie.id %}"
                                     {% else %}
-                                    href="{{query.actor.get_to_detail}}"
-                                    {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
-                                    {% include 'stars.html' with object=query.actor.average_stars|first %}
-                                      <p class="votes_for_table">Rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
+                                    href="{{query.movie.get_to_detail}}"
+                                    {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>
+                                    {% include 'stars.html' with object=query.movie.average_stars|first %}
+                                      <p class="votes_for_table">Movie rate: {{query.movie.average_stars|first}}/5  |  {{query.movie.average_stars|last}} vote{{query.movie.average_stars|last|pluralize}}</p>
                                 </td>
                                 <td align="left" id="role_in_table" width="40%">
                                     <div class="bold">{{ query.role }}</div>
@@ -105,7 +105,7 @@
               <div class="row">
                     <div class="col-12">
                     <hr>
-                    <a href="{% url 'movie_detail' movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{movie.title}}</a><br><br>
+                    <a href="{% url 'actor_detail' actor.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{actor.name}} {{actor.last_name}}</a><br><br>
                     </div>
               </div>
           </div>
