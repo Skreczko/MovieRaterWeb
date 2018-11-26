@@ -106,7 +106,7 @@
        </div>
     </div>
         <br><br>
-
+        {% if gallery_movie_all %}
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Gallery
@@ -129,7 +129,7 @@
             </div>
         </div>
         <br><br>
-
+        {% if related_actors %}
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Cast
@@ -167,8 +167,12 @@
             </div>
         </div>
 <br><br>
+        {% endif %}
+        {% endif %}
+        {% if related_crews %}
         <div class="row justify-content-center">
             <div class="col-8">
+
                 <h4>Crew
                     {% if related_crews|length > 10 %}
                     <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
@@ -204,7 +208,8 @@
             </div>
         </div>
 <br><br>
-
+        {% endif %}
+        {% if all_comment_list %}
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Comments
@@ -280,6 +285,7 @@
             </div>
         </div>
         <br><br><br>
+        {% endif %}
 </div>
 
 <div class="col-2">
