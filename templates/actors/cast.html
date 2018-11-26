@@ -46,19 +46,7 @@
                                 <td id="actor_in_table" width="40%">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' actor.slug query.movie.id %}"
+                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' actor.slug query.id %}"
                                     {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' actor.slug query.movie.id %}"
                                     {% else %}
                                     href="{{query.movie.get_to_detail}}"

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.forms.utils import ErrorList
+from django import forms
 from django.urls import reverse
 from .models import Actor, ActorComment, ActorGallery, ActorRole
 from .forms import ActorForm, ActorGalleryForm, ActorStarsForm, \
@@ -127,8 +129,7 @@ class ActorCastView(DetailView):
 		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
 		return context
 
-from django.forms.utils import ErrorList
-from django import forms
+
 
 
 def actor_cast_create(request, slug=None):
@@ -160,10 +161,7 @@ def actor_cast_create(request, slug=None):
 
 
 def actor_cast_edit(request, slug=None, id=None):
-	qs_actor = Actor.objects.get(slug=slug)
-	# qs_movie = Movie.objects.get(pk=id)
-	qs_movie = Actor.actor_role.movie(pk=id)
-	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	qs_cast = ActorRole.objects.get(pk=id)
 	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
 	template = 'form.html'
 	context = {'form': form}
@@ -173,10 +171,7 @@ def actor_cast_edit(request, slug=None, id=None):
 	return render(request, template, context)
 
 def actor_cast_delete(request, slug=None, id=None):
-	qs_actor = Actor.objects.get(slug=slug)
-	# qs_movie = Actor.objects.get(pk=id)
-	qs_movie = Actor.actor_role.movie(pk=id)
-	qs_cast = ActorRole.objects.get(movie=qs_movie, actor=qs_actor)
+	qs_cast = ActorRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
 	context = {'role': qs_cast}
 	if request.method == 'POST':

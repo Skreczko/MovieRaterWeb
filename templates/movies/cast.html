@@ -44,8 +44,8 @@
                             <tr>
                               <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'edit_cast' movie.slug query.actor.id %}"
-                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'delete_cast' movie.slug query.actor.id %}"
+                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'edit_cast' movie.slug query.id %}"
+                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'delete_cast' movie.slug query.id %}"
                                     {% else %}
                                     href="{{query.actor.get_to_detail}}"
                                     {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
@@ -67,8 +67,8 @@
                             <tr>
                               <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" alt="{{query.actor.last_name}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'edit_crew' movie.slug query.actor.id %}"
-                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'delete_crew' movie.slug query.actor.id %}"
+                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'edit_crew' movie.slug query.id %}"
+                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'delete_crew' movie.slug query.id %}"
                                     {% else %}
                                     href="{{query.actor.get_to_detail}}"
                                     {% endif %}> {{ query.actor.name }} {{ query.actor.last_name }}</a>
