@@ -11,7 +11,7 @@
           </div>
           <div class="col-10">
               <h3 class="card-title">{{object.name}} {{object.last_name}}</h3>
-              <p>{{object.original_name}}</p>
+              {% if object.original_name %}<p>{{object.original_name}}</p>{% endif %}
               <div class="row">
                   <div class="col-2">
                       <p>Born:</p>
@@ -53,7 +53,7 @@
       </div>
 
         <br><br>
-
+        {% if gallery_actor_all %}
               <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Gallery
@@ -76,9 +76,9 @@
             </div>
         </div>
         <br><br>
+        {% endif %}
 
-
-
+        {% if object.biography %}
         <div class="row justify-content-center">
             <div class="col-8">
                 <h4>Biography</h4>
@@ -87,13 +87,14 @@
             </div>
         </div>
         <br><br>
+        {% endif %}
 
-
+        {% if related_movies %}
          <div class="row justify-content-center">
             <div class="col-8">
-                <h4>Filmography {{related_movies}} sss
+                <h4>Filmography
                     {% if related_movies|length > 10 %}
-                    <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
+                    <span id="movie_dur_span"><a href="{% url 'actor_cast_list' actor.slug %}">
                         <i class="fas fa-users"> ({{related_movies|length|add:-10}} more)</i></a>
                     </span>
                     {% endif %}
@@ -125,10 +126,10 @@
                     </table>
             </div>
         </div>
-<br><br>
+        <br><br>
+        {% endif %}
 
 
-        <hr>
 
         <div class="row justify-content-center">
             <div class="col-12">

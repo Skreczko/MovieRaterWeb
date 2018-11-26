@@ -33,6 +33,7 @@ class ActorDetailView(FormMixin, DetailView):
 		context['gallery_actor_all'] = ActorGallery.objects.filter(actor=self.object)
 		if ActorComment.objects.filter(added_by=self.request.user, actor=self.object).exists():
 			context['user_vote'] = ActorComment.objects.filter(added_by=self.request.user, actor=self.object).first().stars
+		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
 		return context
 
 	def get_success_url(self):
@@ -144,17 +145,9 @@ def actor_cast_create(request, slug=None):
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
 				u'Your cannot add more than one actor per movie!'
 			])
-
 		else:
-
-			# ActorRole.objects.filter(movie=movie, actor=qs_actor).update(role=role, picture=picture)
-		# else:
-		# 	ActorRole.objects.create(movie=movie, actor=qs_actor, role=role, picture=picture).save()
-
 			obj = form.save(commit=False)
 			obj.actor = qs_actor
-			print (obj.actor)
-
 			obj.save()
 			return redirect('actor_detail', slug)
 	return render(request, template, context)
