@@ -47,7 +47,7 @@
 
 
                                     <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' actor.slug query.id %}"
-                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' actor.slug query.movie.id %}"
+                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' actor.slug query.id %}"
                                     {% else %}
                                     href="{{query.movie.get_to_detail}}"
                                     {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>

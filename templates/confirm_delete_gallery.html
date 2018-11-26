@@ -15,9 +15,9 @@
           <div class="row">
               <div class="col-2">
                   {% if 'persons' in request.get_full_path %}
-                  <img id="actor_image_list" class="img-responsive" src="/media/{{photo.picture}}" >
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
                   {% elif 'movies' in request.get_full_path %}
-                  <img id="actor_image_list" class="img-responsive" src="/media/{{photo.picture}}" >
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
                   {% elif 'cast' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
                   {% endif %}
