@@ -17,21 +17,22 @@
                   <img id="actor_image_list" class="img-responsive" src="/media/{{object.photo}}" alt="{{object.title}}">
                   {% elif 'movies' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{object.poster}}" alt="{{object.title}}">
-                  {% elif 'comments' in request.get_full_path %}
                   {% endif %}
               </div>
               <div class="col-10">
-                  <h3 class="card-title">{% if 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
-                      {% elif 'comments' in request.get_full_path %}Comment: {{object.movie.title}}
-                      {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
-                       {% endif %}</h3>
+                  <h3 class="card-title">
+                    {% if 'comments' and 'movies' in request.get_full_path %}Comment: {{object.movie.title}}
+                    {% elif 'comments' and 'persons' in request.get_full_path %}Comment: {{object.actor.name}} {{object.actor.last_name}}
+                    {% elif 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
+                    {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
+                    {% endif %}</h3>
                   <div class="row">
                       <div class="col-6">
                           <form action="" method="POST">{% csrf_token %}
                               <br>
                               <p> Are you sure you want to delete
-                                  {% if 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
-                                  {% elif 'comments' in request.get_full_path %} your comment:<br>{{object.comment|truncatewords:20}}
+                                  {% if 'comments' in request.get_full_path %} your comment:<br>{{object.comment|truncatewords:20}}
+                                  {% elif 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
                                   {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
                                   {% endif %}?</p>
                               <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Submit</button>

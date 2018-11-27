@@ -269,8 +269,9 @@ def crew_create(request, slug=None):
 	context = {'form': form}
 	if form.is_valid():
 		actor = form.cleaned_data.get('actor')
-		check = ActorRole.objects.filter(actor=actor, movie=qs_movie)
-		if check.exists() and check.first().role in CREW_ROLE:
+		print(actor)
+		check = CrewRole.objects.filter(actor=actor, movie=qs_movie)
+		if check.exists():
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
 				u'Your cannot add more than one actor per movie!'
 			])
@@ -278,8 +279,12 @@ def crew_create(request, slug=None):
 			obj = form.save(commit=False)
 			obj.movie = qs_movie
 			obj.save()
+			messages.success(request,
+							 '{actor} as a crew member of {title} has been added.'.format(actor=actor, title=qs_movie.title))
 			return redirect('movie_detail', slug)
 	return render(request, template, context)
+
+
 
 
 def crew_edit(request, slug=None, id=None):
@@ -289,7 +294,9 @@ def crew_edit(request, slug=None, id=None):
 	context = {'form': form}
 	if form.is_valid():
 		form.save()
-
+		messages.success(request,
+						 '{actor} as a crew member of {title} has been edited.'.format(actor=qs_cast.actor,
+																					  title=qs_cast.movie.title))
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
@@ -299,6 +306,7 @@ def crew_delete(request, slug=None, id=None):
 	context = {'role': qs_cast}
 	if request.method == 'POST':
 		qs_cast.delete()
+		messages.success(request, 'Crew member has been deleted.')
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
@@ -310,7 +318,7 @@ def crew_delete(request, slug=None, id=None):
 #							COMMENTS
 
 class CommentsListView(ListView):
-	template_name = 'movies/comments.html'
+	template_name = 'comments.html'
 	context_object_name = 'comment_list'
 	paginate_by = 20
 
@@ -320,9 +328,10 @@ class CommentsListView(ListView):
 
 
 
-class CommentCreateView(CreateView):
+class CommentCreateView(SuccessMessageMixin, CreateView):
 	form_class = MovieCommentForm
 	template_name = 'form_comment.html'
+	success_message = "Your comment was created successfully!"
 
 	def form_valid(self, form):
 		movie = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
@@ -348,19 +357,25 @@ class CommentCreateView(CreateView):
 
 
 
-class CommentsUpdateView(UpdateView):
+class CommentsUpdateView(SuccessMessageMixin, UpdateView):
 	model = MovieComment
 	template_name = 'form_comment.html'
 	form_class = MovieCommentForm
+	success_message = "Your comment was updated successfully!"
 
 	def get_success_url(self):
 		view_name = 'comment_list'
 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
 
 
-class CommentsDeleteView(DeleteView):
+class CommentsDeleteView(SuccessMessageMixin, DeleteView):
 	model = MovieComment
 	template_name = "confirm_delete.html"
+	success_message = "Your comment was deleted successfully!"
+
+	def delete(self, request, *args, **kwargs):
+		messages.success(self.request, self.success_message)
+		return super().delete(request, *args, **kwargs)
 
 	def get_success_url(self):
 		return reverse("movie_list")

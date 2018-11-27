@@ -40,13 +40,10 @@
 
                             </ul>
 
-
-
-
                       <li>Comment:</li>
                            <ul>
-                               <li><a href="#"><i class="fas fa-comments"></i> All</a></li>
-                               <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
+                               <li><a href="{% url 'actor_comment_list' actor.slug %}"><i class="fas fa-comments"></i> All</a></li>
+                               <li><a href="{% url 'actor_add_comment' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                               </ul>
                      </ul>
                   </div>

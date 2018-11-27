@@ -6,10 +6,19 @@
     <div class="col-8 offset-2">
        <div class="row">
           <div class="col-2">
+              {% if 'movies' in request.get_full_path %}
               <img id="actor_image_list" class="img-responsive" src="/media/{{comment_list.0.movie.poster}}" alt="{{comment_list.0.movie.title}}">
+              {% elif 'persons' in request.get_full_path %}
+               <img id="actor_image_list" class="img-responsive" src="/media/{{comment_list.0.actor.photo}}" alt="{{comment_list.0.actor.photo}}">
+              {% endif %}
           </div>
           <div class="col-8">
-              <h3 class="card-title" id="">Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})</h3>
+              <h3 class="card-title" id="">
+                    {% if 'movies' in request.get_full_path %}
+                        Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})</h3>
+                    {% elif 'persons' in request.get_full_path %}
+                        Comments: {{comment_list.0.actor.name}} {{comment_list.0.actor.last_name}}</h3>
+                    {% endif %}
               {% for comment in comment_list %}
               <div class="row">
                     <div class="col-12">
@@ -29,17 +38,24 @@
                               </div>
                               <div class="col-1">
                                   {% if request.user.id is comment.added_by.id %}
-                            <a href="{% url 'edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>
-                            <a href="{% url 'delete_comment' comment.id  %}"><i class="far fa-trash-alt"></i></a>
+                                    {% if 'movies' in request.get_full_path %}
+                                        <a href="{% url 'edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>
+                                        <a href="{% url 'delete_comment' comment.id  %}"><i class="far fa-trash-alt"></i></a>
+                                    {% elif 'persons' in request.get_full_path %}
+                                        <a href="{% url 'actor_edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>
+                                        <a href="{% url 'actor_delete_comment' comment.id  %}"><i class="far fa-trash-alt"></i></a>
+                                    {% endif %}
                               {% endif %}
                               </div>
                           </div>
+                              {% if comment.comment %}
                               <div class="row">
                                   <div class="col-12">
                                       <p class="card-text">{{comment.comment}}</p>
                           <br>
                                   </div>
                               </div>
+                              {% endif %}
                           </div>
                         </div>
 
@@ -54,10 +70,12 @@
                     <div class="col-12">
                     <hr>
                     {% if comment_list.0.movie %}
-                    <a href="{% url 'movie_detail' comment_list.0.movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{comment_list.0.movie.title}}</a><br><br>
-                        {% else %}
+                        <a href="{% url 'movie_detail' comment_list.0.movie.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{comment_list.0.movie.title}}</a><br><br>
+                    {% elif comment_list.0.actor %}
+                        <a href="{% url 'actor_detail' comment_list.0.actor.slug %}" class="btn btn-outline-dark my-2 my-sm-0" >Return to {{comment_list.0.actor.name}} {{comment_list.0.actor.last_name}}</a><br><br>
+                    {% else %}
                         <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark my-2 my-sm-0" >Return </a><br><br>
-                        {% endif %}
+                    {% endif %}
                     </div>
               </div>
           </div>

@@ -25,7 +25,13 @@ class ActorForm(forms.ModelForm):
 class ActorCommentForm(forms.ModelForm):
 	class Meta:
 		model = ActorComment
-		fields = ['comment' ]
+		fields = ['comment', 'stars']
+
+		widgets = {
+			'comment': forms.Textarea
+
+		}
+
 
 
 class ActorStarsForm(forms.Form):

@@ -23,23 +23,28 @@ urlpatterns = [
 	#	MOVIES GALLERY
 	path('detail/<slug>/gallery/', MovieDetailView.as_view(template_name = 'movies/gallery.html'), name='picture_gallery'),
 	path('detail/<slug>/gallery/add_image/', gallery_create, name='add_picture'),
-	path('detail/<slug>/gallery/management_image/', MovieDetailView.as_view(template_name = 'movies/gallery.html'), name='management_picture'),
+	path('detail/<slug>/gallery/management_image/', MovieDetailView.as_view(template_name = 'movies/gallery.html'),
+		 name='management_picture'),
 	path('detail/<slug>/gallery/delete/<id>', movie_gallery_delete, name='delete_picture'),
 	#path('detail/<slug>/edit_category/', category_edit, name='category_edit'),
 
 	#	MOVIES CAST
 	path('detail/<slug>/cast/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='cast_list'),
 	path('detail/<slug>/cast/add_role/', cast_create, name='add_cast'),
-	path('detail/<slug>/cast/management_cast/editing/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='management_cast_editing'),
-	path('detail/<slug>/cast/management_cast/deleting/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='management_cast_deleting'),
+	path('detail/<slug>/cast/management_cast/editing/', MovieDetailView.as_view(template_name = 'movies/cast.html'),
+		 																				name='management_cast_editing'),
+	path('detail/<slug>/cast/management_cast/deleting/', MovieDetailView.as_view(template_name = 'movies/cast.html'),
+		 																				name='management_cast_deleting'),
 	path('detail/<slug>/cast/edit/<id>/', cast_edit, name='edit_cast'),
 	path('detail/<slug>/cast/delete/<id>/', cast_delete, name='delete_cast'),
 
 	#	MOVIES CREW
 	path('detail/<slug>/crew/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='crew_list'),
 	path('detail/<slug>/crew/add_role/', crew_create, name='add_crew'),
-	path('detail/<slug>/crew/management_crew/editing/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='management_crew_editing'),
-	path('detail/<slug>/crew/management_crew/deleting/', MovieDetailView.as_view(template_name = 'movies/cast.html'), name='management_crew_deleting'),
+	path('detail/<slug>/crew/management_crew/editing/', MovieDetailView.as_view(template_name = 'movies/cast.html'),
+		 																				name='management_crew_editing'),
+	path('detail/<slug>/crew/management_crew/deleting/', MovieDetailView.as_view(template_name = 'movies/cast.html'),
+		 																				name='management_crew_deleting'),
 	path('detail/<slug>/crew/edit/<id>/', crew_edit, name='edit_crew'),
 	path('detail/<slug>/crew/delete/<id>/', crew_delete, name='delete_crew'),
 
