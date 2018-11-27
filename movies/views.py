@@ -260,9 +260,7 @@ def crew_create(request, slug=None):
 
 
 def crew_edit(request, slug=None, id=None):
-	qs_movie = Movie.objects.get(slug=slug)
-	qs_actor = Actor.objects.get(pk=id)
-	qs_cast = CrewRole.objects.get(movie=qs_movie, actor=qs_actor)
+	qs_cast = CrewRole.objects.get(pk=id)
 	form = MovieCrewRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
 	template = 'form.html'
 	context = {'form': form}
@@ -272,9 +270,7 @@ def crew_edit(request, slug=None, id=None):
 	return render(request, template, context)
 
 def crew_delete(request, slug=None, id=None):
-	qs_movie = Movie.objects.get(slug=slug)
-	qs_actor = Actor.objects.get(pk=id)
-	qs_cast = CrewRole.objects.get(movie=qs_movie, actor=qs_actor)
+	qs_cast = CrewRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
 	context = {'role': qs_cast}
 	if request.method == 'POST':

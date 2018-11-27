@@ -66,3 +66,9 @@ class ActorCastForm(forms.ModelForm):
 		fields = ['movie', 'role', 'picture']
 
 
+class ActorCrewForm(forms.ModelForm):
+	class Meta:
+		model = CrewRole
+		fields = ['movie', 'role', 'picture']
+
+

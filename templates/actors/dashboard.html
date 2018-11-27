@@ -20,19 +20,27 @@
                                <li><a href="{% url 'actor_management_picture' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                               </ul>
                       <li>Filmography</li>
-                           <ul>
-                               {% if actor.is_crew %}
-                               <li><a href="#"><i class="fas fa-users"></i> All</a></li>
-                               <li><a href="#"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="#"><i class="fas fa-pen"></i> Change</a></li>
-                               <li><a href="#"><i class="far fa-trash-alt"></i> Delete</a></li>
-                               {% else %}
-                               <li><a href="{% url 'actor_cast_list' actor.slug %}"><i class="fas fa-users"></i> All</a></li>
-                               <li><a href="{% url 'actor_add_cast' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="{% url 'actor_management_cast_editing' actor.slug %}"><i class="fas fa-pen"></i> Change</a></li>
-                               <li><a href="{% url 'actor_management_cast_deleting' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
-                               {% endif %}
-                              </ul>
+
+                            <ul>
+                               <li class="bold">As Actor</li>
+                               <ul>
+                                   <li><a href="{% url 'actor_cast_list' actor.slug %}"><i class="fas fa-users"></i> All</a></li>
+                                   <li><a href="{% url 'actor_add_cast' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'actor_management_cast_editing' actor.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                                   <li><a href="{% url 'actor_management_cast_deleting' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               </ul>
+                                <li class="bold">As Crew member</li>
+                               <ul>
+                                   <li><a href="{% url 'actor_crew_list' actor.slug %}"><i class="fas fa-users"></i> All</a></li>
+                                   <li><a href="{% url 'actor_add_crew' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'actor_management_crew_editing' actor.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                                   <li><a href="{% url 'actor_management_crew_deleting' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               </ul>
+                            </ul>
+
+
+
+
                       <li>Comment:</li>
                            <ul>
                                <li><a href="#"><i class="fas fa-comments"></i> All</a></li>

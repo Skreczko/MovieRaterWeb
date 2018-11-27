@@ -46,8 +46,8 @@
                                 <td id="actor_in_table" width="40%">
 
 
-                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' actor.slug query.id %}"
-                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' actor.slug query.id %}"
+                                    <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' slug=actor.slug id=query.id %}"
+                                    {% elif 'management_cast/deleting' in request.get_full_path %} href="{% url 'actor_delete_cast' slug=actor.slug id=query.id %}"
                                     {% else %}
                                     href="{{query.movie.get_to_detail}}"
                                     {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>
@@ -69,8 +69,8 @@
                             <tr>
                               <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="/media/{{query.movie.poster}}" alt="{{query.movie.poster}}">{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
-                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'actor_edit_crew' actor.slug query.movie.id %}"
-                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'actor_delete_crew' actor.slug query.movie.id %}"
+                                    <a class="bold" {% if 'management_crew/editing' in request.get_full_path %} href="{% url 'actor_edit_crew' slug=actor.slug id=query.id %}"
+                                    {% elif 'management_crew/deleting' in request.get_full_path %} href="{% url 'actor_delete_crew' slug=actor.slug id=query.id %}"
                                     {% else %}
                                     href="{{query.movie.get_to_detail}}"
                                     {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>

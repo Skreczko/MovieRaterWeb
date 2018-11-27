@@ -2,14 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.utils import ErrorList
 from django import forms
 from django.urls import reverse
-from .models import Actor, ActorComment, ActorGallery, ActorRole
+from .models import Actor, ActorComment, ActorGallery, ActorRole, CrewRole
 from .forms import ActorForm, ActorGalleryForm, ActorStarsForm, \
-					ActorCastForm, MovieCastRoleForm
+					ActorCastForm, MovieCastRoleForm, \
+					ActorCrewForm, MovieCrewRoleForm
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from .models import CREW_ROLE
 
 
 # Create your views here.
@@ -20,7 +23,7 @@ class ActorListView(ListView):
 	queryset = Actor.objects.all()
 
 	def get_queryset(self, *args, **kwargs):
-		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by("last_name")
+		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew','last_name')
 		return qs
 
 class ActorDetailView(FormMixin, DetailView):
@@ -34,6 +37,7 @@ class ActorDetailView(FormMixin, DetailView):
 		if ActorComment.objects.filter(added_by=self.request.user, actor=self.object).exists():
 			context['user_vote'] = ActorComment.objects.filter(added_by=self.request.user, actor=self.object).first().stars
 		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
+		context['related_crews'] = CrewRole.objects.filter(actor=self.object)
 		return context
 
 	def get_success_url(self):
@@ -155,4 +159,47 @@ def actor_cast_delete(request, slug=None, id=None):
 		qs_cast.delete()
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
+
+
+#							CREW
+
+def actor_crew_create(request, slug=None):
+	qs_actor = Actor.objects.get(slug=slug)
+	form = ActorCrewForm(request.POST or None, request.FILES or None)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		movie = form.cleaned_data.get('movie')
+		check = ActorRole.objects.filter(movie=movie, actor=qs_actor)
+		if check.exists() and check.first().role in CREW_ROLE:
+			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+				u'Your cannot add more than one actor per movie!'
+			])
+		else:
+			obj = form.save(commit=False)
+			obj.actor = qs_actor
+			obj.save()
+			return redirect('actor_detail', slug)
+	return render(request, template, context)
+
+
+def actor_crew_edit(request, slug=None, id=None):
+	qs_cast = CrewRole.objects.get(pk=id)
+	form = MovieCrewRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
+	template = 'form.html'
+	context = {'form': form}
+	if form.is_valid():
+		form.save()
+		return redirect('actor_detail', slug)
+	return render(request, template, context)
+
+def actor_crew_delete(request, slug=None, id=None):
+	qs_cast = CrewRole.objects.get(pk=id)
+	template = "confirm_delete_gallery.html"
+	context = {'role': qs_cast}
+	if request.method == 'POST':
+		qs_cast.delete()
+		return redirect('actor_detail', slug)
+	return render(request, template, context)
+
 
