@@ -320,7 +320,7 @@ def crew_delete(request, slug=None, id=None):
 class CommentsListView(ListView):
 	template_name = 'comments.html'
 	context_object_name = 'comment_list'
-	paginate_by = 20
+	paginate_by = 10
 
 	def get_queryset(self):
 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])

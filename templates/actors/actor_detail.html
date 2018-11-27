@@ -20,7 +20,6 @@
                       {% endif %}
                       <p>Birth place:</p>
 
-
                   </div>
                   <div class="col-6">
                       <p>{{object.born|date:"j F Y"}} ({{object.actor_age}})</p>
@@ -107,7 +106,7 @@
                 <h5>Cast
                     {% if related_movies|length > 10 %}
                     <span id="movie_dur_span"><a href="{% url 'actor_cast_list' actor.slug %}">
-                        <i class="fas fa-users"> ({{related_movies|length|add:-10}} more)</i></a>
+                        <i class="far fa-users"> ({{related_movies|length|add:-10}} more)</i></a>
                     </span>
                     {% endif %}
                 </h5>
@@ -187,8 +186,8 @@
             <div class="col-8">
                 <h4>Comments
                     {% if all_comment_list|length > 5 %}
-                    <span id="movie_dur_span"><a href="{% url 'comment_list' actor.slug %}">
-                        <i class="fas fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
+                    <span id="movie_dur_span"><a href="{% url 'actor_comment_list' actor.slug %}">
+                        <i class="far fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
                     </span>
                     {% endif %}
                 </h4><hr>
@@ -214,12 +213,14 @@
                               {% endif %}
                               </div>
                           </div>
+                              {% if comment.comment %}
                               <div class="row">
                                   <div class="col-12">
                                       <p class="card-text">{{comment.comment}}</p>
                           <br>
                                   </div>
                               </div>
+                              {% endif %}
                           </div>
                         </div>
                 {% endfor %}
@@ -247,12 +248,14 @@
                               {% endif %}
                               </div>
                           </div>
+                              {% if comment.comment %}
                               <div class="row">
                                   <div class="col-12">
                                       <p class="card-text">{{comment.comment}}</p>
                           <br>
                                   </div>
                               </div>
+                              {% endif %}
                           </div>
                         </div>
                 {% endif %}

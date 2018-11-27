@@ -179,7 +179,7 @@
                 <h4>Crew
                     {% if related_crews|length > 10 %}
                     <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
-                        <i class="fas fa-users"> ({{related_crews|length|add:-10}} more)</i></a>
+                        <i class="far fa-users"> ({{related_crews|length|add:-10}} more)</i></a>
                     </span>
                     {% endif %}
                 </h4>
@@ -219,7 +219,7 @@
                 <h4>Comments
                     {% if all_comment_list|length > 5 %}
                     <span id="movie_dur_span"><a href="{% url 'comment_list' movie.slug %}">
-                        <i class="fas fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
+                        <i class="far fa-comments"> ({{all_comment_list|length|add:-5}} more)</i></a>
                     </span>
                     {% endif %}
                 </h4><hr>
@@ -245,12 +245,14 @@
                               {% endif %}
                               </div>
                           </div>
+                              {% if comment.comment %}
                               <div class="row">
                                   <div class="col-12">
                                       <p class="card-text">{{comment.comment}}</p>
                           <br>
                                   </div>
                               </div>
+                              {% endif %}
                           </div>
                         </div>
                 {% endfor %}
@@ -278,12 +280,14 @@
                               {% endif %}
                               </div>
                           </div>
+                              {% if comment.comment %}
                               <div class="row">
                                   <div class="col-12">
                                       <p class="card-text">{{comment.comment}}</p>
                           <br>
                                   </div>
                               </div>
+                              {% endif %}
                           </div>
                         </div>
                 {% endif %}
