@@ -104,10 +104,6 @@ def gallery_create(request, slug=None):
 
 	return render(request, template, context)
 
-class ActorGalleryView(DetailView):
-	model = Actor
-	template_name = 'actors/gallery.html'
-
 def actor_gallery_delete(request, slug=None, id=None):
 	photo = ActorGallery.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -120,18 +116,6 @@ def actor_gallery_delete(request, slug=None, id=None):
 
 
 							# CAST
-
-class ActorCastView(DetailView):
-	model = Actor
-	template_name = 'actors/cast.html'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
-		return context
-
-
-
 
 def actor_cast_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)

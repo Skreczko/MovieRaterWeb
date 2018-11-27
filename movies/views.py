@@ -12,7 +12,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from actors.models import CREW_ROLE
 
 # Create your views here.
 
@@ -183,10 +183,6 @@ def gallery_create(request, slug=None):
 
 	return render(request, template, context)
 
-class MovieGalleryView(DetailView):
-	model = Movie
-	template_name = 'movies/gallery.html'
-
 def movie_gallery_delete(request, slug=None, id=None):
 	photo = MovieGallery.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -199,16 +195,6 @@ def movie_gallery_delete(request, slug=None, id=None):
 
 
 						# CAST
-
-class MovieCastView(DetailView):
-	model = Movie
-	template_name = 'movies/cast.html'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['related_actors'] = ActorRole.objects.filter(movie=self.object)
-		return context
-
 
 def cast_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
@@ -252,16 +238,6 @@ def cast_delete(request, slug=None, id=None):
 
 
 #							CREW
-class MovieCrewView(DetailView):
-	model = Movie
-	template_name = 'movies/cast.html'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
-		return context
-
-
 
 def crew_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
@@ -271,7 +247,7 @@ def crew_create(request, slug=None):
 	if form.is_valid():
 		actor = form.cleaned_data.get('actor')
 		check = ActorRole.objects.filter(actor=actor, movie=qs_movie)
-		if check.exists():
+		if check.exists() and check.first().role in CREW_ROLE:
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
 				u'Your cannot add more than one actor per movie!'
 			])
