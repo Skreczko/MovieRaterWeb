@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.db.models import Q
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .models import Movie, MovieComment, MovieGallery, MovieCategory
 from actors.models import Actor, ActorRole, CrewRole
 from actors.forms import MovieCastForm, MovieCastRoleForm, \
@@ -16,9 +17,15 @@ from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from actors.models import CREW_ROLE
 
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 # Create your views here.
 
 """------------------------MOVIE SECTION------------------------"""
+class IsStaffMixin(UserPassesTestMixin):
+	def test_func(self):
+		return self.request.user.is_staff
+
 
 							#MOVIE
 
@@ -88,7 +95,7 @@ class MovieDetailView(FormMixin, DetailView):
 
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(IsStaffMixin, CreateView):
 
 	template_name = "form.html"
 	form_class = MovieForm
