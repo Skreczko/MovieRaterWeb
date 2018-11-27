@@ -27,11 +27,11 @@ STARS = (
 CREW_ROLE = (
 	('Director', 'Director'),
 	('Producer', 'Producer'),
-	('Set_Designer', 'Set Designer'),
-	('Costume_Designer', 'Costume Designer'),
-	('Prop_Master', 'Prop Master'),
-	('Makeup_Artist', 'Makeup Artist'),
-	('Movie_Editor', 'Movie Editor'),
+	('Set Designer', 'Set Designer'),
+	('Costume Designer', 'Costume Designer'),
+	('Prop Master', 'Prop Master'),
+	('Makeup Artist', 'Makeup Artist'),
+	('Movie Editor', 'Movie Editor'),
 	('Other', 'Other'),
 
 )
@@ -56,7 +56,7 @@ class Actor(models.Model):
 	born = models.DateField()
 	if_died = models.BooleanField(default=False, verbose_name="cross if dead")
 	died = models.DateField(blank=True, null=True, default=None,)
-	is_crew = models.BooleanField(default=False, choices=YES_NO, verbose_name='Is crew member? (i.e. director, composer sountrack, costume designer)')
+	is_crew = models.BooleanField(default=False, choices=YES_NO, verbose_name='Is also crew member? (i.e. director, composer sountrack, costume designer)')
 
 
 	def __str__(self):

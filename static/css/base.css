@@ -5,6 +5,13 @@ body {
     width: 100% !important;
 }
 
+.has-error label.error {
+    color: red;
+}
+.has-error .help-block {
+    color: red;
+}
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0;

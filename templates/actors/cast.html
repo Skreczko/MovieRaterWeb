@@ -63,6 +63,8 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                          {% empty %}
+                        <i class="fas fa-exclamation-triangle orange"> The cast is empty!</i>
                           {% endfor %}
                           {% elif 'crew' in request.get_full_path %}
                             {% for query in related_crews %}
@@ -86,6 +88,8 @@
                                     {% endif %}
                                 </td>
                             </tr>
+                          {% empty %}
+                        <i class="fas fa-exclamation-triangle orange"> The crew is empty!</i>
                           {% endfor %}
                           {% endif %}
                         </tbody>

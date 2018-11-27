@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.utils import ErrorList
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.urls import reverse
 from .models import Actor, ActorComment, ActorGallery, ActorRole, CrewRole
@@ -23,7 +25,7 @@ class ActorListView(ListView):
 	queryset = Actor.objects.all()
 
 	def get_queryset(self, *args, **kwargs):
-		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew','last_name')
+		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew', 'last_name')
 		return qs
 
 class ActorDetailView(FormMixin, DetailView):
@@ -76,19 +78,25 @@ class ActorCreateView(CreateView):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorUpdateView(UpdateView):
+class ActorUpdateView(SuccessMessageMixin, UpdateView):
 	model = Actor
 	template_name = "form.html"
 	form_class = ActorForm
+	success_message = "%(name)s %(last_name)s was updated successfully!"
 
 
 	def get_success_url(self):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorDeleteView(DeleteView):
+class ActorDeleteView(SuccessMessageMixin, DeleteView):
 	model=Actor
 	template_name = "confirm_delete.html"
+	success_message = "Actor was deleted successfully!"
+
+	def delete(self, request, *args, **kwargs):
+		messages.success(self.request, self.success_message)
+		return super().delete(request, *args, **kwargs)
 
 	def get_success_url(self):
 		return reverse("actor_list")
@@ -102,6 +110,7 @@ def gallery_create(request, slug=None):
 	context = {'form': form}
 
 	if form.is_valid():
+		messages.success(request, 'Image for {actor} has been added.'.format(actor=qs_actor))
 		picture = form.cleaned_data['picture']
 		ActorGallery.objects.create(actor=qs_actor, picture=picture).save()
 		return redirect('actor_detail', slug)
@@ -113,6 +122,7 @@ def actor_gallery_delete(request, slug=None, id=None):
 	template = "confirm_delete_gallery.html"
 	context = {"photo": photo}
 	if request.method == 'POST':
+		messages.success(request, 'Image  has been deleted.')
 		photo.delete()
 		return redirect('actor_management_picture', slug)
 	return render(request, template, context)
@@ -137,6 +147,8 @@ def actor_cast_create(request, slug=None):
 			obj = form.save(commit=False)
 			obj.actor = qs_actor
 			obj.save()
+			messages.success(request,
+							 '{actor} playing in {title} has been added.'.format(actor=qs_actor, title=movie.title))
 			return redirect('actor_detail', slug)
 	return render(request, template, context)
 
@@ -148,6 +160,9 @@ def actor_cast_edit(request, slug=None, id=None):
 	context = {'form': form}
 	if form.is_valid():
 		form.save()
+		messages.success(request,
+						 '{actor} playing in {title} has been edited.'.format(actor=qs_cast.actor,
+																			  title=qs_cast.movie.title))
 		return redirect('actor_detail', slug)
 	return render(request, template, context)
 
@@ -157,14 +172,16 @@ def actor_cast_delete(request, slug=None, id=None):
 	context = {'role': qs_cast}
 	if request.method == 'POST':
 		qs_cast.delete()
-		return redirect('movie_detail', slug)
+		messages.success(request,
+						 'Actor has been deleted.')
+		return redirect('actor_detail', slug)
 	return render(request, template, context)
 
 
 #							CREW
 
 def actor_crew_create(request, slug=None):
-	qs_actor = Actor.objects.get(slug=slug)
+	qs_actor = Actor.objects.get(slug=slug, is_crew=True)
 	form = ActorCrewForm(request.POST or None, request.FILES or None)
 	template = 'form.html'
 	context = {'form': form}
@@ -203,3 +220,60 @@ def actor_crew_delete(request, slug=None, id=None):
 	return render(request, template, context)
 
 
+#							COMMENTS
+#
+# class CommentsListView(ListView):
+# 	template_name = 'movies/comments.html'
+# 	context_object_name = 'comment_list'
+# 	paginate_by = 20
+#
+# 	def get_queryset(self):
+# 		self.movie = get_object_or_404(Movie, slug=self.kwargs['slug'])
+# 		return MovieComment.objects.filter(movie=self.movie).order_by('-publish_date', 'comment')
+#
+#
+#
+# class CommentCreateView(CreateView):
+# 	form_class = MovieCommentForm
+# 	template_name = 'form_comment.html'
+#
+# 	def form_valid(self, form):
+# 		movie = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
+# 		form.instance.movie = movie
+# 		form.instance.added_by = self.request.user
+# 		check = MovieComment.objects.filter(movie=movie, added_by=self.request.user)
+# 		if check.exists():
+# 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+# 				u'You have added comment already! Please check comment list.'
+# 			])
+# 			return super().form_invalid(form)
+# 		else:
+# 			return super().form_valid(form)
+#
+# 	def get_context_data(self, **kwargs):
+# 		context = super().get_context_data(**kwargs)
+# 		context['movie'] = get_object_or_404(Movie, slug=self.kwargs.get('slug'))
+# 		return context
+#
+# 	def get_success_url(self):
+# 		view_name = 'comment_list'
+# 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
+#
+#
+#
+# class CommentsUpdateView(UpdateView):
+# 	model = MovieComment
+# 	template_name = 'form_comment.html'
+# 	form_class = MovieCommentForm
+#
+# 	def get_success_url(self):
+# 		view_name = 'comment_list'
+# 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
+#
+#
+# class CommentsDeleteView(DeleteView):
+# 	model = MovieComment
+# 	template_name = "confirm_delete.html"
+#
+# 	def get_success_url(self):
+# 		return reverse("movie_list")

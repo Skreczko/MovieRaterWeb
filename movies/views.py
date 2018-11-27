@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.utils import ErrorList
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.db.models import Q
 from django.urls import reverse
@@ -98,21 +100,31 @@ class MovieCreateView(CreateView):
 		view_name = 'movie_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(SuccessMessageMixin, UpdateView):
 	model = Movie
 	template_name = "form.html"
 	form_class = MovieForm
+	success_message = "%(title)s was updated successfully!"
 
 	def get_success_url(self):
 		view_name = 'movie_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class MovieDeleteView(DeleteView):
+
+
+class MovieDeleteView(SuccessMessageMixin, DeleteView):
 	model = Movie
 	template_name = "confirm_delete.html"
+	success_message = "Movie was deleted successfully!"
+
+	def delete(self, request, *args, **kwargs):
+		messages.success(self.request, self.success_message)
+		return super().delete(request, *args, **kwargs)
 
 	def get_success_url(self):
 		return reverse("movie_list")
+
+
 
 
 
@@ -122,11 +134,13 @@ def category_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_category = MovieCategory.objects.filter(related_movie=qs_movie)
 	form = MovieCategoryForm(request.POST or None, )
+
 	template = 'form.html'
 	context = {'form':form}
 
 
 	if form.is_valid():
+		messages.success(request, 'Category for {title} has been added.'.format(title=qs_movie.title))
 		category = form.cleaned_data['category']
 		if len(qs_category) == 0:
 			category = category[:]
@@ -143,6 +157,7 @@ def category_create(request, slug=None):
 				MovieCategory.objects.create(category=item).save()
 			qs_category = MovieCategory.objects.filter(category=item).first()
 			qs_category.related_movie.add(qs_movie)
+
 		return redirect('movie_detail', slug)
 
 	return render(request, template, context)
@@ -150,6 +165,7 @@ def category_create(request, slug=None):
 def category_edit(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieCategoryForm(request.POST or None, )
+	messages.success(request, 'Category for {title} has been changed.'.format(title=qs_movie.title))
 	template = 'form.html'
 	context = {'form':form}
 
@@ -177,6 +193,7 @@ def gallery_create(request, slug=None):
 	context = {'form': form}
 
 	if form.is_valid():
+		messages.success(request, 'Image for {title} has been added.'.format(title=qs_movie.title))
 		picture = form.cleaned_data['picture']
 		MovieGallery.objects.create(movie=qs_movie, picture=picture).save()
 		return redirect('movie_detail', slug)
@@ -189,6 +206,7 @@ def movie_gallery_delete(request, slug=None, id=None):
 	context = {"photo": photo}
 	if request.method == 'POST':
 		photo.delete()
+		messages.success(request, 'Image  has been deleted.')
 		return redirect('management_picture', slug)
 	return render(request, template, context)
 
@@ -204,7 +222,7 @@ def cast_create(request, slug=None):
 	if form.is_valid():
 		actor = form.cleaned_data.get('actor')
 		check = ActorRole.objects.filter(actor=actor, movie=qs_movie)
-		if check.exists():
+		if check.exists() and check.first().role not in CREW_ROLE:
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
 				u'Your cannot add more than one actor per movie!'
 			])
@@ -212,6 +230,7 @@ def cast_create(request, slug=None):
 			obj = form.save(commit=False)
 			obj.movie = qs_movie
 			obj.save()
+			messages.success(request, '{actor} playing in {title} has been added.'.format(actor=actor, title=qs_movie.title))
 			return redirect('movie_detail', slug)
 	return render(request, template, context)
 
@@ -223,6 +242,8 @@ def cast_edit(request, slug=None, id=None):
 	context = {'form': form}
 	if form.is_valid():
 		form.save()
+		messages.success(request,
+						 '{actor} playing in {title} has been edited.'.format(actor=qs_cast.actor, title=qs_cast.movie.title))
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
@@ -232,6 +253,8 @@ def cast_delete(request, slug=None, id=None):
 	context = {'role': qs_cast}
 	if request.method == 'POST':
 		qs_cast.delete()
+		messages.success(request,
+						 'Actor has been deleted.')
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
@@ -266,6 +289,7 @@ def crew_edit(request, slug=None, id=None):
 	context = {'form': form}
 	if form.is_valid():
 		form.save()
+
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 

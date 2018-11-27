@@ -14,11 +14,21 @@
 
           <div class="row">
               <div class="col-2">
-                  {% if 'persons' in request.get_full_path %}
+                  {% if 'persons' and 'cast' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{role.actor.photo}}" >
-                  {% elif 'movies' in request.get_full_path %}
+                  {% elif 'movies' and 'cast' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{role.actor.photo}}" >
+                  {% elif 'persons' and 'crew' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.actor.photo}}" >
+                  {% elif 'movies' and 'crew' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.actor.photo}}" >
+                  {% elif 'persons' and 'gallery' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{photo.picture}}" >
+                  {% elif 'movies' and 'gallery' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{photo.picture}}" >
                   {% elif 'cast' in request.get_full_path %}
+                  <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
+                  {% elif 'crew' in request.get_full_path %}
                   <img id="actor_image_list" class="img-responsive" src="/media/{{role.picture}}" >
                   {% endif %}
               </div>
@@ -27,9 +37,14 @@
                       <div class="col-6">
                           <form action="" method="POST">{% csrf_token %}
                               <br>
-                              {% if 'cast' in request.get_full_path %}
+                              {% if 'cast' or 'crew' in request.get_full_path %}
                               <h5> Are you sure you want to delete</h5>
-                              <h4> {{role.actor}} playing as {{role.role}} in {{role.movie}}?</h4>
+                                  {% if 'cast' in request.get_full_path %}
+                                    <h4> {{role.actor}} playing as {{role.role}} in {{role.movie}}?</h4>
+                                  {% elif 'crew' in request.get_full_path %}
+                                    <h4> {{role.actor}} who is {{role.role}} in {{role.movie}}?</h4>
+
+                                  {% endif %}
                               {% else %}
                               <h5> Are you sure you want to delete?</h5>
                               {% endif %}
