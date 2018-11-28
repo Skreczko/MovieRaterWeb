@@ -10,17 +10,33 @@ from .forms import ActorForm, ActorGalleryForm, ActorStarsForm, \
 					ActorCastForm, MovieCastRoleForm, \
 					ActorCrewForm, MovieCrewRoleForm,\
 					ActorCommentForm
-
+from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from .models import CREW_ROLE
 
 
 # Create your views here.
 
+"""------------------------PERMISSIONS------------------------"""
+class ErrorView(TemplateView):
+	template_name = "404.html"
+
+class IsStaffMixin(UserPassesTestMixin):
+	def test_func(self):
+		return self.request.user.is_staff
+
+def is_staff_check(user):
+	return user.is_staff
+
+"""------------------------ACTOR SECTION------------------------"""
+
+							#ACTOR
 class ActorListView(ListView):
 	model = Actor
 	paginate_by = 20
@@ -73,7 +89,7 @@ class ActorDetailView(FormMixin, DetailView):
 		return super().form_valid(form)
 
 
-class ActorCreateView(CreateView):
+class ActorCreateView(IsStaffMixin, CreateView):
 	template_name = "form.html"
 	form_class = ActorForm
 
@@ -84,7 +100,7 @@ class ActorCreateView(CreateView):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorUpdateView(SuccessMessageMixin, UpdateView):
+class ActorUpdateView(IsStaffMixin, SuccessMessageMixin, UpdateView):
 	model = Actor
 	template_name = "form.html"
 	form_class = ActorForm
@@ -95,7 +111,7 @@ class ActorUpdateView(SuccessMessageMixin, UpdateView):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorDeleteView(SuccessMessageMixin, DeleteView):
+class ActorDeleteView(IsStaffMixin, SuccessMessageMixin, DeleteView):
 	model=Actor
 	template_name = "confirm_delete.html"
 	success_message = "Actor was deleted successfully!"
@@ -109,6 +125,7 @@ class ActorDeleteView(SuccessMessageMixin, DeleteView):
 
 					#GALLERY
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def gallery_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
 	form = ActorGalleryForm(request.POST or None, request.FILES or None)
@@ -123,6 +140,9 @@ def gallery_create(request, slug=None):
 
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_gallery_delete(request, slug=None, id=None):
 	photo = ActorGallery.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -137,6 +157,7 @@ def actor_gallery_delete(request, slug=None, id=None):
 
 							# CAST
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
 	form = ActorCastForm(request.POST or None, request.FILES or None)
@@ -159,6 +180,8 @@ def actor_cast_create(request, slug=None):
 	return render(request, template, context)
 
 
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_edit(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
 	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
@@ -172,6 +195,9 @@ def actor_cast_edit(request, slug=None, id=None):
 		return redirect('actor_detail', slug)
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_delete(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -186,6 +212,7 @@ def actor_cast_delete(request, slug=None, id=None):
 
 #							CREW
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
 
@@ -210,6 +237,8 @@ def actor_crew_create(request, slug=None):
 	return render(request, template, context)
 
 
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_edit(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
 	form = MovieCrewRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
@@ -223,6 +252,9 @@ def actor_crew_edit(request, slug=None, id=None):
 		return redirect('actor_detail', slug)
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_delete(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"

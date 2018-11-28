@@ -2,30 +2,37 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.utils import ErrorList
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django import forms
-from django.db.models import Q
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from .models import Movie, MovieComment, MovieGallery, MovieCategory
-from actors.models import Actor, ActorRole, CrewRole
-from actors.forms import MovieCastForm, MovieCastRoleForm, \
-							MovieCrewForm, MovieCrewRoleForm
-from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm, MovieCommentForm
+from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Q
+from django.urls import reverse
+from .models import Movie, MovieComment, MovieGallery, MovieCategory
+from django import forms
+from actors.models import Actor, ActorRole, CrewRole
+from actors.forms import MovieCastForm, MovieCastRoleForm, \
+							MovieCrewForm, MovieCrewRoleForm
+from .forms import MovieForm, MovieCategoryForm, MovieGalleryForm, MovieStarsForm, MovieCommentForm
 from actors.models import CREW_ROLE
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 # Create your views here.
 
-"""------------------------MOVIE SECTION------------------------"""
+"""------------------------PERMISSIONS------------------------"""
+class ErrorView(TemplateView):
+	template_name = "404.html"
+
 class IsStaffMixin(UserPassesTestMixin):
 	def test_func(self):
 		return self.request.user.is_staff
 
+def is_staff_check(user):
+	return user.is_staff
+
+"""------------------------MOVIE SECTION------------------------"""
 
 							#MOVIE
 
@@ -94,7 +101,6 @@ class MovieDetailView(FormMixin, DetailView):
 
 
 
-
 class MovieCreateView(IsStaffMixin, CreateView):
 
 	template_name = "form.html"
@@ -107,7 +113,9 @@ class MovieCreateView(IsStaffMixin, CreateView):
 		view_name = 'movie_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class MovieUpdateView(SuccessMessageMixin, UpdateView):
+
+
+class MovieUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
 	model = Movie
 	template_name = "form.html"
 	form_class = MovieForm
@@ -119,7 +127,7 @@ class MovieUpdateView(SuccessMessageMixin, UpdateView):
 
 
 
-class MovieDeleteView(SuccessMessageMixin, DeleteView):
+class MovieDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
 	model = Movie
 	template_name = "confirm_delete.html"
 	success_message = "Movie was deleted successfully!"
@@ -133,19 +141,15 @@ class MovieDeleteView(SuccessMessageMixin, DeleteView):
 
 
 
-
-
 						#CATEGORY
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def category_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	qs_category = MovieCategory.objects.filter(related_movie=qs_movie)
 	form = MovieCategoryForm(request.POST or None, )
-
 	template = 'form.html'
 	context = {'form':form}
-
-
 	if form.is_valid():
 		messages.success(request, 'Category for {title} has been added.'.format(title=qs_movie.title))
 		category = form.cleaned_data['category']
@@ -157,18 +161,18 @@ def category_create(request, slug=None):
 			category = category[:1]
 		elif len(qs_category) == 3:
 			category = []
-
 		for item in category:
 			check = MovieCategory.objects.filter(category=item).first()
 			if not check:
 				MovieCategory.objects.create(category=item).save()
 			qs_category = MovieCategory.objects.filter(category=item).first()
 			qs_category.related_movie.add(qs_movie)
-
 		return redirect('movie_detail', slug)
-
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def category_edit(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieCategoryForm(request.POST or None, )
@@ -193,6 +197,8 @@ def category_edit(request, slug=None):
 
 
 							#GALLERY
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def gallery_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieGalleryForm(request.POST or None, request.FILES or None)
@@ -207,6 +213,9 @@ def gallery_create(request, slug=None):
 
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def movie_gallery_delete(request, slug=None, id=None):
 	photo = MovieGallery.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -221,6 +230,7 @@ def movie_gallery_delete(request, slug=None, id=None):
 
 						# CAST
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def cast_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieCastForm(request.POST or None, request.FILES or None)
@@ -242,6 +252,8 @@ def cast_create(request, slug=None):
 	return render(request, template, context)
 
 
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def cast_edit(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
 	form = MovieCastRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
@@ -254,6 +266,9 @@ def cast_edit(request, slug=None, id=None):
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def cast_delete(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -269,6 +284,7 @@ def cast_delete(request, slug=None, id=None):
 
 #							CREW
 
+@user_passes_test(is_staff_check, login_url='404-error')
 def crew_create(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieCrewForm(request.POST or None, request.FILES or None)
@@ -293,7 +309,7 @@ def crew_create(request, slug=None):
 
 
 
-
+@user_passes_test(is_staff_check, login_url='404-error')
 def crew_edit(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
 	form = MovieCrewRoleForm(request.POST or None, request.FILES or None, instance=qs_cast)
@@ -307,6 +323,9 @@ def crew_edit(request, slug=None, id=None):
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
 
+
+
+@user_passes_test(is_staff_check, login_url='404-error')
 def crew_delete(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
 	template = "confirm_delete_gallery.html"
@@ -316,8 +335,6 @@ def crew_delete(request, slug=None, id=None):
 		messages.success(request, 'Crew member has been deleted.')
 		return redirect('movie_detail', slug)
 	return render(request, template, context)
-
-
 
 
 
@@ -363,7 +380,6 @@ class CommentCreateView(SuccessMessageMixin, CreateView):
 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
 
 
-
 class CommentsUpdateView(SuccessMessageMixin, UpdateView):
 	model = MovieComment
 	template_name = 'form_comment.html'
@@ -373,6 +389,7 @@ class CommentsUpdateView(SuccessMessageMixin, UpdateView):
 	def get_success_url(self):
 		view_name = 'comment_list'
 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
+
 
 
 class CommentsDeleteView(SuccessMessageMixin, DeleteView):

@@ -4,7 +4,8 @@ from .views import MovieListView, MovieDetailView, MovieCreateView, MovieUpdateV
 					CommentsListView, CommentCreateView, CommentsUpdateView, CommentsDeleteView,\
 					category_create, category_edit,\
 					gallery_create, movie_gallery_delete,\
-					cast_create, cast_edit, cast_delete, crew_create, crew_edit, crew_delete
+					cast_create, cast_edit, cast_delete, crew_create, crew_edit, crew_delete, \
+					ErrorView
 
 urlpatterns = [
 	#	MOVIES
@@ -54,6 +55,9 @@ urlpatterns = [
 	path('detail/<slug>/comments/add_comment/', CommentCreateView.as_view(), name='add_comment'),
 	path('detail/comments/edit_comment/<int:pk>', CommentsUpdateView.as_view(), name='edit_comment'),
 	path('detail/comments/delete_comment/<int:pk>', CommentsDeleteView.as_view(), name='delete_comment'),
+
+	#	ERROR 404 TEMPLATE
+	path('about/', ErrorView.as_view(), name='404-error'),
 
 
 

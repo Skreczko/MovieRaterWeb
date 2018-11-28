@@ -5,7 +5,9 @@ from .views import ActorListView, ActorDetailView, ActorCreateView, \
 					gallery_create, actor_gallery_delete,\
 					 actor_cast_create, actor_cast_edit, actor_cast_delete, \
 					actor_crew_create, actor_crew_edit, actor_crew_delete, \
-					CommentsListView, CommentCreateView, CommentsUpdateView, CommentsDeleteView
+					CommentsListView, CommentCreateView, CommentsUpdateView, CommentsDeleteView, \
+					ErrorView
+
 
 urlpatterns = [
 
@@ -42,6 +44,9 @@ urlpatterns = [
 	path('detail/<slug>/comments/add_comment/', CommentCreateView.as_view(), name='actor_add_comment'),
 	path('detail/comments/edit_comment/<int:pk>', CommentsUpdateView.as_view(), name='actor_edit_comment'),
 	path('detail/comments/delete_comment/<int:pk>', CommentsDeleteView.as_view(), name='actor_delete_comment'),
+
+	#	ERROR 404 TEMPLATE
+	path('about/', ErrorView.as_view(), name='404-error'),
 
 
 ]

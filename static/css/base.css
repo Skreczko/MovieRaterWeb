@@ -12,6 +12,16 @@ body {
     color: red;
 }
 
+.no-permission-enter {
+    text-align: center;
+    margin: auto;
+    color: red;
+}
+
+.no-permission-image{
+    font-size: 800%;
+}
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0;
