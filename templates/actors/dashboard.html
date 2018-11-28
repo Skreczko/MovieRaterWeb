@@ -8,16 +8,19 @@
               <div class="col-12">
                   <div class="card-section">
                      <ul><li class="bold bigger">{{actor.name}} {{actor.last_name}}:</li>
+                         {% if request.user.is_authenticated and request.user.is_staff %}
                           <ul>
                                 <li><a href="{% url 'actor_update' actor.slug %}"><i class="fas fa-pen"></i> Update</a></li>
                                 <li><a href="{% url 'actor_delete' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                           </ul>
-
+                         {% endif %}
                         <li>Gallery:</li>
                            <ul>
                                <li><a href="{% url 'actor_gallery' actor.slug %}"><i class="fas fa-images"></i> All</a></li>
-                               <li><a href="{% url 'add_actor_picture' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="{% url 'actor_management_picture' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% if request.user.is_authenticated and request.user.is_staff %}
+                                   <li><a href="{% url 'add_actor_picture' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'actor_management_picture' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% endif %}
                               </ul>
                       <li>Filmography</li>
 
@@ -25,17 +28,21 @@
                                <li class="bold">Cast</li>
 
                                    <li><a href="{% url 'actor_cast_list' actor.slug %}"><i class="fas fa-users"></i> All</a></li>
+                                {% if request.user.is_authenticated and request.user.is_staff %}
                                    <li><a href="{% url 'actor_add_cast' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                                    <li><a href="{% url 'actor_management_cast_editing' actor.slug %}"><i class="fas fa-pen"></i> Change</a></li>
                                    <li><a href="{% url 'actor_management_cast_deleting' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                                {% endif %}
 
                                 {% if actor.is_crew %}
                                 <li class="bold">Crew</li>
 
                                    <li><a href="{% url 'actor_crew_list' actor.slug %}"><i class="fas fa-users"></i> All</a></li>
+                                    {% if request.user.is_authenticated and request.user.is_staff %}
                                    <li><a href="{% url 'actor_add_crew' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                                    <li><a href="{% url 'actor_management_crew_editing' actor.slug %}"><i class="fas fa-pen"></i> Change</a></li>
                                    <li><a href="{% url 'actor_management_crew_deleting' actor.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                                    {% endif %}
                                 {% endif %}
 
                             </ul>
@@ -43,7 +50,9 @@
                       <li>Comment:</li>
                            <ul>
                                <li><a href="{% url 'actor_comment_list' actor.slug %}"><i class="fas fa-comments"></i> All</a></li>
+                               {% if request.user.is_authenticated %}
                                <li><a href="{% url 'actor_add_comment' actor.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               {% endif %}
                               </ul>
                      </ul>
                   </div>

@@ -54,14 +54,17 @@ class ActorDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_actor_20'] = ActorGallery.objects.filter(actor=self.object)[:20]
 		context['gallery_actor_all'] = ActorGallery.objects.filter(actor=self.object)
-		if ActorComment.objects.filter(added_by=self.request.user, actor=self.object).exists():
-			context['user_vote'] = ActorComment.objects.filter(added_by=self.request.user, actor=self.object).first().stars
+
 		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
 		context['related_crews'] = CrewRole.objects.filter(actor=self.object)
 		context['comment_list'] = ActorComment.objects.filter(actor=self.object).exclude(
 			Q(comment__isnull=True) | Q(comment__exact=''))[:5]
 		context['all_comment_list'] = ActorComment.objects.filter(actor=self.object)
-		context['your_comment_list'] = ActorComment.objects.filter(actor=self.object, added_by=self.request.user)
+		if self.request.user.is_authenticated:
+			context['your_comment_list'] = ActorComment.objects.filter(actor=self.object, added_by=self.request.user)
+			if ActorComment.objects.filter(added_by=self.request.user, actor=self.object).exists():
+				context['user_vote'] = ActorComment.objects.filter(added_by=self.request.user,
+																   actor=self.object).first().stars
 		return context
 
 	def get_success_url(self):

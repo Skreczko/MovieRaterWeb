@@ -36,8 +36,11 @@
                          </div>
                     </div>
                   <div class="row">
-                     <div class="col-12 align-self-end">
+
+                      <div class="col-12 align-self-end">
+                          {% if request.user.is_authenticated %}
                         {% include 'form_stars.html' with object=actor.actor_comments vote=user_vote %}
+                          {% endif %}
                          <div class="fb-share-button" data-href="{{request.get_full_path}}"
                               data-layout="button" data-size="small" data-mobile-iframe="true">
                              <a target="_blank" href=""
@@ -45,6 +48,7 @@
                          </div>
                         <br>
                       </div>
+
                   </div>
                   </div>
               </div>
@@ -191,6 +195,7 @@
                     </span>
                     {% endif %}
                 </h4><hr>
+
                  {% for comment in your_comment_list %}
                         <div class="card">
                           <div class="card-body">

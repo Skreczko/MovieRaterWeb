@@ -8,7 +8,8 @@
               <div class="col-12">
                   <div class="card-section">
                      <ul><li class="bold bigger">{{movie.title}}:</li>
-                          <ul>
+                         {% if request.user.is_authenticated and request.user.is_staff %}
+                         <ul>
                               <li><a href="{% url 'movie_update' movie.slug %}"><i class="fas fa-pen"></i> Update</a></li>
                               <li><a href="{% url 'movie_delete' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
                           </ul>
@@ -18,34 +19,42 @@
                                <li><a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
                                <li><a href="{% url 'category_edit' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
                               </ul>
-
+                         {% endif %}
                         <li>Gallery:</li>
                            <ul>
                                <li><a href="{% url 'picture_gallery' movie.slug %}"><i class="fas fa-images"></i> All</a></li>
-                               <li><a href="{% url 'add_picture' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="{% url 'management_picture' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% if request.user.is_authenticated and request.user.is_staff %}
+                                   <li><a href="{% url 'add_picture' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'management_picture' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% endif %}
                               </ul>
 
                       <li>Cast:</li>
                            <ul>
                                <li><a href="{% url 'cast_list' movie.slug %}"><i class="fas fa-users"></i> All</a></li>
-                               <li><a href="{% url 'add_cast' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="{% url 'management_cast_editing' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
-                               <li><a href="{% url 'management_cast_deleting' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% if request.user.is_authenticated and request.user.is_staff %}
+                                   <li><a href="{% url 'add_cast' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'management_cast_editing' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                                    <li><a href="{% url 'management_cast_deleting' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% endif %}
                               </ul>
 
                       <li>Crew:</li>
                            <ul>
                                <li><a href="{% url 'crew_list' movie.slug %}"><i class="fas fa-users"></i> All</a></li>
-                               <li><a href="{% url 'add_crew' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
-                               <li><a href="{% url 'management_crew_editing' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
-                               <li><a href="{% url 'management_crew_deleting' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% if request.user.is_authenticated and request.user.is_staff %}
+                                   <li><a href="{% url 'add_crew' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                                   <li><a href="{% url 'management_crew_editing' movie.slug %}"><i class="fas fa-pen"></i> Change</a></li>
+                                   <li><a href="{% url 'management_crew_deleting' movie.slug %}"><i class="far fa-trash-alt"></i> Delete</a></li>
+                               {% endif %}
                               </ul>
 
                       <li>Comment:</li>
                            <ul>
                                <li><a href="{% url 'comment_list' movie.slug %}"><i class="fas fa-comments"></i> All</a></li>
+                               {% if request.user.is_authenticated %}
                                <li><a href="{% url 'add_comment' movie.slug %}"><i class="fas fa-plus"></i> Add</a></li>
+                               {% endif %}
                               </ul>
                      </ul>
                   </div>
