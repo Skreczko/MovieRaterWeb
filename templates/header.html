@@ -13,6 +13,7 @@
 <div class="container-fluid under_jumbo">
   <div class="row justify-content-center">
     <div class="col-auto">
+        {% if request.user.is_authenticated and request.user.is_staff%}
         <div class="btn-group" id="movies_list" role="group">
           <a class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="false"
              aria-expanded="false" href="{% url 'movie_list' %}"><i class="fas fa-film" ></i> Movies</a>
@@ -21,6 +22,7 @@
                  <a class="dropdown-item" href="{% url 'movie_create' %}"><i class="fas fa-plus"></i> Add Movie</a>
              </div>
         </div>
+
         <div class="btn-group " id="actors_list" role="group">
           <a class="btn btn-outline-light my-2 my-sm-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="false"
              aria-expanded="false" href="{% url 'actor_list' %}"><i class="fas fa-users" ></i> Persons</a>
@@ -29,6 +31,10 @@
                  <a class="dropdown-item" href="{% url 'actor_create' %}"><i class="fas fa-plus"></i> Add Person</a>
              </div>
         </div>
+        {% else %}
+        <a id="movies_list" class="btn btn-outline-light my-2 my-sm-0"  href="{% url 'movie_list' %}"><i class="fas fa-film" ></i> Movies</a>
+        <a id="actors_list" class="btn btn-outline-light my-2 my-sm-0"  href="{% url 'actor_list' %}"><i class="fas fa-film" ></i> Persons</a>
+        {% endif %}
     </div>
   </div>
 </div>
