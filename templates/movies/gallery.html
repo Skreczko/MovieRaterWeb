@@ -23,6 +23,8 @@
 {% else %}
                         {% for imag in object.movie_gallery.all %}
                             <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                        {% empty %}
+                        <i class="fas fa-exclamation-triangle orange"> The gallery is empty!</i>
                         {% endfor %}
 {% endif %}
                     </div>

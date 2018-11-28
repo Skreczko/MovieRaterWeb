@@ -115,7 +115,7 @@ class MovieCreateView(IsStaffMixin, CreateView):
 
 
 
-class MovieUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class MovieUpdateView(IsStaffMixin, SuccessMessageMixin, UpdateView):
 	model = Movie
 	template_name = "form.html"
 	form_class = MovieForm
@@ -127,7 +127,7 @@ class MovieUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
 
 
 
-class MovieDeleteView(UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class MovieDeleteView(IsStaffMixin, SuccessMessageMixin, DeleteView):
 	model = Movie
 	template_name = "confirm_delete.html"
 	success_message = "Movie was deleted successfully!"
