@@ -6,6 +6,7 @@ from django.db.models.signals import pre_save
 import os, random, string
 from django.urls import reverse
 from django_countries.fields import CountryField
+from django.utils.translation import ugettext_lazy as _
 
 
 YEARS = ((x, x) for x in range(1930, 2041))
@@ -64,6 +65,7 @@ class Movie(models.Model):
 	def __str__(self):
 		return str(self.title) + " ({})".format(str(self.year_of_production))
 
+	@property
 	def average_stars(self):
 		rates = MovieComment.objects.filter(movie=self)
 		rates_amount = len(rates)
@@ -82,7 +84,7 @@ class Movie(models.Model):
 
 class MovieCategory(models.Model):
 
-	related_movie = models.ManyToManyField(Movie)
+	related_movie = models.ManyToManyField(Movie,related_name='movie_category')
 	category = models.CharField(max_length=100, choices=CATEGORIES)
 
 	def __str__(self):

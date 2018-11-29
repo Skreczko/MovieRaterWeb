@@ -52,7 +52,7 @@
                               </div>
                               <div class="col-3">
                                 <p id="paragraph_category">
-                                    NOT SELECTED YETasfsafdasdfasdasd
+                                    NOT {{movie.actorrole_set.all}}
                                 </p>
                               </div>
                               <div class="col-2">
@@ -61,7 +61,11 @@
 
                               <div class="col-5">
                                     <p id="paragraph_category">
-                                        ACTORS NOT SELECTED
+                                        {% for person in director %}
+                                        {% if  movie.title is person.movie.title %}
+                                        fs
+                                        {% endif %}
+                                        {% endfor %}
                                     </p>
                               </div>
                            </div>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'multiselectfield',
 
     #apps
     'accounts',
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
     'src',
 
     #else
-    'multiselectfield',
+
     'bootstrapform',
     'crispy_forms',
     'django_countries',
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -151,3 +153,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)

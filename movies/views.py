@@ -52,6 +52,13 @@ class MovieListView(ListView):
 	
 	
 	"""
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['director'] = ActorRole.objects.all()
+
+		return context
+
 	def get_queryset(self, *args, **kwargs):
 		qs = super(MovieListView,self).get_queryset(*args, **kwargs).order_by("title")
 		return qs
