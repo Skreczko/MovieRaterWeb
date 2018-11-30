@@ -7,5 +7,6 @@ from .views import MovieListAPIView
 
 urlpatterns = [
 	url(r'^$', MovieListAPIView.as_view(), name='list'),
+	url(r'^$', MovieListAPIView.as_view(), name='list'),
 
 ]

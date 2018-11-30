@@ -20,7 +20,6 @@ from movies.models import Movie
 
 class MovieListAPIView(ListAPIView):
 	serializer_class = MovieListSerializer
-
 	def get_queryset(self):
 		queryset_list = Movie.objects.all()
 		return queryset_list

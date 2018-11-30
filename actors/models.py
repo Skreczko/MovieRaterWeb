@@ -93,6 +93,9 @@ class Actor(models.Model):
 	def get_to_detail(self):
 		return reverse('actor_detail', kwargs={"slug": self.slug})
 
+	def get_api_url(self):
+		return reverse("actors-api:detail", kwargs={"slug": self.slug})
+
 
 class ActorComment(models.Model):
 

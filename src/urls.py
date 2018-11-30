@@ -32,6 +32,7 @@ urlpatterns = [
     path('persons/', include('actors.urls')),
     path('movies/', include('movies.urls')),
     path('api/movies/', include('movies.api.urls')),
+    path('api/persons/', include('actors.api.urls')),
 
 
 

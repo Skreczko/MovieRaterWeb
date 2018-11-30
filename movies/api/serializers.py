@@ -1,11 +1,10 @@
 
-from movies.models import Movie, MovieCategory
+from movies.models import Movie, MovieCategory, MovieGallery
 from rest_framework.serializers import (
     HyperlinkedIdentityField,
     ModelSerializer,
     SerializerMethodField
     )
-
 
 
 
@@ -16,6 +15,7 @@ class CategorySerializer(ModelSerializer):
 			'id',
 			'category',
 		]
+
 
 class MovieListSerializer(ModelSerializer):
 	movie_category = CategorySerializer(many=True)
@@ -29,7 +29,58 @@ class MovieListSerializer(ModelSerializer):
 			'duration',
 			'movie_category',
 			'average_stars',
-			''
+
+			'production',
+			'budget',
+			'poster',
+			'description',
+
+		)
+
+
+class MovieGallerySerializer(ModelSerializer):
+	class Meta:
+		model = MovieGallery
+		fields = (
+			'id',
+			'picture',
+		)
+
+
+
+class MovieCommentsSerializer(ModelSerializer):
+	class Meta:
+		model = Movie
+		fields = (
+			'id',
+			'stars',
+			'publish_date',
+			'added_time',
+			'edited_date',
+			'edited_time',
+			'comment',
+			'added_by',
+		)
+
+movie_detail_url = HyperlinkedIdentityField(
+        view_name='movies-api:detail',
+        lookup_field='slug'
+        )
+
+class MovieDetailSerializer(ModelSerializer):
+	url = movie_detail_url
+	movie_category = CategorySerializer(many=True)
+	movie_gallery = MovieGallerySerializer(many=True)
+
+	class Meta:
+		model = Movie
+		fields = (
+			'id',
+			'title',
+			'year_of_production',
+			'duration',
+			'movie_category',
+			'average_stars',
 			'production',
 			'budget',
 			'poster',
