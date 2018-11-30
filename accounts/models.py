@@ -115,7 +115,7 @@ def send_email(instance):
     from_email = settings.EMAIL_HOST_USER
     to_email = [from_email, User.email]
     html_content = '<h3>Thank you for registering</h3><hr><br><br><p>Click ' \
-                   '<a href="http://127.0.0.1:8000/accounts/register/{}">HERE</a>' \
+                   '<a href="https://movieraterweb.herokuapp.com/accounts/register/{}">HERE</a>' \
                    ' to confirm your registration<br><br><br><strong>Best regards<br>MovieRaterWEB</strong><hr></p>' \
                     .format(activation_key)
 
