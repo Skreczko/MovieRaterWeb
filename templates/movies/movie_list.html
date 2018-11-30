@@ -52,7 +52,13 @@
                               </div>
                               <div class="col-3">
                                 <p id="paragraph_category">
-                                    NOT {{movie.actorrole_set.all}}
+                                    {% for person in director %}
+                                        {% if  movie == person.movie and person.role == check_director %}
+                                            <a href="{{person.actor.get_to_detail}}">{{ person }}</a>
+                                        {% else %}
+                                            <i class="fas fa-ban red"> Add in details</i>
+                                        {% endif %}
+                                    {% endfor %}
                                 </p>
                               </div>
                               <div class="col-2">
@@ -61,11 +67,21 @@
 
                               <div class="col-5">
                                     <p id="paragraph_category">
-                                        {% for person in director %}
-                                        {% if  movie.title is person.movie.title %}
-                                        fs
+                                        {% if actors_in_movie|length > 1 %}
+                                            {% for person in actors_in_movie %}
+                                                {% if forloop.counter != actors_in_movie|length and person.movie == movie %}
+                                            <a href="{{person.actor.get_to_detail}}">{{person.actor}}</a>,
+                                                {% else %}
+                                                    <a href="{{person.actor.get_to_detail}}">{{person.actor}}</a>
+                                                {% endif %}
+                                            {% empty %}
+                                                <i class="fas fa-ban red"> Add actors in details</i>
+                                            {% endfor %}
+                                        {% elif actors_in_movie|length is 1 %}
+                                            <a href="{{actors_in_movie.0.actor.get_to_detail}}">{{actors_in_movie.0.actor}}</a>
+                                       {% else %}
+                                           <i class="fas fa-ban red"> Add actors in details</i>
                                         {% endif %}
-                                        {% endfor %}
                                     </p>
                               </div>
                            </div>

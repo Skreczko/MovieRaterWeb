@@ -55,7 +55,9 @@ class MovieListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['director'] = ActorRole.objects.all()
+		context['director'] = CrewRole.objects.all()
+		context['check_director'] = str('Director')
+		context['actors_in_movie'] = ActorRole.objects.all()
 
 		return context
 
