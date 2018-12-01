@@ -20,17 +20,17 @@
                                   </div>
                                   <div class="col-6">
                                        <p>
-                                          {% if movie.moviecategory_set.all|length > 1 %}
-                                                {% for cat in movie.moviecategory_set.all %}
-                                                    {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                          {% if related_category|length > 1 %}
+                                                {% for cat in related_category %}
+                                                    {% if forloop.counter != related_category|length %}
                                                         {{cat.category}},
                                                     {% else %}
                                                         {{cat.category}}
                                                     {% endif %}
                                                 {% endfor %}
-                                          {% elif movie.moviecategory_set.all|length is 1 %}
-                                                {{movie.moviecategory_set.all.0.category}}
-                                           {% elif movie.moviecategory_set.all|length == 0 %}
+                                          {% elif related_category|length is 1 %}
+                                                {{related_category.0.category}}
+                                           {% elif related_category|length == 0 %}
                                                 <i class="fas fa-ban red"></i>
                                           {% endif %}
                                       </p>
