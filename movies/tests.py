@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Movie, MovieCategory, MovieComment
 from accounts.models import MyUser
 from django.utils.text import slugify
@@ -11,15 +12,18 @@ class MovieModelTestCase(TestCase):
 			year_of_production='2018',
 			production='US',
 			budget='48027682',
+			poster=SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg'),
 			duration='104',
 			description='Movie about Robin Hood.'
-		)
+			)
+
 
 	def create_movie(self,
 			title='Robin Hood',
 			year_of_production='2018',
 			production='US',
 			budget='48027682',
+			poster=SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg'),
 			duration='104',
 			description='Movie about Robin Hood.'
 					 ):
@@ -27,6 +31,7 @@ class MovieModelTestCase(TestCase):
 									year_of_production=year_of_production,
 									production=production,
 									budget=budget,
+									poster=poster,
 									duration=duration,
 									description=description
 									)
@@ -48,6 +53,7 @@ class MovieModelTestCase(TestCase):
 		obj = Movie.objects.get(slug='robin-hood')
 		self.assertEqual(obj.title, 'Robin Hood')
 
+
 	def test_slugify(self):
 		title = 'Avatar'
 		obj1 = self.create_movie(title=title)
@@ -57,6 +63,11 @@ class MovieModelTestCase(TestCase):
 		self.assertEqual(obj1.slug, slug)
 		self.assertNotEqual(obj2.slug, slug)
 		self.assertNotEqual(obj2.slug, obj3.slug)
+
+	def test_movie_poster(self):
+		poster_movie1 = self.create_movie().poster.name
+		poster_movie2 = self.create_movie().poster.name
+		self.assertNotEqual(poster_movie1, poster_movie2)
 
 	def test_categories(self):
 		cat_action = MovieCategory.objects.create(category='Action')
@@ -96,6 +107,8 @@ class MovieModelTestCase(TestCase):
 		self.assertEqual(rating, 2.5)
 		self.assertEqual(rates_amount, 2)
 
+	def test_gallery(self):
+		pass
 
 
 
