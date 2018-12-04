@@ -6,6 +6,7 @@ from django.utils.text import slugify
 # Create your tests here.
 
 class MovieModelTestCase(TestCase):
+
 	def setUp(self):
 		Movie.objects.create(
 			title='Robin Hood',
@@ -36,6 +37,7 @@ class MovieModelTestCase(TestCase):
 									description=description
 									)
 
+
 	def create_user(self,
 					username='User1',
 					email='user1@gmail.com',
@@ -48,6 +50,7 @@ class MovieModelTestCase(TestCase):
 									 is_active=is_active,
 									 is_admin=is_admin,
 									 is_staff=is_staff)
+
 
 	def test_title(self):
 		obj = Movie.objects.get(slug='robin-hood')
@@ -64,10 +67,12 @@ class MovieModelTestCase(TestCase):
 		self.assertNotEqual(obj2.slug, slug)
 		self.assertNotEqual(obj2.slug, obj3.slug)
 
+
 	def test_movie_poster(self):
 		poster_movie1 = self.create_movie().poster.name
 		poster_movie2 = self.create_movie().poster.name
 		self.assertNotEqual(poster_movie1, poster_movie2)
+
 
 	def test_categories(self):
 		cat_action = MovieCategory.objects.create(category='Action')
@@ -83,7 +88,6 @@ class MovieModelTestCase(TestCase):
 
 		count = MovieCategory.objects.filter(related_movie=movie).count()
 		self.assertEqual(count, 3)
-
 
 
 	def test_comments(self):
@@ -106,6 +110,7 @@ class MovieModelTestCase(TestCase):
 		rating, rates_amount = movie.average_stars
 		self.assertEqual(rating, 2.5)
 		self.assertEqual(rates_amount, 2)
+
 
 	def test_gallery(self):
 		pass
