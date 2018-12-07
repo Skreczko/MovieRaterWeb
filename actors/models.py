@@ -7,7 +7,7 @@ import os, random, string
 from django.urls import reverse
 from django_countries.fields import CountryField
 from movies.models import Movie
-
+from datetime import datetime
 # Create your models here.
 
 YEARS = [x for x in range(1930, 2041)]
@@ -69,11 +69,12 @@ class Actor(models.Model):
 	@property
 	def actor_age(self):
 		if not self.if_died:
-			age = timesince(self.born).split(',')[0]
-			return '{} old'.format(age)
+			#age = timesince(self.born).split(',')[0]
+			age = int(datetime.now().year- self.born.year)
+			return age
 		elif self.died:
 			age = int((self.died-self.born).days/365)
-			return '{} years old'.format(age)
+			return age
 		else:
 			return "Edit this section and choose the date of death"
 
@@ -165,7 +166,7 @@ class CrewRole(models.Model):
 	picture = models.ImageField(null=True, blank=True, upload_to=upload_path)
 
 	def __str__(self):
-		return str(self.actor)
+		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
 
 	class Meta:
 		ordering = ('role', 'actor', 'movie')

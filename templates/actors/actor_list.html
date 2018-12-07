@@ -15,7 +15,7 @@
                   <div class="col-10">
                       <div class="card-section">
                           <h4 class="card-title" id="element1"><a href="{{actor.get_to_detail}}">{{actor.name}} {{actor.last_name}}</a></h4>
-                          <p id="element2">{{actor.actor_age}} ({{actor.born|date:"Y"}} - {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
+                          <p id="element2">{{actor.actor_age}} years old ({{actor.born|date:"Y"}} - {% if actor.if_died %}<i class="fas fa-cross"></i> {{actor.died|date:"Y"}}{% endif %})</p>
                             {% if actor.original_name %}<p>{{actor.original_name}}</p> {% endif %}
                           <div class="card-section2"><br>
                            {% include 'stars.html' with object=actor.average_stars|first %}

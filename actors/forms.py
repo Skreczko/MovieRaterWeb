@@ -7,9 +7,7 @@ from .models import Actor, ActorGallery, ActorComment, ActorRole, CrewRole
 
 
 class ActorForm(forms.ModelForm):
-
 	class Meta:
-
 		model = Actor
 		fields = ['is_crew', 'name', 'last_name', 'original_name', 'photo', 'nationality',
 				  'city_of_birth', 'biography', 'born', 'if_died', 'died', ]
