@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from actors.models import Actor, ActorComment, ActorGallery, ActorRole, CrewRole
-from actors.forms import ActorForm, ActorCommentForm, ActorCastForm
-from accounts.models import MyUser
+from actors.forms import ActorForm, ActorCommentForm, ActorCastForm, ActorCrewForm
 from movies.models import Movie
 import datetime
 
@@ -121,6 +120,43 @@ class ActorTestCase(TestCase):
 		self.assertTrue(form.is_valid())
 		self.assertEqual(form.cleaned_data.get('movie'), movie)
 		self.assertEqual(form.cleaned_data.get("role"), "First role")
+
+	def test_actor_cast_invalid_form(self):
+		actor = self.create_actor()
+		movie = self.create_movie()
+		actor_role = ActorRole.objects.create(actor=actor, movie=movie, role="First role")
+		data = {'movie': actor_role.movie.id,
+				"role": "",
+				}
+		form = ActorCastForm(data=data)
+		self.assertFalse(form.is_valid())
+		self.assertEqual(form.cleaned_data.get('movie'), movie)
+		self.assertEqual(form.cleaned_data.get("role"), None)
+
+
+	def test_actor_crew_valid_form(self):
+		actor1 = self.create_actor(name='Elizabeth', is_crew=True)
+		movie = self.create_movie()
+		actor_role = CrewRole.objects.create(actor=actor1, movie=movie, role="Set Designer")
+		data = {'movie': actor_role.movie.id,
+				"role": actor_role.role,
+				}
+		form = ActorCrewForm(data=data)
+		self.assertTrue(form.is_valid())
+		self.assertEqual(form.cleaned_data.get('movie'), movie)
+		self.assertEqual(form.cleaned_data.get("role"), "Set Designer")
+
+	def test_actor_crew_invalid_form(self):
+		actor1 = self.create_actor(name='Elizabeth', is_crew=True)
+		movie = self.create_movie()
+		actor_role = CrewRole.objects.create(actor=actor1, movie=movie, role="Role not in CHOICES")
+		data = {'movie': actor_role.movie.id,
+				"role": actor_role.role,
+				}
+		form = ActorCrewForm(data=data)
+		self.assertFalse(form.is_valid())
+		self.assertEqual(form.cleaned_data.get('movie'), movie)
+		self.assertNotEqual(form.cleaned_data.get("role"), "Role not in CHOICES")
 
 
 

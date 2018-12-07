@@ -1,13 +1,36 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
-from movies.models import Movie, MovieCategory, MovieComment, MovieGallery
+from actors.models import Actor, ActorComment, ActorGallery, ActorRole, CrewRole
 from accounts.models import MyUser
 import os
 from django.utils.text import slugify
 # Create your tests here.
 
-class MovieTestCase(TestCase):
+class ActorTestCase(TestCase):
+	def create_actor(self,
+					 name='Emily',
+					 last_name='Konawsky',
+					 original_name='Emily Konawsky-Butt',
+					 nationality='US',
+					 city_of_birth='LA',
+					 photo=SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg'),
+					 biography='Some random biography',
+					 born=datetime.date(1985,5,25),
+					 if_died=False,
+					 is_crew=True
+					 ):
+		return Actor.objects.create(name=name,
+									last_name=last_name,
+									original_name=original_name,
+									nationality=nationality,
+									city_of_birth=city_of_birth,
+									biography=biography,
+									born=born,
+									if_died=if_died,
+									is_crew=is_crew,
+									)
+
 	def create_movie(self,
 			title='Robin Hood',
 			year_of_production=2018,
