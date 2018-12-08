@@ -151,7 +151,7 @@ class ActorModelTestCase(TestCase):
 		self.assertNotEqual(os.path.basename(image1.picture.name), os.path.basename(image3.picture.name))
 		self.assertNotEqual(os.path.basename(image2.picture.name), os.path.basename(image3.picture.name))
 
-	def test_actor_role(self):
+	def test_cast_role(self):
 		actor= self.create_actor()
 		movie = self.create_movie()
 		picture = SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg')

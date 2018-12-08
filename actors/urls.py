@@ -39,7 +39,7 @@ urlpatterns = [
 	path('detail/<slug>/crew/edit/<id>/', actor_crew_edit, name='actor_edit_crew'),
 	path('detail/<slug>/crew/delete/<id>/', actor_crew_delete, name='actor_delete_crew'),
 
-	#	MOVIE COMMENTS
+	#	ACTOR COMMENTS
 	path('detail/<slug>/comments/', CommentsListView.as_view(), name='actor_comment_list'),
 	path('detail/<slug>/comments/add_comment/', CommentCreateView.as_view(), name='actor_add_comment'),
 	path('detail/comments/edit_comment/<int:pk>', CommentsUpdateView.as_view(), name='actor_edit_comment'),

@@ -45,22 +45,34 @@ class MovieTestCase(TestCase):
 		list_url = reverse("movie_list")
 		response = self.client.get(list_url)
 		self.assertEqual(response.status_code, 200)
+		self.assertEqual(list_url, '/movies/')
 
 	def test_movie_create_view(self):
 		list_url = reverse("movie_create")
 		response = self.client.get(list_url)
 		self.assertEqual(response.status_code, 302)
+		self.assertEqual(list_url, '/movies/add/')
 
 	def test_movie_detail_view(self):
 		movie = self.create_movie()
 		response = self.client.get(movie.get_to_detail())
 		self.assertEqual(response.status_code, 200)
 
+		movie_edit_url = movie.get_to_detail()
+		response = self.client.get(movie_edit_url)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(movie_edit_url, '/movies/detail/robin-hood')
+
 	def test_movie_update_view(self):
 		movie = self.create_movie()
 		movie_edit_url = reverse("movie_update", kwargs={"slug": movie.slug})
 		response = self.client.get(movie_edit_url)
 		self.assertEqual(response.status_code, 302)
+
+		movie_edit_url = movie.get_to_detail() + '/edit/'
+		response = self.client.get(movie_edit_url)
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(movie_edit_url, '/movies/detail/robin-hood/edit/')
 
 	def test_movie_delete_view(self):
 		movie = self.create_movie()
