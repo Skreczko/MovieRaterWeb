@@ -40,6 +40,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +62,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'crispy_forms',
     'django_countries',
+
 
 
 ]
@@ -161,14 +165,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 LOCALE_PATHS = (
@@ -181,3 +178,9 @@ LANGUAGES = (
     ('fr', ugettext('French')),
     ('pl', ugettext('Polish')),
 )
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hmoahlwol',
+    'API_KEY': '917849456827225',
+    'API_SECRET': 'RiaiG6xVQdJN1RG902s_UHOpLZo'
+}
