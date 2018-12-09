@@ -111,21 +111,21 @@ class ActorTestCase(TestCase):
 
 	def test_actor_gallery_list(self):
 		actor = self.create_actor()
-		gallery_list = actor.get_to_detail() + 'gallery/'
+		gallery_list = reverse("actor_gallery", kwargs={"slug":actor.slug})
 		response = self.client.get(gallery_list)
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(gallery_list, '/persons/detail/konawsky-emily/gallery/')
 
 	def test_actor_gallery_add(self):
 		actor = self.create_actor()
-		gallery_list = actor.get_to_detail() + 'gallery/add_image/'
-		response = self.client.get(gallery_list)
+		gallery_add = reverse("add_actor_picture", kwargs={"slug":actor.slug})
+		response = self.client.get(gallery_add)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(gallery_list, '/persons/detail/konawsky-emily/gallery/add_image/')
+		self.assertEqual(gallery_add, '/persons/detail/konawsky-emily/gallery/add_image/')
 
 	def test_actor_gallery_management(self):
 		actor = self.create_actor()
-		gallery_list = actor.get_to_detail() + 'gallery/management_image/'
+		gallery_list = reverse("actor_management_picture", kwargs={"slug":actor.slug})
 		response = self.client.get(gallery_list)
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(gallery_list, '/persons/detail/konawsky-emily/gallery/management_image/')
@@ -134,10 +134,10 @@ class ActorTestCase(TestCase):
 		actor = self.create_actor()
 		image = SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg')
 		actor_gallery = ActorGallery.objects.create(actor=actor, picture=image)
-		gallery_list = actor.get_to_detail() + 'gallery/delete/{}'.format(actor_gallery.id)
-		response = self.client.get(gallery_list)
+		gallery_delete = reverse("delete_actor_picture", kwargs={"slug":actor.slug, "id":actor_gallery.id})
+		response = self.client.get(gallery_delete)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(gallery_list, '/persons/detail/konawsky-emily/gallery/delete/1')
+		self.assertEqual(gallery_delete, '/persons/detail/konawsky-emily/gallery/delete/1')
 
 	def test_actor_cast_list(self):
 		actor = self.create_actor()
@@ -148,7 +148,7 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = cast.actor.get_to_detail() + 'cast/'
+		cast_list = reverse("actor_cast_list", kwargs={"slug":actor.slug})
 		response = self.client.get(cast_list)
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/cast/')
@@ -162,10 +162,10 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = cast.actor.get_to_detail() + 'cast/add_role/'
-		response = self.client.get(cast_list)
+		cast_add = reverse("actor_add_cast", kwargs={"slug":actor.slug})
+		response = self.client.get(cast_add)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/cast/add_role/')
+		self.assertEqual(cast_add, '/persons/detail/konawsky-emily/cast/add_role/')
 
 	def test_actor_cast_edit(self):
 		actor = self.create_actor()
@@ -176,10 +176,10 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = cast.actor.get_to_detail() + 'cast/edit/{}/'.format(cast.id)
-		response = self.client.get(cast_list)
+		cast_edit = reverse("actor_edit_cast", kwargs={"slug":actor.slug,"id":cast.id})
+		response = self.client.get(cast_edit)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/cast/edit/1/')
+		self.assertEqual(cast_edit, '/persons/detail/konawsky-emily/cast/edit/1/')
 
 	def test_actor_cast_delete(self):
 		actor = self.create_actor()
@@ -190,38 +190,25 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = cast.actor.get_to_detail() + 'cast/delete/{}/'.format(cast.id)
-		response = self.client.get(cast_list)
+		cast_delete = reverse("actor_delete_cast", kwargs={"slug":actor.slug, "id":cast.id})
+
+		response = self.client.get(cast_delete)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/cast/delete/1/')
+		self.assertEqual(cast_delete, '/persons/detail/konawsky-emily/cast/delete/1/')
 
 	def test_actor_crew_list(self):
 		actor = self.create_actor()
-		movie = self.create_movie()
-		picture = SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg')
-		crew = CrewRole.objects.create(
-			movie=movie,
-			actor=actor,
-			role='First role',
-			picture=picture, )
-		crew_list = crew.actor.get_to_detail() + 'crew/'
+		crew_list = reverse("actor_crew_list", kwargs={"slug":actor.slug})
 		response = self.client.get(crew_list)
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(crew_list, '/persons/detail/konawsky-emily/crew/')
 
 	def test_actor_crew_add_role(self):
 		actor = self.create_actor()
-		movie = self.create_movie()
-		picture = SimpleUploadedFile("file.jpg", b"file_content", content_type='image/jpeg')
-		crew = CrewRole.objects.create(
-			movie=movie,
-			actor=actor,
-			role='First role',
-			picture=picture, )
-		crew_list = crew.actor.get_to_detail() + 'crew/add_role/'
-		response = self.client.get(crew_list)
+		crew_add = reverse("actor_add_crew", kwargs={"slug":actor.slug})
+		response = self.client.get(crew_add)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(crew_list, '/persons/detail/konawsky-emily/crew/add_role/')
+		self.assertEqual(crew_add, '/persons/detail/konawsky-emily/crew/add_role/')
 
 	def test_actor_crew_edit(self):
 		actor = self.create_actor()
@@ -232,10 +219,10 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = crew.actor.get_to_detail() + 'crew/edit/{}/'.format(crew.id)
-		response = self.client.get(cast_list)
+		crew_edit = reverse("actor_edit_crew", kwargs={"slug":actor.slug, "id":crew.id})
+		response = self.client.get(crew_edit)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/crew/edit/1/')
+		self.assertEqual(crew_edit, '/persons/detail/konawsky-emily/crew/edit/1/')
 
 	def test_actor_crew_delete(self):
 		actor = self.create_actor()
@@ -246,10 +233,76 @@ class ActorTestCase(TestCase):
 			actor=actor,
 			role='First role',
 			picture=picture, )
-		cast_list = crew.actor.get_to_detail() + 'crew/delete/{}/'.format(crew.id)
-		response = self.client.get(cast_list)
+		crew_delete = reverse("actor_delete_crew", kwargs={"slug":actor.slug, "id":crew.id})
+		response = self.client.get(crew_delete)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(cast_list, '/persons/detail/konawsky-emily/crew/delete/1/')
+		self.assertEqual(crew_delete, '/persons/detail/konawsky-emily/crew/delete/1/')
+
+	def test_actor_comment_list(self):
+		actor = self.create_actor()
+		user1 = MyUser.objects.create(
+					username='User1',
+					email='user1@gmail.com',
+					is_active = True,
+					is_admin = False,
+					is_staff = False,)
+		comment1 = ActorComment.objects.create(
+			added_by=user1,
+			actor=actor,
+			comment='Random comment',
+			stars='3',
+		)
+		comment_list = reverse('actor_comment_list', kwargs={"slug":actor.slug})
+		response = self.client.get(comment_list)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(comment_list, '/persons/detail/konawsky-emily/comments/')
+
+	def test_actor_comment_add(self):
+		actor = self.create_actor()
+		comment_add = reverse('actor_add_comment', kwargs={"slug":actor.slug})
+		response = self.client.get(comment_add)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(comment_add, '/persons/detail/konawsky-emily/comments/add_comment/')
+
+	def test_actor_comment_edit(self):
+		actor = self.create_actor()
+		user1 = MyUser.objects.create(
+					username='User1',
+					email='user1@gmail.com',
+					is_active = True,
+					is_admin = False,
+					is_staff = False,)
+		comment1 = ActorComment.objects.create(
+			added_by=user1,
+			actor=actor,
+			comment='Random comment',
+			stars='3',
+		)
+		comment_edit = reverse("actor_edit_comment", kwargs={"pk":comment1.id})
+		print(comment_edit)
+		response = self.client.get(comment_edit)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(comment_edit, '/persons/detail/comments/edit_comment/1')
+
+
+	def test_actor_comment_delete(self):
+		actor = self.create_actor()
+		user1 = MyUser.objects.create(
+					username='User1',
+					email='user1@gmail.com',
+					is_active = True,
+					is_admin = False,
+					is_staff = False,)
+		comment1 = ActorComment.objects.create(
+			added_by=user1,
+			actor=actor,
+			comment='Random comment',
+			stars='3',
+		)
+		comment_delete = reverse("actor_delete_comment", kwargs={"pk":comment1.id})
+		response = self.client.get(comment_delete)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(comment_delete, '/persons/detail/comments/delete_comment/1')
 
 
 
