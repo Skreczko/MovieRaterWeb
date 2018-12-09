@@ -6,7 +6,7 @@
     <div class="col-8 offset-2">
        <div class="row">
           <div class="col-2">
-              <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
+              <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
           </div>
           <div class="col-8">
               <h3 class="card-title" id="">Gallery: {{movie.title}} ({{movie.year_of_production}})
@@ -18,11 +18,11 @@
                         <i class="fas fa-exclamation-triangle red">{% if object.movie_gallery.all|length == 0 %} There is no images to delete! {% else %}
                             Click on image you want to delete!{% endif %}</i><br><br>
                             {% for imag in object.movie_gallery.all %}
-                            <a href="{% url 'delete_picture' movie.slug imag.id %}"><img id="delete_img" src="/media/{{imag.picture}}"></a>
+                            <a href="{% url 'delete_picture' movie.slug imag.id %}"><img id="delete_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                         {% endfor %}
 {% else %}
                         {% for imag in object.movie_gallery.all %}
-                            <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                            <a href="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                         {% empty %}
                         <i class="fas fa-exclamation-triangle orange"> The gallery is empty!</i>
                         {% endfor %}

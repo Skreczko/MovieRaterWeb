@@ -6,7 +6,7 @@
     <div class="col-8 offset-2">
        <div class="row">
           <div class="col-2">
-              <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
+              <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
           </div>
           <div class="col-10">
               <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
@@ -122,11 +122,11 @@
                 <hr>
             {% if 'management_image' in request.get_full_path %}
                 {% for imag in gallery_movie_all %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% else %}
                 {% for imag in gallery_movie_20 %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}
             </div>
@@ -150,7 +150,7 @@
                           {% for query in related_actors %}
                       {% if forloop.counter <= 10 %}
                             <tr>
-                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" >{% endif %}</th>
+                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.actor.photo}}" >{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
                                     <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
@@ -161,7 +161,7 @@
                                  </td>
                                 <td width="5%">
                                  {% if query.picture %}
-                                    <img id="img_table" src="/media/{{query.picture}}" >
+                                    <img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.picture}}" >
                                     {% endif %}
                                 </td>
                             </tr>
@@ -191,7 +191,7 @@
                           {% for query in related_crews %}
                       {% if forloop.counter <= 10 %}
                             <tr>
-                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="/media/{{query.actor.photo}}" >{% endif %}</th>
+                              <th scope="row" width="10%">{% if query.actor.photo %}<img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.actor.photo}}" >{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
                                     <a class="bold" href="{{query.actor.get_to_detail}}">{{ query.actor.name }} {{ query.actor.last_name }}</a>
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
@@ -202,7 +202,7 @@
                                  </td>
                                 <td width="5%">
                                  {% if query.picture %}
-                                    <img id="img_table" src="/media/{{query.picture}}" >
+                                    <img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.picture}}" >
                                     {% endif %}
                                 </td>
                             </tr>

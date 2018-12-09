@@ -7,7 +7,7 @@
 
       <div class="row">
           <div class="col-2">
-              <img id="actor_image_list" class="img-responsive" src="/media/{{actor.photo}}" alt="{{actor.last_name}}">
+              <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{actor.photo}}" alt="{{actor.last_name}}">
           </div>
           <div class="col-10">
               <h3 class="card-title">{{object.name}} {{object.last_name}}</h3>
@@ -69,11 +69,11 @@
                 <hr>
             {% if 'management_image' in request.get_full_path %}
                 {% for imag in gallery_actor_all %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% else %}
                 {% for imag in gallery_actor_20 %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="/media/{{imag.picture}}"></a>
+                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}
             </div>
@@ -119,7 +119,7 @@
                           {% for query in related_movies %}
                       {% if forloop.counter <= 10 %}
                             <tr>
-                              <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="/media/{{query.movie.poster}}" >{% endif %}</th>
+                              <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.movie.poster}}" >{% endif %}</th>
                                 <td id="actor_in_table" width="40%">
                                     <a class="bold" href="{{query.movie.get_to_detail}}">{{ query.movie.title }} ({{ query.movie.year_of_production }})</a>
                                     {% include 'stars.html' with object=query.movie.average_stars|first %}
@@ -130,7 +130,7 @@
                                  </td>
                                 <td width="5%">
                                  {% if query.picture %}
-                                    <img id="img_table" src="/media/{{query.picture}}" >
+                                    <img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.picture}}" >
                                     {% endif %}
                                 </td>
                             </tr>
@@ -172,7 +172,7 @@
                                  </td>
                                 <td width="5%">
                                  {% if query.picture %}
-                                    <img id="img_table" src="/media/{{query.picture}}" >
+                                    <img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.picture}}" >
                                     {% endif %}
                                 </td>
                             </tr>
