@@ -69,11 +69,11 @@
                 <hr>
             {% if 'management_image' in request.get_full_path %}
                 {% for imag in gallery_actor_all %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
+                <a href="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% else %}
                 {% for imag in gallery_actor_20 %}
-                <a href="/media/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
+                <a href="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"><img id="gallery_img" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{imag.picture}}"></a>
                 {% endfor %}
             {% endif %}
             </div>

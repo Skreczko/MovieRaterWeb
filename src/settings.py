@@ -185,3 +185,4 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '917849456827225',
     'API_SECRET': 'RiaiG6xVQdJN1RG902s_UHOpLZo'
 }
+#https://github.com/klis87/django-cloudinary-storage
