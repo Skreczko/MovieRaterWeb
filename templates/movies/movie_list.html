@@ -54,7 +54,7 @@
                                 <p id="paragraph_category">
                                     {% for person in director %}
                                         {% if  movie == person.movie and person.role == check_director %}
-                                            <a href="{{person.actor.get_to_detail}}">{{ person }}</a>
+                                            <a href="{{person.actor.get_to_detail}}">{{ person.actor }}</a>
                                         {% else %}
                                             <i class="fas fa-ban red"> Add in details</i>
                                         {% endif %}
