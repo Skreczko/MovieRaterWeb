@@ -366,7 +366,7 @@ class CommentsListView(ListView):
 
 
 
-class CommentCreateView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, CreateView):
+class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 	form_class = MovieCommentForm
 	template_name = 'form_comment.html'
 	success_message = "Your comment was created successfully!"
@@ -395,7 +395,7 @@ class CommentCreateView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, C
 		return reverse(view_name, kwargs={'slug': self.object.movie.slug})
 
 
-class CommentsUpdateView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, UpdateView):
+class CommentsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 	model = MovieComment
 	template_name = 'form_comment.html'
 	form_class = MovieCommentForm
@@ -408,7 +408,7 @@ class CommentsUpdateView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, 
 
 
 
-class CommentsDeleteView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, DeleteView):
+class CommentsDeleteView(LoginRequiredMixin,  SuccessMessageMixin, DeleteView):
 	model = MovieComment
 	template_name = "confirm_delete.html"
 	success_message = "Your comment was deleted successfully!"
