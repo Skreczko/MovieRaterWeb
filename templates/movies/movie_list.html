@@ -9,7 +9,7 @@
           <div class="card-body">
               <div class="row">
                   <div class="col-2">
-                      <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
+                      <img id="actor_image_list" class="img-responsive" src="/media/{{movie.poster}}" alt="{{movie.title}}">
                   </div>
                   <div class="col-10">
                       <div class="card-section">
@@ -20,9 +20,9 @@
                               </div>
                               <div class="col-5">
                                   <p id="paragraph_category">
-                                        {% if movie.moviecategory_set.all|length > 1 %}
-                                            {% for cat in movie.moviecategory_set.all %}
-                                                {% if forloop.counter != movie.moviecategory_set.all|length %}
+                                        {% if movie.movie_category.all|length > 1 %}
+                                            {% for cat in movie.movie_category.all %}
+                                                {% if forloop.counter != movie.movie_category.all|length %}
                                                     {{cat.category}},
                                                 {% else %}
                                                     {{cat.category}}
@@ -30,8 +30,8 @@
                                             {% empty %}
                                                 <a href="{% url 'add_category' movie.slug %}"><i class="fas fa-plus"></i> Add</a>
                                             {% endfor %}
-                                        {% elif movie.moviecategory_set.all|length is 1 %}
-                                            {{movie.moviecategory_set.all.0.category}}
+                                        {% elif movie.movie_category.all|length is 1 %}
+                                            {{movie.movie_category.all.0.category}}
                                        {% else %}
                                            <i class="fas fa-ban red"> Add category in details</i>
                                         {% endif %}
