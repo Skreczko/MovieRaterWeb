@@ -15,8 +15,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+
 
 from .models import CREW_ROLE
 
@@ -60,7 +61,6 @@ class ActorDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_actor_20'] = ActorGallery.objects.filter(actor=self.object)[:20]
 		context['gallery_actor_all'] = ActorGallery.objects.filter(actor=self.object)
-
 		context['related_movies'] = ActorRole.objects.filter(actor=self.object)
 		context['related_crews'] = CrewRole.objects.filter(actor=self.object)
 		context['comment_list'] = ActorComment.objects.filter(actor=self.object).exclude(
@@ -98,9 +98,10 @@ class ActorDetailView(FormMixin, DetailView):
 		return super().form_valid(form)
 
 
-class ActorCreateView(IsStaffMixin, CreateView):
+class ActorCreateView(LoginRequiredMixin, IsStaffMixin, CreateView):
 	template_name = "form.html"
 	form_class = ActorForm
+	login_url = "404-error"
 
 	def form_valid(self, form):
 		return super(ActorCreateView,self).form_valid(form)
@@ -109,21 +110,23 @@ class ActorCreateView(IsStaffMixin, CreateView):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorUpdateView(IsStaffMixin, SuccessMessageMixin, UpdateView):
+class ActorUpdateView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, UpdateView):
 	model = Actor
 	template_name = "form.html"
 	form_class = ActorForm
 	success_message = "%(name)s %(last_name)s was updated successfully!"
+	login_url = "404-error"
 
 
 	def get_success_url(self):
 		view_name = 'actor_detail'
 		return reverse(view_name, kwargs={'slug': self.object.slug})
 
-class ActorDeleteView(IsStaffMixin, SuccessMessageMixin, DeleteView):
+class ActorDeleteView(LoginRequiredMixin, IsStaffMixin, SuccessMessageMixin, DeleteView):
 	model=Actor
 	template_name = "confirm_delete.html"
 	success_message = "Actor was deleted successfully!"
+	login_url = "404-error"
 
 	def delete(self, request, *args, **kwargs):
 		messages.success(self.request, self.success_message)
@@ -134,6 +137,7 @@ class ActorDeleteView(IsStaffMixin, SuccessMessageMixin, DeleteView):
 
 					#GALLERY
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def gallery_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
@@ -151,6 +155,7 @@ def gallery_create(request, slug=None):
 
 
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_gallery_delete(request, slug=None, id=None):
 	photo = ActorGallery.objects.get(pk=id)
@@ -166,6 +171,7 @@ def actor_gallery_delete(request, slug=None, id=None):
 
 							# CAST
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
@@ -190,6 +196,7 @@ def actor_cast_create(request, slug=None):
 
 
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_edit(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
@@ -206,6 +213,7 @@ def actor_cast_edit(request, slug=None, id=None):
 
 
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_cast_delete(request, slug=None, id=None):
 	qs_cast = ActorRole.objects.get(pk=id)
@@ -221,6 +229,7 @@ def actor_cast_delete(request, slug=None, id=None):
 
 #							CREW
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_create(request, slug=None):
 	qs_actor = Actor.objects.get(slug=slug)
@@ -247,6 +256,7 @@ def actor_crew_create(request, slug=None):
 
 
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_edit(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
@@ -263,6 +273,7 @@ def actor_crew_edit(request, slug=None, id=None):
 
 
 
+@login_required(login_url='404-error')
 @user_passes_test(is_staff_check, login_url='404-error')
 def actor_crew_delete(request, slug=None, id=None):
 	qs_cast = CrewRole.objects.get(pk=id)
@@ -289,10 +300,11 @@ class CommentsListView(ListView):
 
 
 
-class CommentCreateView(SuccessMessageMixin, CreateView):
+class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 	form_class = ActorCommentForm
 	template_name = 'form_comment.html'
 	success_message = "Your comment was created successfully!"
+	login_url = "404-error"
 
 	def form_valid(self, form):
 		actor = get_object_or_404(Actor, slug=self.kwargs.get('slug'))
@@ -318,21 +330,23 @@ class CommentCreateView(SuccessMessageMixin, CreateView):
 
 
 
-class CommentsUpdateView(SuccessMessageMixin, UpdateView):
+class CommentsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 	model = ActorComment
 	template_name = 'form_comment.html'
 	form_class = ActorCommentForm
 	success_message = "Your comment was updated successfully!"
+	login_url = "404-error"
 
 	def get_success_url(self):
 		view_name = 'actor_comment_list'
 		return reverse(view_name, kwargs={'slug': self.object.actor.slug})
 
 
-class CommentsDeleteView(SuccessMessageMixin, DeleteView):
+class CommentsDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 	model = ActorComment
 	template_name = "confirm_delete.html"
 	success_message = "Your comment was deleted successfully!"
+	login_url = "404-error"
 
 	def delete(self, request, *args, **kwargs):
 		messages.success(self.request, self.success_message)

@@ -56,7 +56,7 @@ urlpatterns = [
 	path('detail/comments/delete_comment/<int:pk>', CommentsDeleteView.as_view(), name='delete_comment'),
 
 	#	ERROR 404 TEMPLATE
-	path('about/', ErrorView.as_view(), name='404-error'),
+	path('no-access/', ErrorView.as_view(), name='404-error'),
 
 
 
