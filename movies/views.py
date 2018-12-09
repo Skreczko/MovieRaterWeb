@@ -39,30 +39,21 @@ def is_staff_check(user):
 class MovieListView(ListView):
 	model = Movie
 	paginate_by = 20
-	queryset = Movie.objects.all()
-	""" 
-	https://docs.djangoproject.com/en/2.1/topics/pagination/
-	https://docs.djangoproject.com/en/2.1/topics/class-based-views/mixins/
-	https://docs.djangoproject.com/en/2.1/ref/class-based-views/mixins/
-	"""
-
-	"""
-	mozemy dodac wszystkie filmy danego reżysera na jednej stronie, zas innego na drugiej
-	https://docs.djangoproject.com/en/2.1/topics/class-based-views/mixins/  <-Using SingleObjectMixin with ListView
-	
-	
-	"""
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['director'] = CrewRole.objects.all()
 		context['check_director'] = str('Director')
 		context['actors_in_movie'] = ActorRole.objects.all()
-
 		return context
 
 	def get_queryset(self, *args, **kwargs):
-		qs = super(MovieListView,self).get_queryset(*args, **kwargs).order_by("title")
+		qs = super().get_queryset(*args, **kwargs).order_by("title")
+		query = self.request.GET.get('q', None)
+		if query is not None:
+			qs = qs.filter(
+				Q(title__icontains=query)
+			)
 		return qs
 
 

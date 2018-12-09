@@ -40,10 +40,16 @@ def is_staff_check(user):
 class ActorListView(ListView):
 	model = Actor
 	paginate_by = 20
-	queryset = Actor.objects.all()
 
 	def get_queryset(self, *args, **kwargs):
 		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew', 'last_name')
+		query = self.request.GET.get("q", None)
+		if query is not None:
+			qs = qs.filter(
+				Q(name__icontains=query) |
+				Q(last_name__icontains=query) |
+				Q(original_name__icontains=query)
+			)
 		return qs
 
 class ActorDetailView(FormMixin, DetailView):
