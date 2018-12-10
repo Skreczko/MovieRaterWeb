@@ -40,7 +40,7 @@ def is_staff_check(user):
 							#ACTOR
 class ActorListView(ListView):
 	model = Actor
-	paginate_by = 20
+	paginate_by = 10
 
 	def get_queryset(self, *args, **kwargs):
 		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew', 'last_name')
