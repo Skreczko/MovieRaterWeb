@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<div class="row no-gutters">
-    <div class="col-8 offset-2">
+<div class="row justify-content-end no-gutters">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-11 center">
        <div class="row">
-          <div class="col-2">
+          <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 center">
               {% if 'movies' in request.get_full_path %}
-              <img id="actor_image_list" class="img-responsive" src="/media/{{comment_list.0.movie.poster}}" alt="{{comment_list.0.movie.title}}">
+              <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{comment_list.0.movie.poster}}" alt="{{comment_list.0.movie.title}}">
               {% elif 'persons' in request.get_full_path %}
-               <img id="actor_image_list" class="img-responsive" src="/media/{{comment_list.0.actor.photo}}" alt="{{comment_list.0.actor.photo}}">
+               <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{comment_list.0.actor.photo}}" alt="{{comment_list.0.actor.photo}}">
               {% endif %}
           </div>
-          <div class="col-8">
-              <h3 class="card-title" id="">
+          <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-8 col-xl-8">
+              <h3 class="card-title offset-to-center" >
                     {% if 'movies' in request.get_full_path %}
                         Comments: {{comment_list.0.movie.title}} ({{comment_list.0.movie.year_of_production}})</h3>
                     {% elif 'persons' in request.get_full_path %}
@@ -25,7 +25,7 @@
                         <div class="card">
                           <div class="card-body">
                           <div class="row">
-                              <div class="col-11">
+                              <div class="col-10 col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xl-11">
                             <h5 class="card-title">{% include 'stars.html' with object=comment.stars %}</h5>
                             <p class="card-subtitle mb-3 text-muted comment_added_by">
                                 Added by: <span class="bold">{{comment.added_by.username}}</span>  |
@@ -36,7 +36,7 @@
                               {% endif %}
                             </p>
                               </div>
-                              <div class="col-1">
+                              <div class="col-2 col-xs-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
                                   {% if request.user.id is comment.added_by.id %}
                                     {% if 'movies' in request.get_full_path %}
                                         <a href="{% url 'edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>

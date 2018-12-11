@@ -9,28 +9,28 @@
 {% block content %}
 
 
-<div class="row no-gutters">
-    <div class="col-8 offset-2">
+<div class="row justify-content-end no-gutters">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 center">
           <div class="row">
-              <div class="col-2">
+              <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 center">
                   {% if 'persons' in request.get_full_path %}
-                  <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{object.photo}}" alt="{{object.title}}">
+                  <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{object.photo}}" alt="{{object.title}}">
                   {% elif 'movies' in request.get_full_path %}
-                  <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{object.poster}}" alt="{{object.title}}">
+                  <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{object.poster}}" alt="{{object.title}}">
                   {% endif %}
               </div>
-              <div class="col-10">
+              <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-10 col-xl-10 offset-to-center">
                   <h3 class="card-title">
-                    {% if 'comments' and 'movies' in request.get_full_path %}Comment: {{object.movie.title}}
-                    {% elif 'comments' and 'persons' in request.get_full_path %}Comment: {{object.actor.name}} {{object.actor.last_name}}
+                    {% if 'comments' in request.get_full_path and 'movies' in request.get_full_path %}Comment: {{object.movie.title}}
+                    {% elif 'comments' in request.get_full_path and 'persons' in request.get_full_path %}Comment: {{object.actor.name}} {{object.actor.last_name}}
                     {% elif 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
                     {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
                     {% endif %}</h3>
                   <div class="row">
-                      <div class="col-6">
+                      <div class="col-12">
                           <form action="" method="POST">{% csrf_token %}
                               <br>
-                              <p> Are you sure you want to delete
+                              <p class="offset-to-center"> Are you sure you want to delete
                                   {% if 'comments' in request.get_full_path %} your comment:<br>{{object.comment|truncatewords:20}}
                                   {% elif 'persons' in request.get_full_path %}{{object.name}} {{object.last_name}}
                                   {% elif 'movies' in request.get_full_path %} {{object.title}} ({{object.year_of_production}})
