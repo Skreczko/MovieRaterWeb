@@ -13,7 +13,7 @@
                   <span id="movie_dur_span"><i class="far fa-clock"></i> {{movie.duration}} min</span>
               </h3>
             <div class="row font_90">
-                <div class="col-5">
+                <div class="col-12 col-sm-6 col-md-5 col-lg-5 col-xl-5">
                               <div class="row no_gutters">
                                   <div class="col-4">
                                       <p class="bold">Category:</p>
@@ -77,14 +77,14 @@
                                   </div>
                               </div>
                 </div>
-                <div class="col-4">
+                <div class="col-12 offset-text-to-center col-sm-6 col-md-4 col-lg-4 col-xl-4">
                   <div class="row no_gutters">
                       <div class="col-12">
                           <p>{{movie.description}}</p>
                       </div>
                   </div>
             </div>
-                <div class="col-3">
+                <div class="col-12 col-sm-12 offset-to-center col-md-3 col-lg-3 col-xl-3">
                     <div class="row">
                          <div class="col-12" >
                               <h3 id><i class="fas fa-star" style="  color:orange;"></i> {{movie.average_stars|first}}</h3>
@@ -136,7 +136,7 @@
 
         {% if related_actors %}
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                 <h4>Cast
                     {% if related_actors|length > 10 %}
                     <span id="movie_dur_span"><a href="{% url 'cast_list' movie.slug %}">
@@ -176,7 +176,7 @@
 
         {% if related_crews %}
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
 
                 <h4>Crew
                     {% if related_crews|length > 10 %}
@@ -217,7 +217,7 @@
 
         {% if all_comment_list %}
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                 <h4>Comments
                     {% if all_comment_list|length > 5 %}
                     <span id="movie_dur_span"><a href="{% url 'comment_list' movie.slug %}">
@@ -300,7 +300,7 @@
         {% endif %}
 </div>
 
-<div class="col-12 col-12 col-xs-12 col-sm-12 col-md-9 col-lg-10 col-xl-2">
+<div class="col-12 col-xs-12 col-sm-12 col-md-12 offset-text-to-center col-lg-12 col-xl-2">
         {% include 'movies/dashboard.html' with object=movie %}
     </div>
 

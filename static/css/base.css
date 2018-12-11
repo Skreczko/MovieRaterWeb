@@ -8,6 +8,25 @@ html,body
     overflow-x: hidden;
 }
 
+
+@media (max-width: 768px) {
+  .offset-to-center {
+          text-align: center;
+   }
+}
+
+@media (max-width: 576px) {
+  .offset-text-to-center {
+          text-align: center;
+   }
+}
+
+@media (max-width: 1200px) {
+  .offset-text-to-center {
+          text-align: center;
+   }
+}
+
 .has-error label.error {
     color: red;
 }
