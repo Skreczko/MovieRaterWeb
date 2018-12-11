@@ -7,22 +7,23 @@
         <form class="form-inline my-1 " method="POST" action="{% url 'login' %}">{% csrf_token%}
           <input class="form-control mr-sm-2" type="text" name="query" placeholder="Username or email" >
             <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" >
-    </div>
-              <div class="col-auto">
+
+
                 <button class="btn btn-outline-light my-1" type="submit">Login</button>
                 {% if not "/register/" in request.get_full_path %}
-                  <a href="{% url 'register'%}" class="btn btn-outline-light my-2 my-sm-0" id="register_now">REGISTER NOW</a>
+                  <a href="{% url 'register'%}" class="btn btn-outline-light my-1" id="register_now">REGISTER NOW</a>
                 {% else %}
-                  <a href="/" class="btn btn-outline-light my-2 my-sm-0">Home</a>
+                  <a href="/" class="btn btn-outline-light my-1">Home</a>
                 {% endif %}
               </div>
         </form>
       {% elif request.user.is_authenticated %}
         <p class="authenticated_user_name">Welcome, {{request.user.username}}</p>
-        <a  href="{% url 'logout'%}" class="btn btn-outline-light my-2 my-sm-0">Logout</a>
+        <a  href="{% url 'logout'%}" class="btn btn-outline-light my-1">Logout</a>
       {% else %}
-        <a href="/" class="btn btn-outline-light my-2 my-sm-0">Home</a>
+        <a href="/" class="btn btn-outline-light my-1">Home</a>
       {% endif %}
+      </div>
 </div>
     </div>
 
