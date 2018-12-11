@@ -2,23 +2,23 @@
 
 {% block content %}
 
-<div class="row no-gutters">
-    <div class="col-6 offset-3">
+<div class="row justify-content-center no-gutters">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
         {% for movie in object_list %}
         <div class="card">
           <div class="card-body">
               <div class="row">
-                  <div class="col-2">
-                      <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
+                  <div class="col-12 col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 center">
+                      <img id="actor_image_list" class="rounded mx-auto d-block " src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
                   </div>
-                  <div class="col-10">
+                  <div class="col-12 col-xs-12 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                       <div class="card-section">
                           <h3 class="card-title" id="duration_time"><a href="{{movie.get_to_detail}}">{{movie.title}} ({{movie.year_of_production}})</a></h3>
                           <div class="row">
-                              <div class="col-2">
+                              <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                                   <p id="paragraph_category">{{movie.duration}}min</p>
                               </div>
-                              <div class="col-5">
+                              <div class="col-8 col-sm-8 col-md-9 col-lg-8 col-xl-5">
                                   <p id="paragraph_category">
                                         {% if movie.movie_category.all|length > 1 %}
                                             {% for cat in movie.movie_category.all %}
@@ -40,17 +40,17 @@
                           </div>
 
                               <div class="row">
-                                  <div class="col-6">
+                                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                       {% include 'stars.html' with object=movie.average_stars|first %}
                                       <p class="votes">{{movie.average_stars|first}}/5  |  {{movie.average_stars|last}} vote{{movie.average_stars|last|pluralize}}</p>
                                   </div>
 
                         </div>
                           <div class="row">
-                              <div class="col-2">
+                              <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                                   <p class="bold" id="paragraph_category">Director: </p>
                               </div>
-                              <div class="col-3">
+                              <div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-3">
                                 <p id="paragraph_category">
                                     {% for person in director %}
                                         {% if  movie == person.movie and person.role == check_director %}
@@ -63,11 +63,11 @@
                                     {% endfor %}
                                 </p>
                               </div>
-                              <div class="col-2">
+                              <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                                   <p class="bold" id="paragraph_category">Actors: </p>
                               </div>
 
-                              <div class="col-5">
+                              <div class="col-8 col-sm-8 col-md-9 col-lg-6 col-xl-5">
                                     <p id="paragraph_category">
                                         {% if actors_in_movie|length > 1 %}
                                             {% for person in actors_in_movie %}
@@ -87,19 +87,19 @@
                                     </p>
                               </div>
                            </div>
-                          <div class="row margin_bottom">
-                              <div class="col-2">
+                          <div class="row margin-border">
+                              <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                                   <p class="bold " id="paragraph_category">Production: </p>
                               </div>
-                              <div class="col-3">
+                              <div class="col-8 col-sm-8 col-md-9 col-lg-9 col-xl-3">
                                     <p id="paragraph_category">
                                         {{movie.production.name}}
                                     </p>
                               </div>
-                              <div class="col-2">
+                              <div class="col-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                                   <p class="bold" id="paragraph_category">Budget: </p>
                               </div>
-                              <div class="col-5">
+                              <div class="col-8 col-sm-8 col-md-9 col-lg-6 col-xl-5">
                                     <p id="paragraph_category">
                                         {{movie.budget}} $
                                     </p>
@@ -118,15 +118,19 @@
             <hr>
             {% include 'pagination.html' %}
         {% endif %}
+
     </div>
-    <div class="col-2">
+<div class="col-12 col-12 col-xs-12 col-sm-12 col-md-1 col-lg-1 col-xl-1" id="form_in_movie_list">
+
         <form method="GET" action="">
             <input type="text" name="q" placeholder="Search for movie">
             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" >Submit</button>
         </form>
+
     </div>
 
 </div>
+
 
 
 

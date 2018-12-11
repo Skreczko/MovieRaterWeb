@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<div class="row no-gutters">
-    <div class="col-8 offset-2">
+<div class="row justify-content-end no-gutters">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 center">
        <div class="row">
-          <div class="col-2">
-              <img id="actor_image_list" class="img-responsive" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
+          <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 center">
+              <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
           </div>
-          <div class="col-10">
+          <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-10 col-xl-10">
               <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
                   <span id="movie_dur_span"><i class="far fa-clock"></i> {{movie.duration}} min</span>
               </h3>
@@ -16,7 +16,7 @@
                 <div class="col-5">
                               <div class="row no_gutters">
                                   <div class="col-4">
-                                      <p>Category:</p>
+                                      <p class="bold">Category:</p>
                                   </div>
                                   <div class="col-6">
                                        <p>
@@ -38,7 +38,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-4">
-                                      <p>Director:</p>
+                                      <p class="bold">Director:</p>
                                   </div>
                                   <div class="col-6">
                                       <p>
@@ -61,7 +61,7 @@
 
                               <div class="row">
                                   <div class="col-4 ">
-                                      <p>Production:</p>
+                                      <p class="bold">Production:</p>
                                   </div>
                                   <div class="col-6">
                                       <p>{{movie.production.name}}</p>
@@ -70,7 +70,7 @@
 
                               <div class="row">
                                   <div class="col-4">
-                                      <p>Budget:</p>
+                                      <p class="bold">Budget:</p>
                                   </div>
                                   <div class="col-6">
                                       <p>{{movie.budget}} $</p>
@@ -111,7 +111,7 @@
 
         {% if gallery_movie_all %}
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                 <h4>Gallery
                     {% if gallery_movie_all|length > 20 %}
                     <span id="movie_dur_span"><a href="{% url 'picture_gallery' movie.slug %}">
@@ -300,7 +300,7 @@
         {% endif %}
 </div>
 
-<div class="col-2">
+<div class="col-12 col-12 col-xs-12 col-sm-12 col-md-9 col-lg-10 col-xl-2">
         {% include 'movies/dashboard.html' with object=movie %}
     </div>
 

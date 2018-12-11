@@ -254,6 +254,13 @@ ul {
 .margin_bottom_20px {
     margin_bottom: 20px;
 }
+.margin-border {
+    margin-bottom: -5px;
+}
+
+#form_in_movie_list{
+    text-align:center;
+}
 
 .votes {
     color:#505050;
