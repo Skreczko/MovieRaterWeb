@@ -16,7 +16,13 @@ html,body
 }
 
 @media (max-width: 576px) {
-  .offset-text-to-center {
+  .offset-text-to-center-576 {
+          text-align: center;
+   }
+}
+
+@media (max-width: 992px) {
+  .offset-text-to-center-992 {
           text-align: center;
    }
 }

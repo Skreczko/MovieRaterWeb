@@ -3,13 +3,13 @@
 {% block content %}
 
 <div class="row justify-content-end no-gutters">
-    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 center">
+    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 center">
        <div class="row">
-          <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 center">
+          <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 center ">
               <img id="actor_image_list" class="rounded mx-auto d-block" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{movie.poster}}" alt="{{movie.title}}">
           </div>
-          <div class="col-12 col-xs-12 col-sm-12 col-md-9 col-lg-10 col-xl-10">
-              <h3 class="card-title" id="">{{movie.title}} ({{movie.year_of_production}})
+          <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+              <h3 class="card-title offset-text-to-center-992" id="">{{movie.title}} ({{movie.year_of_production}})
                   <span id="movie_dur_span"><i class="far fa-clock"></i> {{movie.duration}} min</span>
               </h3>
             <div class="row font_90">
@@ -18,7 +18,7 @@
                                   <div class="col-4">
                                       <p class="bold">Category:</p>
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-8">
                                        <p>
                                           {% if related_category|length > 1 %}
                                                 {% for cat in related_category %}
@@ -40,7 +40,7 @@
                                   <div class="col-4">
                                       <p class="bold">Director:</p>
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-8">
                                       <p>
                                           {% if director.all|length > 1 %}
                                                 {% for cat in director.all %}
@@ -63,7 +63,7 @@
                                   <div class="col-4 ">
                                       <p class="bold">Production:</p>
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-8">
                                       <p>{{movie.production.name}}</p>
                                   </div>
                               </div>
@@ -72,18 +72,18 @@
                                   <div class="col-4">
                                       <p class="bold">Budget:</p>
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-8">
                                       <p>{{movie.budget}} $</p>
                                   </div>
                               </div>
                 </div>
-                <div class="col-12 offset-text-to-center col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                <div class="col-12 offset-text-to-center col-sm-4 col-md-4 col-lg-4 col-xl-4">
                   <div class="row no_gutters">
                       <div class="col-12">
                           <p>{{movie.description}}</p>
                       </div>
                   </div>
-            </div>
+                    </div>
                 <div class="col-12 col-sm-12 offset-to-center col-md-3 col-lg-3 col-xl-3">
                     <div class="row">
                          <div class="col-12" >
@@ -298,6 +298,7 @@
         </div>
         <br><br><br>
         {% endif %}
+</div>
 </div>
 
 <div class="col-12 col-xs-12 col-sm-12 col-md-12 offset-text-to-center col-lg-12 col-xl-2">
