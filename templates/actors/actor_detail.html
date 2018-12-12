@@ -67,13 +67,14 @@
                          <div class="fb-share-button" data-href="{{request.get_full_path}}"
                               data-layout="button" data-size="small" data-mobile-iframe="true">
                              <a target="_blank" href=""
-                                class="fb-xfbml-parse-ignore">Share</a>
+                                class="fb-xfbml-parse-ignore">Share</a></div>
                      <br>
-                         </div>
+
                      </div>
                   </div>
                 </div>
             </div>
+               <br><br>
                 {% if gallery_actor_all %}
         <div class="row">
             <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-11 col-xl-11">
@@ -298,7 +299,7 @@
     <div class="col-12 col-xs-12 col-sm-12 col-md-12 offset-text-to-center col-lg-12 col-xl-2">
         {% include 'actors/dashboard.html' with actor=actor%}
     </div>
-</div>
+
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
