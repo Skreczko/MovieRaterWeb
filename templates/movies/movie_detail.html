@@ -229,7 +229,7 @@
                         <div class="card">
                           <div class="card-body">
                           <div class="row">
-                              <div class="col-10 col-xs-10 col-sm-10 col-md-11 col-lg-11 col-xl-11">
+                              <div class="col-10 col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
                             <h5 class="card-title">{% include 'stars.html' with object=comment.stars %}</h5>
                             <p class="card-subtitle mb-3 text-muted comment_added_by">
                                 Added by: <span class="bold">{{comment.added_by.username}}</span>  |
@@ -240,7 +240,7 @@
                               {% endif %}
                             </p>
                               </div>
-                              <div class="col-2 col-xs-2 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                              <div class="col-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                                   {% if request.user.id is comment.added_by.id %}
                             <a href="{% url 'edit_comment' comment.id  %}" ><i class="far fa-edit"></i></a>
                             <a href="{% url 'delete_comment' comment.id  %}"><i class="far fa-trash-alt"></i></a>
