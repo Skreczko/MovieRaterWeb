@@ -176,6 +176,10 @@ ul {
 
 /*  actor section */
 
+.align-justify {
+    text-align:justify;
+}
+
 .card {
     margin-bottom: 20px;
 }
