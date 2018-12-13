@@ -1,6 +1,6 @@
 from django import forms
 from .models import Movie, MovieComment, MovieGallery
-
+from decimal import Decimal
 
 from .models import CATEGORIES, YEARS, DURATION
 
@@ -35,6 +35,8 @@ class MovieForm(forms.ModelForm):
 				raise forms.ValidationError("The maximum number "
 											"of characters has been exceeded by {}.".format(len(description)))
 			return description
+
+
 
 
 class MovieCommentForm(forms.ModelForm):

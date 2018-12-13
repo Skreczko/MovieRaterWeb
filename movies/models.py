@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
+from django.core.validators import MaxValueValidator
 from django.utils.timesince import timesince
 from django.db.models.signals import pre_save
 import os, random, string
@@ -55,7 +56,7 @@ class Movie(models.Model):
 	slug = models.SlugField(unique=True)
 	year_of_production = models.PositiveSmallIntegerField()
 	production = CountryField()
-	budget = models.PositiveIntegerField(help_text="in dollars")
+	budget = models.PositiveIntegerField(help_text="in dollars", validators=[MaxValueValidator(500000000,"The maximum value is 500 million ")])
 	poster = models.ImageField(null=True, blank=True, upload_to=upload_path)
 	duration = models.PositiveSmallIntegerField(help_text="in minutes")
 	description = models.CharField(max_length=295, default="", null=True,blank=True, help_text="295 character maximum.")
