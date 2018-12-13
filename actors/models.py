@@ -63,7 +63,7 @@ class Actor(models.Model):
 		return self.name + " " + self.last_name
 
 	class Meta:
-		ordering = ('last_name', 'name', )
+		ordering = ('last_name', 'name')
 
 
 	@property
