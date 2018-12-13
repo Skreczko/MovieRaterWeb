@@ -15,6 +15,10 @@ html,body
    }
 }
 
+.black {
+    color-background: black;
+}
+
 @media (max-width: 576px) {
   .offset-text-to-center-576 {
           text-align: center;
