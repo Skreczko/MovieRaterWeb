@@ -43,7 +43,7 @@ class ActorListView(ListView):
 	paginate_by = 10
 
 	def get_queryset(self, *args, **kwargs):
-		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('is_crew', 'last_name')
+		qs = super(ActorListView,self).get_queryset(*args, **kwargs).order_by('last_name')
 		query = self.request.GET.get("q", None)
 		if query is not None:
 			qs = qs.filter(
