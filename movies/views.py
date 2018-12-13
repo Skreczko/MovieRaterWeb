@@ -68,7 +68,7 @@ class MovieDetailView(FormMixin, DetailView):
 		context = super().get_context_data(**kwargs)
 		context['gallery_movie_20'] = MovieGallery.objects.filter(movie=self.object)[:20]
 		context['gallery_movie_all'] = MovieGallery.objects.filter(movie=self.object)
-		context['related_actors'] = ActorRole.objects.filter(movie=self.object).order_by('-movie')
+		context['related_actors'] = ActorRole.objects.filter(movie=self.object).order_by(movie='-movie')
 		context['related_crews'] = CrewRole.objects.filter(movie=self.object)
 		context['director'] = CrewRole.objects.filter(movie=self.object, role='Director')
 		context['comment_list'] = MovieComment.objects.filter(movie=self.object).exclude(Q(comment__isnull=True) | Q(comment__exact=''))[:5]
