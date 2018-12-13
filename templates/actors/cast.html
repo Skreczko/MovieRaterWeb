@@ -43,7 +43,7 @@
                             {% for query in related_movies %}
                             <tr>
                               <th scope="row" width="10%">{% if query.movie.poster %}<img id="img_table" src="http://res.cloudinary.com/hmoahlwol/image/upload/{{query.movie.poster}}" alt="{{query.movie.title}}">{% endif %}</th>
-                                <td id="actor_in_table" width="40%">
+                                <td id="actor_in_table" width="50%">
 
 
                                     <a class="bold" {% if 'management_cast/editing' in request.get_full_path %} href="{% url 'actor_edit_cast' slug=actor.slug id=query.id %}"
@@ -54,7 +54,7 @@
                                     {% include 'stars.html' with object=query.movie.average_stars|first %}
                                       <p class="votes">Movie rate: {{query.movie.average_stars|first}}/5  |  {{query.movie.average_stars|last}} vote{{query.movie.average_stars|last|pluralize}}</p>
                                 </td>
-                                <td align="left" id="role_in_table" width="40%">
+                                <td align="left" id="role_in_table" width="50%">
                                     <div class="bold">{{ query.role }}</div>
                                  </td>
                                 <td width="5%">

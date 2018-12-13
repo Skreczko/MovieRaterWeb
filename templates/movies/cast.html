@@ -52,7 +52,7 @@
                                     {% include 'stars.html' with object=query.actor.average_stars|first %}
                                       <p class="votes">Actor rate: {{query.actor.average_stars|first}}/5  |  {{query.actor.average_stars|last}} vote{{query.actor.average_stars|last|pluralize}}</p>
                                 </td>
-                                <td align="left" id="role_in_table" width="40%">
+                                <td align="left" id="role_in_table" width="50%">
                                     <div class="bold">{{ query.role }}</div>
                                  </td>
                                 <td width="5%">
