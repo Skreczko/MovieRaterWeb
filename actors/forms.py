@@ -58,6 +58,7 @@ class MovieCrewForm(forms.ModelForm):
 		model = CrewRole
 		fields = ['actor', 'role', 'picture']
 
+
 class MovieCrewRoleForm(forms.ModelForm):
 	class Meta:
 		model = CrewRole
@@ -68,6 +69,7 @@ class ActorCastForm(forms.ModelForm):
 	class Meta:
 		model = ActorRole
 		fields = ['movie', 'role', 'picture']
+		field_order = ['movie']
 
 
 class ActorCrewForm(forms.ModelForm):

@@ -61,6 +61,9 @@ class Movie(models.Model):
 	duration = models.PositiveSmallIntegerField(help_text="in minutes")
 	description = models.CharField(max_length=295, default="", null=True,blank=True, help_text="295 character maximum.")
 
+	class Meta:
+		ordering = ('title',)
+
 
 
 	def __str__(self):

@@ -183,20 +183,21 @@ def category_create(request, slug=None):
 def category_edit(request, slug=None):
 	qs_movie = Movie.objects.get(slug=slug)
 	form = MovieCategoryForm(request.POST or None, )
-	messages.success(request, 'Category for {title} has been changed.'.format(title=qs_movie.title))
+
 	template = 'form.html'
 	context = {'form':form}
 
 	if form.is_valid():
 		category = form.cleaned_data['category']
 		if category:
-			qs_movie.moviecategory_set.clear()
+			qs_movie.movie_category.clear()
 		for item in category:
 			check = MovieCategory.objects.filter(category=item).first()
 			if not check:
 				MovieCategory.objects.create(category=item).save()
 			qs_category = MovieCategory.objects.filter(category=item).first()
 			qs_category.related_movie.add(qs_movie)
+		messages.success(request, 'Category for {title} has been changed.'.format(title=qs_movie.title))
 		return redirect('movie_detail', slug)
 
 	return render(request, template, context)
@@ -304,7 +305,6 @@ def crew_create(request, slug=None):
 	context = {'form': form}
 	if form.is_valid():
 		actor = form.cleaned_data.get('actor')
-		print(actor)
 		check = CrewRole.objects.filter(actor=actor, movie=qs_movie)
 		if check.exists():
 			form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
