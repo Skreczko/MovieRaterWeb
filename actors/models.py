@@ -169,7 +169,7 @@ class CrewRole(models.Model):
 		return str("{movie} - {actor} - {role}".format(movie=self.movie, actor=self.actor, role=self.role))
 
 	class Meta:
-		ordering = ('role', 'actor', 'movie')
+		ordering = ('actor', 'movie')
 
 
 def slug_create(instance, new_slug=None):
