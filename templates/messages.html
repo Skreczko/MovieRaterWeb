@@ -1,12 +1,14 @@
 {% load bootstrap %}
 
+{% if messages %}
 <div class="row justify-content-center ">
-    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 center">
-        {% if messages %}
+    <div class="col-12 col-xs-8 col-sm-12 col-md-12 col-lg-12 col-xl-8 center">
+
             {% for message in messages %}
-            <span class="badge badge-pill badge-info">{{ message }}</span>
+            <p id="form_in_movie_list"><span class="badge badge-pill badge-info center">{{ message }}</span></p>
             {% endfor %}
-        <br><hr><br>
-        {% endif %}
+        <hr>
+
     </div>
 </div>
+{% endif %}

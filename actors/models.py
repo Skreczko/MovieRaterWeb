@@ -45,10 +45,10 @@ class Actor(models.Model):
 		return os.path.join(
 			 'actors/',"%s" % instance.slug, filename)
 
-	name = models.CharField(max_length=128, default="")
+	name = models.CharField(max_length=25, default="")
 	slug = models.SlugField(unique=True)
-	last_name = models.CharField(max_length=128,  default="")
-	original_name = models.CharField(max_length=128, null=True, blank=True)
+	last_name = models.CharField(max_length=25,  default="")
+	original_name = models.CharField(max_length=60, null=True, blank=True)
 	nationality = CountryField()
 	city_of_birth = models.CharField(max_length=50)
 	photo = models.ImageField(null=True, blank=True, upload_to=upload_path)
