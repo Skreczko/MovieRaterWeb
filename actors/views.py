@@ -247,7 +247,6 @@ def actor_crew_create(request, slug=None):
 		else:
 			obj = form.save(commit=False)
 			obj.actor = qs_actor
-
 			obj.save()
 			messages.success(request,
 							 '{actor} as a crew member of {title} has been added.'.format(actor=qs_actor, title=movie.title))

@@ -1,5 +1,5 @@
 from django import forms
-from .models import YEARS, YES_NO
+from .models import YEARS, YES_NO, CREW_ROLE
 from .models import Actor, ActorGallery, ActorComment, ActorRole, CrewRole
 
 
@@ -74,5 +74,10 @@ class ActorCrewForm(forms.ModelForm):
 	class Meta:
 		model = CrewRole
 		fields = ['movie', 'role', 'picture']
+
+		widgets = {
+			'role': forms.Select(choices=CREW_ROLE),
+
+		}
 
 

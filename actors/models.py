@@ -154,7 +154,7 @@ class ActorRole(models.Model):
 
 class CrewRole(models.Model):
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="movie_crew_role", null=True)
-	actor = models.OneToOneField(Actor, on_delete=models.CASCADE, related_name="actor_crew_role", null=True,
+	actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name="actor_crew_role", null=True,
 								 limit_choices_to={'is_crew': True})
 	role = models.CharField(max_length=100, choices=CREW_ROLE)
 	def upload_path(instance, filename):
