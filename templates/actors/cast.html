@@ -52,7 +52,7 @@
                                     href="{{query.movie.get_to_detail}}"
                                     {% endif %}> {{ query.movie.title }} ({{ query.movie.year_of_production }})</a>
                                     {% include 'stars.html' with object=query.movie.average_stars|first %}
-                                      <p class="votes_for_table">Movie rate: {{query.movie.average_stars|first}}/5  |  {{query.movie.average_stars|last}} vote{{query.movie.average_stars|last|pluralize}}</p>
+                                      <p class="votes">Movie rate: {{query.movie.average_stars|first}}/5  |  {{query.movie.average_stars|last}} vote{{query.movie.average_stars|last|pluralize}}</p>
                                 </td>
                                 <td align="left" id="role_in_table" width="40%">
                                     <div class="bold">{{ query.role }}</div>
